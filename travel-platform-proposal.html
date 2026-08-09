@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Platform Proposal — Product Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0B1A33;--black:#050607;--paper:#F4F6FA;--white:#FFF;--muted:#64748B;--line:rgba(11,26,51,.12);--blue:#2D7FF9;--violet:#7C3AED;--purple:#6B21A8;--sky:#DDF4FF;--sun:#FBBF24;--coral:#EF4444;--success:#10B981;--pink:#EC4899;--lime:#84CC16;--teal:#14B8A6;--gradient:linear-gradient(100deg,#2D7FF9,#7C3AED);--font-display:'Archivo Black',sans-serif;--font-body:'Manrope',sans-serif}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--black);font-family:var(--font-body);color:var(--ink);-webkit-font-smoothing:antialiased}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;opacity:0;visibility:hidden;transition:opacity .55s ease,transform .55s ease;transform:translateX(36px);overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transform:none;z-index:10}
+.slide.prev{opacity:0;transform:translateX(-36px)}
+.slide--white{background:var(--white)}
+.slide--black{background:var(--black);color:var(--white)}
+.slide-inner{position:relative;width:100%;height:100%;padding:72px 88px 56px;display:flex;flex-direction:column;justify-content:center}
+.slide h1{font-family:var(--font-display);font-size:clamp(44px,4.8vw,84px);line-height:1.02;letter-spacing:-.02em}
+.slide h2{font-family:var(--font-display);font-size:clamp(32px,3.2vw,58px);line-height:1.08;letter-spacing:-.01em}
+.slide h3{font-size:clamp(18px,1.6vw,28px);font-weight:700;line-height:1.25}
+.slide p,.slide li{font-size:clamp(15px,1.15vw,20px);line-height:1.55;font-weight:500}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:var(--muted)}
+.label--white{color:rgba(255,255,255,.45)}
+.gradient-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.slide-footer{position:absolute;bottom:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;font-size:11px;font-weight:700;z-index:5}
+.slide-footer.dark{color:var(--muted)}.slide-footer.light{color:rgba(255,255,255,.35)}
+.slide-progress{position:absolute;bottom:0;left:0;height:3px;background:var(--gradient);z-index:6;transition:width .45s ease}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.08s}.reveal-delay-2{transition-delay:.16s}.reveal-delay-3{transition-delay:.24s}.reveal-delay-4{transition-delay:.32s}.reveal-delay-5{transition-delay:.4s}.reveal-delay-6{transition-delay:.48s}.reveal-delay-7{transition-delay:.56s}.reveal-delay-8{transition-delay:.64s}
+/* Cover — purple wedge + circle visual */
+.slide--cover .slide-inner{padding:0;flex-direction:row;overflow:hidden}
+.cover-wedge{position:absolute;left:0;top:0;bottom:0;width:58%;background:var(--purple);clip-path:polygon(0 0,100% 0,78% 100%,0 100%);display:flex;flex-direction:column;justify-content:center;padding:80px 120px 80px 88px;z-index:2}
+.cover-wedge h1{color:var(--white);font-size:clamp(48px,5.2vw,92px);margin-bottom:20px}
+.cover-wedge .subtitle{color:rgba(255,255,255,.82);font-size:clamp(16px,1.35vw,22px);max-width:460px;line-height:1.5;margin-bottom:28px}
+.cover-wedge .proposal-label{color:rgba(255,255,255,.55);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:16px}
+.cover-visual-zone{position:absolute;right:0;top:0;bottom:0;width:52%;display:flex;align-items:center;justify-content:center;padding:60px}
+.cover-circle{width:min(420px,38vw);height:min(420px,38vw);border-radius:50%;border:3px solid var(--purple);background:var(--white);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 24px 80px rgba(107,33,168,.18)}
+.cover-circle img,.cover-circle svg{width:88%;height:88%;object-fit:contain}
+/* Split layouts — text and visuals never overlap */
+.layout-split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;width:100%;height:100%}
+.layout-split-38{grid-template-columns:.95fr 1.05fr}
+.layout-split-62{grid-template-columns:1.15fr .85fr}
+.text-zone{display:flex;flex-direction:column;justify-content:center;gap:16px}
+.visual-zone{display:flex;align-items:center;justify-content:center;position:relative}
+.visual-frame{border-radius:20px;overflow:hidden;background:var(--paper);border:1px solid var(--line)}
+.visual-frame--circle{width:min(340px,30vw);height:min(340px,30vw);border-radius:50%;border:3px solid var(--violet);background:var(--white);padding:20px;display:flex;align-items:center;justify-content:center}
+.visual-frame img,.visual-frame svg{width:100%;height:auto;object-fit:contain;display:block}
+/* Story blocks — linear narrative */
+.story-linear{margin-top:24px}
+.story-phase{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.story-phase-label{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;width:90px;flex-shrink:0}
+.story-blocks{display:flex;gap:6px;flex:1}
+.story-block{height:36px;border-radius:4px;flex:1;min-width:28px}
+.story-block--grey{background:#CBD5E1}.story-block--green{background:#86EFAC}.story-block--pink{background:#F9A8D4}.story-block--blue{background:#93C5FD}
+.story-phase-desc{font-size:13px;color:var(--muted);font-weight:600;width:220px;flex-shrink:0;text-align:right}
+/* Section dividers */
+.statement-slide .slide-inner{align-items:center;text-align:center;justify-content:center}
+.statement-slide h1{font-size:clamp(56px,6.5vw,108px);line-height:.95}
+/* Bento grids — varied tile sizes */
+.bento{display:grid;gap:14px;width:100%}
+.bento--audience{grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto}
+.bento--products{grid-template-columns:repeat(4,1fr);grid-template-rows:140px 140px}
+.bento--narrative{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,130px)}
+.bento--templates{grid-template-columns:repeat(4,1fr);grid-template-rows:180px}
+.bento-tile{border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.bento-tile--paper{background:var(--paper);border:1px solid var(--line)}
+.bento-tile--dark{background:#1E293B;color:var(--white)}
+.bento-tile--accent{background:var(--gradient);color:var(--white)}
+.bento-tile--visa{grid-column:span 2;grid-row:span 2;background:linear-gradient(135deg,#1E293B,#312E81);color:var(--white)}
+.bento-tile--wide{grid-column:span 2}
+.bento-tile--tall{grid-row:span 2}
+.bento-tile h3{font-size:clamp(16px,1.3vw,22px);margin-bottom:4px}
+.bento-tile p{font-size:13px;opacity:.78;line-height:1.4}
+.bento-tile .tile-icon{font-size:28px;margin-bottom:10px}
+/* Tip table — one thought per row */
+.tip-table{width:100%;border-top:1px solid rgba(255,255,255,.12)}
+.tip-row{display:grid;grid-template-columns:220px 1fr;gap:32px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,.08);align-items:start}
+.tip-row h3{font-size:clamp(18px,1.5vw,24px);color:var(--white)}
+.tip-row p,.tip-row li{font-size:15px;color:rgba(255,255,255,.72);line-height:1.55}
+.tip-row ul{list-style:none;padding:0}
+.tip-row li{padding:3px 0}
+.tip-row li::before{content:'· ';color:var(--sun)}
+/* Sticky narrative rows */
+.sticky-stack{display:flex;flex-direction:column;gap:10px}
+.sticky{width:100%;padding:16px 20px;border-radius:6px;font-size:15px;font-weight:600;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.sticky--orange{background:#FED7AA}.sticky--yellow{background:#FEF08A}.sticky--blue{background:#BFDBFE}.sticky--purple{background:#E9D5FF}
+.sticky--wide-3{width:75%}.sticky--wide-4{width:88%}.sticky--wide-6{width:100%}
+/* Pipeline / journey */
+.pipeline{display:flex;align-items:stretch;gap:0;margin:28px 0}
+.pipeline-step{flex:1;text-align:center;padding:18px 10px;position:relative}
+.pipeline-step::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:18px;font-weight:700}
+.pipeline-step:last-child::after{display:none}
+.pipeline-step .step-num{font-family:var(--font-display);font-size:28px;color:var(--violet);margin-bottom:6px}
+.pipeline-step p{font-size:12px;color:var(--muted);font-weight:700}
+.phase-bar{display:flex;gap:4px;margin:20px 0 12px}
+.phase-seg{height:8px;border-radius:4px;flex:1}
+/* Compare columns */
+.compare{display:grid;grid-template-columns:1fr auto 1fr;gap:28px;align-items:center;width:100%}
+.compare-badge{font-family:var(--font-display);font-size:36px;color:var(--coral)}
+.compare-col h3{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.compare-col--bad h3{color:var(--coral)}.compare-col--good h3{color:var(--teal)}
+.compare-visual{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;min-height:200px}
+.compare-list{font-size:14px;line-height:1.7;color:var(--muted)}
+.compare-list li{margin-bottom:6px}
+/* Mockups */
+.mockup-card{background:var(--white);border-radius:14px;box-shadow:0 8px 32px rgba(11,26,51,.08);border:1px solid var(--line);overflow:hidden}
+.mockup-header{padding:12px 18px;background:var(--paper);border-bottom:1px solid var(--line);font-size:12px;font-weight:800}
+.mockup-body{padding:16px 18px}
+.mockup-row{display:flex;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;gap:8px}
+.mockup-row:last-child{border-bottom:none}
+.mockup-tag{padding:3px 8px;border-radius:5px;font-size:10px;font-weight:800;text-transform:uppercase}
+.mockup-tag--blue{background:var(--sky);color:var(--blue)}.mockup-tag--green{background:#D1FAE5;color:var(--success)}.mockup-tag--coral{background:#FEE2E2;color:var(--coral)}.mockup-tag--violet{background:#EDE9FE;color:var(--violet)}
+/* Architecture, spectrum, stats */
+.arch-layer{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.arch-node{padding:10px 16px;border-radius:8px;font-size:12px;font-weight:700}
+.arch-node--product{background:var(--gradient);color:var(--white)}
+.arch-node--platform{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--white)}
+.arch-node--ops{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.55)}
+.arch-connector{display:flex;justify-content:center;margin:6px 0}.arch-connector span{width:2px;height:20px;background:rgba(255,255,255,.12)}
+.spectrum-line{width:100%;height:4px;background:var(--line);border-radius:2px;position:relative;margin:32px 0 48px}
+.spectrum-fill{position:absolute;left:0;top:0;bottom:0;width:50%;background:var(--gradient);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .9s ease}
+.spectrum-marker{position:absolute;left:50%;top:-7px;width:18px;height:18px;background:var(--violet);border-radius:50%;transform:translateX(-50%) scale(0);transition:transform .35s ease .5s;border:3px solid var(--white);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.spectrum-labels{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted)}
+.stat-bars{display:flex;flex-direction:column;gap:16px;margin-top:8px}
+.stat-bar-row{display:flex;align-items:center;gap:14px}
+.stat-bar-label{font-size:12px;font-weight:700;color:var(--muted);width:130px;text-transform:uppercase;letter-spacing:.04em}
+.stat-bar-track{flex:1;height:32px;background:var(--paper);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.stat-bar-fill{height:100%;background:var(--violet);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;color:var(--white);font-weight:800;font-size:14px}
+.chip{display:inline-block;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;margin:3px}
+.chip--blue{background:var(--sky);color:var(--blue)}.chip--violet{background:#EDE9FE;color:var(--violet)}.chip--coral{background:#FEE2E2;color:var(--coral)}.chip--green{background:#D1FAE5;color:var(--success)}.chip--dark{background:rgba(255,255,255,.08);color:rgba(255,255,255,.75)}
+.narrative-card{background:var(--white);border-radius:12px;padding:28px 32px;box-shadow:0 12px 40px rgba(11,26,51,.1);max-width:520px;border:1px solid var(--line)}
+.narrative-lead{font-size:17px;font-weight:800;margin-bottom:16px;line-height:1.4}
+.narrative-bullets{font-size:14px;color:var(--muted);margin-bottom:16px;padding-left:18px}
+.narrative-rec{font-size:14px;color:var(--success);font-weight:700}
+.narrative-rec li{color:var(--success);margin-bottom:4px}
+.annotation{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:var(--violet);text-transform:uppercase;letter-spacing:.08em;margin:8px 0}
+.annotation::before{content:'';width:40px;height:2px;background:var(--violet)}
+.hero-stat{font-family:var(--font-display);font-size:clamp(48px,5vw,72px);color:var(--violet);line-height:1}
+.audience-row{display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid var(--line)}
+.audience-row:last-child{border-bottom:none}
+.audience-num{font-family:var(--font-display);font-size:32px;color:var(--violet);width:48px;flex-shrink:0}
+.audience-row h3{font-size:18px;margin-bottom:2px}.audience-row p{font-size:14px;color:var(--muted)}
+.timeline-gantt{display:flex;flex-direction:column;gap:10px}
+.gantt-row{display:grid;grid-template-columns:120px 1fr 180px;gap:12px;align-items:center}
+.gantt-label{font-size:12px;font-weight:800;text-align:right}
+.gantt-track{height:28px;background:var(--paper);border-radius:6px;border:1px solid var(--line);position:relative;overflow:hidden}
+.gantt-fill{position:absolute;top:2px;bottom:2px;border-radius:5px;opacity:.85}
+.gantt-desc{font-size:11px;color:var(--muted)}
+.deck-controls{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;z-index:100;background:rgba(5,6,7,.88);backdrop-filter:blur(10px);border-radius:40px;padding:7px 18px;border:1px solid rgba(255,255,255,.08)}
+.deck-controls button{width:38px;height:38px;border:none;background:rgba(255,255,255,.07);color:var(--white);border-radius:50%;cursor:pointer;font-size:17px}
+.deck-controls button:hover{background:rgba(255,255,255,.15)}
+.deck-counter{color:rgba(255,255,255,.55);font-size:13px;font-weight:700;min-width:56px;text-align:center}
+.presenter-notes{position:fixed;bottom:0;left:0;right:0;max-height:28vh;background:rgba(11,26,51,.96);color:rgba(255,255,255,.82);padding:18px 36px;font-size:14px;line-height:1.55;z-index:90;transform:translateY(100%);transition:transform .28s ease;overflow-y:auto;border-top:2px solid var(--blue)}
+.presenter-notes.open{transform:translateY(0)}
+.presenter-notes .note-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-weight:800;margin-bottom:6px}
+@media print{.deck-controls,.presenter-notes{display:none!important}.slide{page-break-after:always;opacity:1!important;visibility:visible!important;transform:none!important}.reveal{opacity:1!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){.slide,.reveal,.spectrum-fill,.spectrum-marker{transition:none}}
+@media(max-width:1200px){.slide-inner{padding:56px 40px 48px}.layout-split{gap:32px;grid-template-columns:1fr}.cover-wedge{width:100%;clip-path:none;padding:60px 40px}.cover-visual-zone{display:none}}
+</style>
+</head>
+<body>
+<main class="deck" aria-live="polite">
+
+<!-- SLIDE 01 — COVER -->
+<section class="slide slide--cover slide--black" id="slide-01" role="group" aria-label="Slide 1: Cover" data-notes="Open by explaining that the proposal covers the complete journey from product discovery to booking, service, and post-booking management. Fees and commercial pricing are intentionally outside this presentation.">
+<div class="slide-inner">
+<div class="cover-left">
+<p class="proposal-label reveal">Product proposal · Design and development direction</p>
+<h1 class="reveal reveal-delay-1">TRAVEL,<br>CONNECTED</h1>
+<p class="subtitle reveal reveal-delay-2">Flights, stays, experiences, visas and transfers in one customer journey.</p>
+</div>
+<div class="cover-right"></div>
+<div class="cover-gradient-line"></div>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">01 / 34</span></div>
+<div class="slide-progress" style="width:2.94%"></div>
+</section>
+
+<!-- SLIDE 02 — NARRATIVE / AGENDA -->
+<section class="slide slide--black" id="slide-02" role="group" aria-label="Slide 2: Narrative Agenda" data-notes="Explain that the deck first establishes understanding, then translates the opportunity into an experience, and finally presents the delivery plan.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:48px">WHAT. SO WHAT. NOW WHAT.</h2>
+<div class="agenda-row reveal reveal-delay-1"><span class="agenda-label gradient-text">WHAT</span><span class="agenda-desc" style="color:rgba(255,255,255,.7);flex:1;margin:0 16px">The customer, the market and the product</span><span style="color:var(--muted);font-size:14px">Slides 04–10</span></div>
+<div class="agenda-row reveal reveal-delay-2"><span class="agenda-label gradient-text">SO WHAT</span><span class="agenda-desc" style="color:rgba(255,255,255,.7);flex:1;margin:0 16px">The opportunity, experience and conversion model</span><span style="color:var(--muted);font-size:14px">Slides 11–25</span></div>
+<div class="agenda-row reveal reveal-delay-3"><span class="agenda-label gradient-text">NOW WHAT</span><span class="agenda-desc" style="color:rgba(255,255,255,.7);flex:1;margin:0 16px">The platform, technology and delivery plan</span><span style="color:var(--muted);font-size:14px">Slides 26–34</span></div>
+<p class="reveal reveal-delay-4" style="margin-top:32px;font-size:15px;color:var(--muted)">A clear path from idea to launch.</p>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">02 / 34</span></div>
+<div class="slide-progress" style="width:5.88%"></div>
+</section>
+
+<!-- SLIDE 03 — OPENING TENSION -->
+<section class="slide slide--white" id="slide-03" role="group" aria-label="Slide 3: Opening Tension" data-notes="The problem is not a lack of travel products. The problem is that travellers often have to assemble one journey across multiple systems, policies, payments, confirmations, and support teams.">
+<div class="slide-inner" style="text-align:center">
+<h2 class="reveal" style="margin-bottom:32px">Travel planning still feels fragmented.</h2>
+<p class="reveal reveal-delay-1" style="font-size:clamp(20px,1.6vw,28px);color:var(--muted);margin-bottom:48px">One trip can mean:</p>
+<p class="reveal reveal-delay-2" style="font-family:var(--font-display);font-size:clamp(28px,2.5vw,48px);margin-bottom:48px">6 searches · 5 providers · 4 payments · 3 support channels</p>
+<div class="reveal reveal-delay-3" style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
+<span class="chip chip--blue">Flight</span><span class="chip chip--violet">Hotel</span><span class="chip chip--coral">Visa</span>
+<span class="chip chip--blue">Tour</span><span class="chip chip--violet">Transfer</span><span class="chip chip--coral">Support</span>
+</div>
+<p class="reveal reveal-delay-4" style="margin-top:32px;font-size:15px;color:var(--coral);font-weight:700">Disconnected experiences create friction.</p>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">03 / 34</span></div>
+<div class="slide-progress" style="width:8.82%"></div>
+</section>
+
+<!-- SLIDE 04 — CHAPTER DIVIDER: WHAT -->
+<section class="slide slide--black statement-slide" id="slide-04" role="group" aria-label="Slide 4: Chapter Divider - What" data-notes="Transition from the general travel problem into the specific product the client wants to build.">
+<div class="slide-inner" style="align-items:center;text-align:center">
+<p class="label label--white reveal" style="margin-bottom:24px">WHAT</p>
+<h1 class="reveal reveal-delay-1" style="font-size:clamp(64px,6vw,110px);line-height:1">UNDERSTANDING<br>THE PRODUCT</h1>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">04 / 34</span></div>
+<div class="slide-progress" style="width:11.76%"></div>
+</section>
+
+<!-- SLIDE 05 — WHO IS THE PLATFORM FOR? -->
+<section class="slide slide--white" id="slide-05" role="group" aria-label="Slide 5: Who Is the Platform For?" data-notes="Do not describe one generic traveller. Explain that different audiences have different booking anxieties, support expectations, group sizes, and reasons for travel. The platform needs reusable components with adaptable journeys.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:36px">WHO is travelling?</h2>
+<div class="grid-2x2">
+<div class="card card--white reveal reveal-delay-1"><div class="icon-circle">✈</div><h3>Leisure travellers</h3><p>Booking personal holidays and short breaks</p></div>
+<div class="card card--white reveal reveal-delay-2"><div class="icon-circle">👨‍👩‍👧</div><h3>Families and diaspora travellers</h3><p>Coordinating visits across countries and generations</p></div>
+<div class="card card--white reveal reveal-delay-3"><div class="icon-circle">💼</div><h3>Business and frequent travellers</h3><p>Prioritising speed, flexibility and support</p></div>
+<div class="card card--white reveal reveal-delay-4"><div class="icon-circle">👥</div><h3>Groups and special-interest travellers</h3><p>Managing shared itineraries and complex requirements</p></div>
+</div>
+<p class="reveal reveal-delay-5" style="margin-top:28px;font-size:15px;color:var(--muted)">UK-based demand, global destinations</p>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">05 / 34</span></div>
+<div class="slide-progress" style="width:14.71%"></div>
+</section>
+
+<!-- SLIDE 06 — WHAT WILL THEY BOOK? -->
+<section class="slide slide--white" id="slide-06" role="group" aria-label="Slide 06: What Will They Book?" data-notes="Emphasise that these should not feel like six unrelated mini-websites. Shared dates, travellers, destinations, currency, preferences, and account details should connect the products.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">WHAT are they trying to arrange?</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:32px;font-size:18px">Separate products. One connected itinerary.</p>
+<div class="grid-2x3">
+<div class="card card--gradient reveal reveal-delay-1"><h3>✈ Flights</h3><p>Search, compare and reserve routes</p></div>
+<div class="card card--gradient reveal reveal-delay-2"><h3>🏨 Hotels</h3><p>Find the right stay for the trip</p></div>
+<div class="card card--gradient reveal reveal-delay-3"><h3>🗺 Tours</h3><p>Book activities and local experiences</p></div>
+<div class="card card--gradient reveal reveal-delay-4"><h3>📦 Packages</h3><p>Combine travel into a stronger offer</p></div>
+<div class="card card--gradient reveal reveal-delay-5"><h3>📋 Visas</h3><p>Understand, apply and track</p></div>
+<div class="card card--gradient reveal reveal-delay-6"><h3>🚗 Transfers</h3><p>Complete the airport-to-door journey</p></div>
+</div>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">06 / 34</span></div>
+<div class="slide-progress" style="width:17.65%"></div>
+</section>
+
+<!-- SLIDE 07 — WHY WILL CUSTOMERS USE IT? -->
+<section class="slide slide--white" id="slide-07" role="group" aria-label="Slide 07: Why Will Customers Use It?" data-notes="The value proposition is not only cheap travel. Travel purchases involve uncertainty. The product must make customers feel informed before payment and supported after payment.">
+<div class="slide-inner">
+<p class="reveal" style="color:var(--muted);font-size:17px;margin-bottom:8px;font-weight:700">The platform must reduce uncertainty, not merely display inventory.</p>
+<h2 class="reveal reveal-delay-1" style="margin-bottom:36px">WHY will they choose this platform?</h2>
+<div class="grid-3">
+<div class="card card--white reveal reveal-delay-2" style="text-align:center;padding:40px 28px"><div style="font-size:48px;margin-bottom:16px">🛡</div><h3 style="font-size:28px;margin-bottom:12px">Confidence</h3><p>Clear prices, policies, protection and support</p></div>
+<div class="card card--white reveal reveal-delay-3" style="text-align:center;padding:40px 28px"><div style="font-size:48px;margin-bottom:16px">⚡</div><h3 style="font-size:28px;margin-bottom:12px">Convenience</h3><p>One account, one itinerary and fewer repeated steps</p></div>
+<div class="card card--white reveal reveal-delay-4" style="text-align:center;padding:40px 28px"><div style="font-size:48px;margin-bottom:16px">🎛</div><h3 style="font-size:28px;margin-bottom:12px">Control</h3><p>Compare options, manage bookings and track progress</p></div>
+</div>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">07 / 34</span></div>
+<div class="slide-progress" style="width:20.59%"></div>
+</section>
+
+<!-- SLIDE 08 — MARKET PATTERN STUDY -->
+<section class="slide slide--black" id="slide-08" role="group" aria-label="Slide 08: Market Pattern Study" data-notes="Explain that the research identifies patterns, not visual styles to imitate. The proposed product should take the breadth of a marketplace, the clarity of a booking engine, and the reassurance of a travel consultant.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:36px">What the market already teaches us</h2>
+<div class="grid-2x3">
+<div class="card card--dark reveal reveal-delay-1"><p class="label label--white" style="margin-bottom:8px">Category reference</p><h3 style="color:var(--white);margin-bottom:6px">Trip.com</h3><p style="color:rgba(255,255,255,.6)">Breadth and self-service</p></div>
+<div class="card card--dark reveal reveal-delay-2"><p class="label label--white" style="margin-bottom:8px">Category reference</p><h3 style="color:var(--white);margin-bottom:6px">TravelUp</h3><p style="color:rgba(255,255,255,.6)">Search and value</p></div>
+<div class="card card--dark reveal reveal-delay-3"><p class="label label--white" style="margin-bottom:8px">Category reference</p><h3 style="color:var(--white);margin-bottom:6px">Netflights</h3><p style="color:rgba(255,255,255,.6)">Comparison and cross-sell</p></div>
+<div class="card card--dark reveal reveal-delay-4"><p class="label label--white" style="margin-bottom:8px">Category reference</p><h3 style="color:var(--white);margin-bottom:6px">Trailfinders</h3><p style="color:rgba(255,255,255,.6)">Expert-assisted planning</p></div>
+<div class="card card--dark reveal reveal-delay-5"><p class="label label--white" style="margin-bottom:8px">Category reference</p><h3 style="color:var(--white);margin-bottom:6px">Flight Centre</h3><p style="color:rgba(255,255,255,.6)">Omnichannel support</p></div>
+<div class="card card--dark reveal reveal-delay-6"><p class="label label--white" style="margin-bottom:8px">Category reference</p><h3 style="color:var(--white);margin-bottom:6px">Travel Republic</h3><p style="color:rgba(255,255,255,.6)">Packages and inspiration</p></div>
+</div>
+<p class="reveal reveal-delay-7" style="margin-top:36px;font-size:20px;color:rgba(255,255,255,.85);font-weight:700;max-width:900px">The opportunity is not to copy one platform. It is to combine the strongest behaviours into one focused experience.</p>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">08 / 34</span></div>
+<div class="slide-progress" style="width:23.53%"></div>
+</section>
+
+<!-- SLIDE 09 — THE OPPORTUNITY -->
+<section class="slide slide--white" id="slide-09" role="group" aria-label="Slide 09: The Opportunity" data-notes="The product should not force every user into one behaviour. Some travellers know exactly what they want; others need help. The strongest model supports both.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">Digital speed. Human confidence.</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:16px;font-size:18px">The platform can sit between a fully self-service marketplace and a traditional travel agency.</p>
+<div class="spectrum-line reveal reveal-delay-2"><div class="spectrum-fill"></div><div class="spectrum-marker"></div></div>
+<div class="spectrum-labels reveal reveal-delay-2"><span>Traditional agent</span><span style="color:var(--blue);font-weight:800">Proposed position</span><span>Self-service marketplace</span></div>
+<div class="reveal reveal-delay-3" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:32px">
+<span class="chip chip--blue">Search independently</span><span class="chip chip--violet">Ask for assistance</span>
+<span class="chip chip--blue">Save an itinerary</span><span class="chip chip--violet">Complete secure booking</span>
+<span class="chip chip--blue">Manage the trip</span><span class="chip chip--violet">Reach a real support team</span>
+</div>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">09 / 34</span></div>
+<div class="slide-progress" style="width:26.47%"></div>
+</section>
+
+<!-- SLIDE 10 — PRODUCT VISION -->
+<section class="slide slide--black" id="slide-10" role="group" aria-label="Slide 10: Product Vision" data-notes="Describe the platform as a journey-management product. The customer relationship begins before a search and continues through documents, confirmations, changes, support, and future trips.">
+<div class="slide-inner" style="align-items:center;text-align:center;justify-content:center">
+<div class="reveal" style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(45,127,249,.12) 0%,transparent 70%)"></div>
+<h1 class="reveal reveal-delay-1" style="font-size:clamp(42px,5vw,80px);position:relative;z-index:2">SEARCH. COMPARE. BOOK. <span class="gradient-text">PREPARE.</span> TRAVEL.</h1>
+<p class="reveal reveal-delay-2" style="color:rgba(255,255,255,.6);font-size:20px;margin-top:24px;position:relative;z-index:2">One continuous experience before, during and after payment.</p>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">10 / 34</span></div>
+<div class="slide-progress" style="width:29.41%"></div>
+</section>
+
+<!-- SLIDE 11 — CHAPTER DIVIDER: SO WHAT -->
+<section class="slide slide--black statement-slide" id="slide-11" role="group" aria-label="Slide 11: Chapter Divider - So What" data-notes="Transition from product understanding into the proposed user experience and conversion system.">
+<div class="slide-inner" style="align-items:center;text-align:center">
+<p class="label label--white reveal" style="margin-bottom:24px">SO WHAT</p>
+<h1 class="reveal reveal-delay-1" style="font-size:clamp(64px,6vw,110px);line-height:1">DESIGNING<br>THE EXPERIENCE</h1>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">11 / 34</span></div>
+<div class="slide-progress" style="width:32.35%"></div>
+</section>
+
+<!-- SLIDE 12 — END-TO-END JOURNEY -->
+<section class="slide slide--white" id="slide-12" role="group" aria-label="Slide 12: End-to-End Journey" data-notes="Explain that the design process should start from the entire journey, not from isolated pages. Shared information and consistent status communication are major experience advantages.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:16px">One journey, not six transactions</h2>
+<div class="journey-line reveal reveal-delay-1">
+<div class="journey-stage"><div class="journey-dot blue">1</div><span class="journey-label">Inspire</span></div>
+<div class="journey-stage"><div class="journey-dot blue">2</div><span class="journey-label">Search</span></div>
+<div class="journey-stage"><div class="journey-dot blue">3</div><span class="journey-label">Compare</span></div>
+<div class="journey-stage"><div class="journey-dot violet">4</div><span class="journey-label">Build itinerary</span></div>
+<div class="journey-stage"><div class="journey-dot violet">5</div><span class="journey-label">Verify</span></div>
+<div class="journey-stage"><div class="journey-dot violet">6</div><span class="journey-label">Pay</span></div>
+<div class="journey-stage"><div class="journey-dot green">7</div><span class="journey-label">Manage</span></div>
+<div class="journey-stage"><div class="journey-dot green">8</div><span class="journey-label">Travel</span></div>
+<div class="journey-stage"><div class="journey-dot green">9</div><span class="journey-label">Rebook</span></div>
+</div>
+<div class="reveal reveal-delay-2" style="display:flex;justify-content:space-between;margin-top:8px">
+<div style="text-align:center"><p class="chip chip--coral" style="font-size:11px">Friction</p><p style="font-size:12px;color:var(--coral);margin-top:4px">Unclear eligibility</p></div>
+<div style="text-align:center"><p class="chip chip--coral" style="font-size:11px">Friction</p><p style="font-size:12px;color:var(--coral);margin-top:4px">Repeated details</p></div>
+<div style="text-align:center"><p class="chip chip--coral" style="font-size:11px">Friction</p><p style="font-size:12px;color:var(--coral);margin-top:4px">Hidden conditions</p></div>
+<div style="text-align:center"><p class="chip chip--coral" style="font-size:11px">Friction</p><p style="font-size:12px;color:var(--coral);margin-top:4px">Scattered confirmations</p></div>
+</div>
+<div class="reveal reveal-delay-3" style="display:flex;justify-content:space-between;margin-top:16px">
+<div style="text-align:center"><p class="chip chip--green" style="font-size:11px">Shared traveller profile</p></div>
+<div style="text-align:center"><p class="chip chip--green" style="font-size:11px">Unified itinerary</p></div>
+<div style="text-align:center"><p class="chip chip--green" style="font-size:11px">Clear policy display</p></div>
+<div style="text-align:center"><p class="chip chip--green" style="font-size:11px">Central support</p></div>
+</div>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">12 / 34</span></div>
+<div class="slide-progress" style="width:35.29%"></div>
+</section>
+
+<!-- SLIDE 13 — PRODUCT ECOSYSTEM -->
+<section class="slide slide--black" id="slide-13" role="group" aria-label="Slide 13: Product Ecosystem" data-notes="The important technical principle is reuse. Authentication, payments, notifications, customer profiles, support, and analytics should be platform capabilities used by every product.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:28px;text-align:center">Six products. One platform layer.</h2>
+<div class="arch-layer reveal reveal-delay-1">
+<div class="arch-node arch-node--product">Flights</div><div class="arch-node arch-node--product">Hotels</div><div class="arch-node arch-node--product">Tours</div>
+<div class="arch-node arch-node--product">Packages</div><div class="arch-node arch-node--product">Visas</div><div class="arch-node arch-node--product">Transfers</div>
+</div>
+<div class="arch-connector reveal reveal-delay-2"><span></span></div>
+<div class="arch-layer reveal reveal-delay-2" style="background:rgba(255,255,255,.03);border-radius:16px;padding:20px;border:1px solid rgba(255,255,255,.08)">
+<div class="arch-node arch-node--platform">Customer account</div><div class="arch-node arch-node--platform">Search & filters</div>
+<div class="arch-node arch-node--platform">Itinerary/cart</div><div class="arch-node arch-node--platform">Payments</div>
+<div class="arch-node arch-node--platform">Notifications</div><div class="arch-node arch-node--platform">Support</div>
+<div class="arch-node arch-node--platform">Content & offers</div>
+</div>
+<div class="arch-connector reveal reveal-delay-3"><span></span></div>
+<div class="arch-layer reveal reveal-delay-3">
+<div class="arch-node arch-node--ops">Supplier APIs</div><div class="arch-node arch-node--ops">Internal admin</div>
+<div class="arch-node arch-node--ops">CRM</div><div class="arch-node arch-node--ops">Reporting</div>
+<div class="arch-node arch-node--ops">Security & compliance</div>
+</div>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">13 / 34</span></div>
+<div class="slide-progress" style="width:38.24%"></div>
+</section>
+
+<!-- SLIDE 14 — FLIGHTS EXPERIENCE -->
+<section class="slide slide--white" id="slide-14" role="group" aria-label="Slide 14: Flights Experience" data-notes="Explain that flight content changes quickly. The experience must recheck availability and price before payment and communicate baggage, operating carrier, fare rules, and expiry clearly.">
+<div class="slide-inner"><div class="split-layout">
+<div class="split-left">
+<h2 class="reveal" style="margin-bottom:12px">Flights: compare without confusion</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:24px;font-size:16px">Search → Results → Fare details → Travellers → Payment → Confirmation</p>
+<div class="mockup-card reveal reveal-delay-2" style="max-width:440px">
+<div class="mockup-header">✈ London Heathrow → Tokyo Narita</div>
+<div class="mockup-body">
+<div class="mockup-row"><span style="flex:1">BA 005 · 1 stop</span><span class="mockup-tag mockup-tag--blue">Economy</span><span style="font-weight:700">£487</span></div>
+<div class="mockup-row"><span style="flex:1">JL 044 · Direct</span><span class="mockup-tag mockup-tag--green">Direct</span><span style="font-weight:700">£512</span></div>
+<div class="mockup-row"><span style="flex:1">LH 780 · 1 stop</span><span class="mockup-tag mockup-tag--violet">Flex</span><span style="font-weight:700">£445</span></div>
+</div></div>
+</div>
+<div class="split-right">
+<div class="reveal reveal-delay-2">
+<h3 style="font-size:16px;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em">Key principles</h3>
+<ul style="list-style:none;padding:0">
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Clear total price</li>
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Baggage and fare conditions visible early</li>
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Filters for stops, time, airline and duration</li>
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Flexible-date and nearby-airport options</li>
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Revalidation before payment</li>
+<li style="padding:10px 0;font-size:16px">✓ Post-booking reference and itinerary</li>
+</ul></div>
+</div></div></div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">14 / 34</span></div>
+<div class="slide-progress" style="width:41.18%"></div>
+</section>
+
+<!-- SLIDE 15 — HOTELS EXPERIENCE -->
+<section class="slide slide--white" id="slide-15" role="group" aria-label="Slide 15: Hotels Experience" data-notes="Hotel results can feel repetitive. The design should help users understand why one property fits their trip, not only show price and star rating.">
+<div class="slide-inner"><div class="split-layout">
+<div class="split-left">
+<h2 class="reveal" style="margin-bottom:12px">Hotels: turn options into confidence</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:24px;font-size:16px">Destination → Availability → Property → Room → Guest details → Booking</p>
+<div class="mockup-card reveal reveal-delay-2" style="max-width:440px">
+<div class="mockup-header">📍 Map · List</div>
+<div class="mockup-body">
+<div style="height:120px;background:linear-gradient(135deg,var(--sky),#e8f4fd);border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;color:var(--blue);font-weight:700">Interactive map</div>
+<div class="mockup-row"><span style="flex:1">Grand Sakura Hotel</span><span class="mockup-tag mockup-tag--green">4.5★</span><span style="font-weight:700">£128/night</span></div>
+<div class="mockup-row"><span style="flex:1">Riverside Inn</span><span class="mockup-tag mockup-tag--blue">4.2★</span><span style="font-weight:700">£96/night</span></div>
+</div></div>
+</div>
+<div class="split-right">
+<div class="reveal reveal-delay-2">
+<h3 style="font-size:16px;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em">Key principles</h3>
+<ul style="list-style:none;padding:0">
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Map and list working together</li>
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Strong photography and factual information</li>
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Room and board differences made obvious</li>
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Cancellation terms near the decision</li>
+<li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:16px">✓ Location context and nearby attractions</li>
+<li style="padding:10px 0;font-size:16px">✓ Save and compare properties</li>
+</ul></div>
+</div></div></div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">15 / 34</span></div>
+<div class="slide-progress" style="width:44.12%"></div>
+</section>
+
+<!-- SLIDE 16 — TOURS AND PACKAGES -->
+<section class="slide slide--white" id="slide-16" role="group" aria-label="Slide 16: Tours and Packages" data-notes="Tours are emotional and visual. Packages require both inspiration and precision. The interface should show what is included, what is optional, and what protection or terms apply.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">Move from inventory to inspiration</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:32px;font-size:18px">Experiences create desire. Packages convert that desire into a complete trip.</p>
+<div style="display:flex;gap:48px">
+<div style="flex:1" class="reveal reveal-delay-2">
+<h3 style="margin-bottom:16px">Tours and activities</h3>
+<ul style="list-style:none;padding:0"><li style="padding:8px 0;font-size:16px;border-bottom:1px solid var(--line)">Date-based availability</li><li style="padding:8px 0;font-size:16px;border-bottom:1px solid var(--line)">Duration and meeting point</li><li style="padding:8px 0;font-size:16px;border-bottom:1px solid var(--line)">What is included</li><li style="padding:8px 0;font-size:16px;border-bottom:1px solid var(--line)">Cancellation policy</li><li style="padding:8px 0;font-size:16px">Traveller type suitability</li></ul>
+</div>
+<div style="flex:1" class="reveal reveal-delay-3">
+<h3 style="margin-bottom:16px">Holiday packages</h3>
+<ul style="list-style:none;padding:0"><li style="padding:8px 0;font-size:16px;border-bottom:1px solid var(--line)">Flight and hotel combination</li><li style="padding:8px 0;font-size:16px;border-bottom:1px solid var(--line)">Optional experiences</li><li style="padding:8px 0;font-size:16px;border-bottom:1px solid var(--line)">Transfer add-on</li><li style="padding:8px 0;font-size:16px;border-bottom:1px solid var(--line)">Package summary</li><li style="padding:8px 0;font-size:16px">Payment and protection information</li></ul>
+</div></div>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">16 / 34</span></div>
+<div class="slide-progress" style="width:47.06%"></div>
+</section>
+
+<!-- SLIDE 17 — VISA EXPERIENCE -->
+<section class="slide slide--white" id="slide-17" role="group" aria-label="Slide 17: Visa Experience" data-notes="Explain that visa service is different from a normal catalogue product. It is a case-management workflow involving sensitive data, document security, communication, and clear limits on what the platform can promise.">
+<div class="slide-inner"><div class="split-layout">
+<div class="split-left">
+<h2 class="reveal" style="margin-bottom:12px">Visa support should replace uncertainty with progress</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:24px;font-size:15px">Check requirements → Confirm eligibility → Submit → Upload documents → Review → Track</p>
+<div class="reveal reveal-delay-2">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)"><div style="width:28px;height:28px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center;color:white;font-size:14px">✓</div><span style="font-size:15px">Requirements checked</span></div>
+<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)"><div style="width:28px;height:28px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center;color:white;font-size:14px">✓</div><span style="font-size:15px">Documents uploaded</span></div>
+<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)"><div style="width:28px;height:28px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:white;font-size:14px">3</div><span style="font-size:15px">Under review</span></div>
+<div style="display:flex;align-items:center;gap:12px;padding:12px 0"><div style="width:28px;height:28px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px">4</div><span style="font-size:15px;color:var(--muted)">Decision pending</span></div>
+</div></div>
+<div class="split-right">
+<div class="mockup-card reveal reveal-delay-3">
+<div class="mockup-header">📋 Document checklist</div>
+<div class="mockup-body">
+<div class="mockup-row"><span style="flex:1">Passport scan</span><span class="mockup-tag mockup-tag--green">Uploaded</span></div>
+<div class="mockup-row"><span style="flex:1">Photo</span><span class="mockup-tag mockup-tag--green">Uploaded</span></div>
+<div class="mockup-row"><span style="flex:1">Proof of accommodation</span><span class="mockup-tag mockup-tag--coral">Required</span></div>
+<div class="mockup-row"><span style="flex:1">Travel insurance</span><span class="mockup-tag mockup-tag--violet">Pending</span></div>
+</div></div>
+<p class="reveal reveal-delay-4" style="margin-top:16px;font-size:13px;color:var(--muted);font-style:italic">Requirements and final decisions remain subject to the relevant authority.</p>
+</div></div></div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">17 / 34</span></div>
+<div class="slide-progress" style="width:50%"></div>
+</section>
+
+<!-- SLIDE 18 — AIRPORT TRANSFER EXPERIENCE -->
+<section class="slide slide--black" id="slide-18" role="group" aria-label="Slide 18: Airport Transfer Experience" data-notes="Transfers are a natural cross-sell because the platform already knows airport, arrival time, passenger count, and hotel. Reusing that information reduces effort and increases attachment rate.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:12px">The journey does not end at arrivals</h2>
+<p class="reveal reveal-delay-1" style="color:rgba(255,255,255,.5);margin-bottom:32px;font-size:16px">Airport → Flight details → Vehicle → Passenger needs → Pickup → Support</p>
+<div style="display:flex;gap:48px">
+<div style="flex:1" class="reveal reveal-delay-2">
+<div style="background:rgba(255,255,255,.04);border-radius:16px;padding:28px;border:1px solid rgba(255,255,255,.08)">
+<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+<div style="width:48px;height:48px;border-radius:12px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:24px">🚗</div>
+<div><h3 style="color:var(--white);font-size:18px">Airport Transfer</h3><p style="color:rgba(255,255,255,.5);font-size:14px">Heathrow Terminal 5 → Central London</p></div>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><span class="chip chip--dark">Sedan · 3 bags</span><span class="chip chip--dark">Meet & greet</span><span class="chip chip--dark">Free cancellation</span></div>
+</div></div>
+<div style="flex:1" class="reveal reveal-delay-3">
+<h3 style="font-size:16px;color:rgba(255,255,255,.5);margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em">Key features</h3>
+<ul style="list-style:none;padding:0">
+<li style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:rgba(255,255,255,.8)">Flight number and arrival-time capture</li>
+<li style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:rgba(255,255,255,.8)">Pickup location clarity</li>
+<li style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:rgba(255,255,255,.8)">Child-seat or accessibility requirements</li>
+<li style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:rgba(255,255,255,.8)">Delay-aware communication</li>
+<li style="padding:8px 0;font-size:15px;color:rgba(255,255,255,.8)">Transfer voucher</li>
+</ul></div>
+</div></div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">18 / 34</span></div>
+<div class="slide-progress" style="width:52.94%"></div>
+</section>
+
+<!-- SLIDE 19 — UNIFIED ITINERARY -->
+<section class="slide slide--white" id="slide-19" role="group" aria-label="Slide 19: Unified Itinerary" data-notes="Clarify that one checkout may depend on supplier and regulatory arrangements. Even where separate supplier transactions are required, the customer can still receive one coherent itinerary and management experience.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">One trip. One itinerary. One place to manage it.</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:32px;font-size:16px">Reuse traveller details · Avoid duplicate dates · Show the full trip total · Separate confirmed and pending items</p>
+<div style="display:flex;gap:48px">
+<div style="flex:1" class="reveal reveal-delay-2">
+<div class="mockup-card">
+<div class="mockup-header">🗺 Tokyo Trip · 15–22 Mar 2026</div>
+<div class="mockup-body">
+<div class="mockup-row"><span class="mockup-tag mockup-tag--green" style="margin-right:8px">✓</span><span style="flex:1">✈ LHR → NRT · British Airways</span><span style="font-weight:700">£487</span></div>
+<div class="mockup-row"><span class="mockup-tag mockup-tag--green" style="margin-right:8px">✓</span><span style="flex:1">🏨 Grand Sakura Hotel · 7 nights</span><span style="font-weight:700">£896</span></div>
+<div class="mockup-row"><span class="mockup-tag mockup-tag--violet" style="margin-right:8px">⏳</span><span style="flex:1">📋 Japan visa application</span><span style="font-weight:700;color:var(--violet)">Pending</span></div>
+<div class="mockup-row"><span class="mockup-tag mockup-tag--blue" style="margin-right:8px">+</span><span style="flex:1">🚗 NRT airport transfer</span><span style="font-weight:700">£65</span></div>
+<div class="mockup-row"><span class="mockup-tag mockup-tag--blue" style="margin-right:8px">+</span><span style="flex:1">🗺 Tokyo food tour</span><span style="font-weight:700">£45</span></div>
+</div></div></div>
+<div style="flex:1" class="reveal reveal-delay-3">
+<div style="background:var(--paper);border-radius:12px;padding:28px;border:1px solid var(--line)">
+<h3 style="font-size:18px;margin-bottom:16px">Trip total</h3>
+<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:16px"><span>Flights</span><span>£487</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:16px"><span>Hotels</span><span>£896</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:16px"><span>Transfer</span><span>£65</span></div>
+<div style="display:flex;justify-content:space-between;padding:8px 0;font-size:16px"><span>Tour</span><span>£45</span></div>
+<div style="border-top:2px solid var(--ink);margin-top:8px;padding-top:12px;display:flex;justify-content:space-between;font-weight:800;font-size:20px"><span>Total</span><span class="gradient-text">£1,493</span></div>
+</div></div>
+</div></div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">19 / 34</span></div>
+<div class="slide-progress" style="width:55.88%"></div>
+</section>
+
+<!-- SLIDE 20 — CHAPTER DIVIDER -->
+<section class="slide slide--black statement-slide" id="slide-20" role="group" aria-label="Slide 20: Chapter Divider" data-notes="Transition into conversion, traffic acquisition, trust, and repeat business.">
+<div class="slide-inner" style="align-items:center;text-align:center">
+<p class="label label--white reveal" style="margin-bottom:24px">SO WHAT</p>
+<h1 class="reveal reveal-delay-1" style="font-size:clamp(64px,6vw,110px);line-height:1">TURNING ATTENTION<br>INTO BOOKINGS</h1>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">20 / 34</span></div>
+<div class="slide-progress" style="width:58.82%"></div>
+</section>
+
+<!-- SLIDE 21 — CONVERSION SYSTEM -->
+<section class="slide slide--white" id="slide-21" role="group" aria-label="Slide 21: Conversion System" data-notes="Do not present conversion as button colour or urgency alone. Travel conversion is built by reducing information gaps and giving users confidence to continue.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">Traffic only matters when the journey removes doubt</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:36px;font-size:16px">Relevant offer + trusted decision + easy action = stronger conversion</p>
+<div style="display:flex;gap:16px;align-items:stretch">
+<div class="card card--white reveal reveal-delay-2" style="flex:1;text-align:center;padding:28px 16px"><div style="font-size:32px;margin-bottom:8px">🎯</div><h3 style="font-size:17px;margin-bottom:6px">Relevance</h3><p style="font-size:13px">Show the right destination, dates and offer</p></div>
+<div style="display:flex;align-items:center;color:var(--muted);font-size:20px">→</div>
+<div class="card card--white reveal reveal-delay-3" style="flex:1;text-align:center;padding:28px 16px"><div style="font-size:32px;margin-bottom:8px">💡</div><h3 style="font-size:17px;margin-bottom:6px">Clarity</h3><p style="font-size:13px">Explain price, inclusion and conditions</p></div>
+<div style="display:flex;align-items:center;color:var(--muted);font-size:20px">→</div>
+<div class="card card--white reveal reveal-delay-4" style="flex:1;text-align:center;padding:28px 16px"><div style="font-size:32px;margin-bottom:8px">🛡</div><h3 style="font-size:17px;margin-bottom:6px">Trust</h3><p style="font-size:13px">Show protection, reviews, security and support</p></div>
+<div style="display:flex;align-items:center;color:var(--muted);font-size:20px">→</div>
+<div class="card card--white reveal reveal-delay-5" style="flex:1;text-align:center;padding:28px 16px"><div style="font-size:32px;margin-bottom:8px">⚡</div><h3 style="font-size:17px;margin-bottom:6px">Momentum</h3><p style="font-size:13px">Save progress and make the next step obvious</p></div>
+<div style="display:flex;align-items:center;color:var(--muted);font-size:20px">→</div>
+<div class="card card--white reveal reveal-delay-6" style="flex:1;text-align:center;padding:28px 16px"><div style="font-size:32px;margin-bottom:8px">🤝</div><h3 style="font-size:17px;margin-bottom:6px">Assistance</h3><p style="font-size:13px">Offer chat, call, quote or expert support</p></div>
+</div></div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">21 / 34</span></div>
+<div class="slide-progress" style="width:61.76%"></div>
+</section>
+
+<!-- SLIDE 22 — TRAFFIC GENERATION -->
+<section class="slide slide--black" id="slide-22" role="group" aria-label="Slide 22: Traffic Generation" data-notes="Keep SEO discussion strategic. Explain that the build should support indexable destinations, fast performance, structured content, campaign landing pages, and measurable booking funnels from the beginning.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:36px">Build demand before asking for the booking</h2>
+<div class="grid-2x2">
+<div class="card card--dark reveal reveal-delay-1"><h3 style="color:var(--white);margin-bottom:8px">📝 Destination content</h3><p style="color:rgba(255,255,255,.6)">Guides, requirements, routes and seasonal inspiration</p></div>
+<div class="card card--dark reveal reveal-delay-2"><h3 style="color:var(--white);margin-bottom:8px">🔍 Search visibility</h3><p style="color:rgba(255,255,255,.6)">Structured destination and product pages</p></div>
+<div class="card card--dark reveal reveal-delay-3"><h3 style="color:var(--white);margin-bottom:8px">📢 Paid campaigns</h3><p style="color:rgba(255,255,255,.6)">High-intent route, destination and package offers</p></div>
+<div class="card card--dark reveal reveal-delay-4"><h3 style="color:var(--white);margin-bottom:8px">🔄 Lifecycle communication</h3><p style="color:rgba(255,255,255,.6)">Saved searches, incomplete trips, reminders and repeat offers</p></div>
+</div>
+<p class="reveal reveal-delay-5" style="margin-top:32px;font-size:18px;color:rgba(255,255,255,.8);font-weight:700">Every campaign should land on a page designed for the traveller's exact intent.</p>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">22 / 34</span></div>
+<div class="slide-progress" style="width:64.71%"></div>
+</section>
+
+<!-- SLIDE 23 — PERSONALISATION -->
+<section class="slide slide--white" id="slide-23" role="group" aria-label="Slide 23: Personalisation" data-notes="Position personalisation as helpful context, not invasive tracking. Recommendations should be explainable and based on the trip the customer is actively building.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">Help customers find the next best action</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:32px;font-size:16px">Recommendations based on the trip the customer is actively building.</p>
+<div class="grid-2x3">
+<div class="card card--white reveal reveal-delay-2" style="border-left:3px solid var(--blue)"><p style="font-size:14px;color:var(--blue);font-weight:700;margin-bottom:6px">Because your flight lands at 22:10</p><h3 style="font-size:16px">Add a hotel after a flight is selected</h3></div>
+<div class="card card--white reveal reveal-delay-3" style="border-left:3px solid var(--violet)"><p style="font-size:14px;color:var(--violet);font-weight:700;margin-bottom:6px">Because your passport may require a visa</p><h3 style="font-size:16px">Suggest visa requirements before checkout</h3></div>
+<div class="card card--white reveal reveal-delay-4" style="border-left:3px solid var(--blue)"><p style="font-size:14px;color:var(--blue);font-weight:700;margin-bottom:6px">Because your hotel does not include transfer</p><h3 style="font-size:16px">Offer transfer based on arrival airport</h3></div>
+<div class="card card--white reveal reveal-delay-5" style="border-left:3px solid var(--violet)"><p style="font-size:14px;color:var(--violet);font-weight:700;margin-bottom:6px">Because you're visiting Tokyo</p><h3 style="font-size:16px">Recommend tours from the booked destination</h3></div>
+<div class="card card--white reveal reveal-delay-6" style="border-left:3px solid var(--blue)"><p style="font-size:14px;color:var(--blue);font-weight:700;margin-bottom:6px">Because you saved this itinerary</p><h3 style="font-size:16px">Re-engage saved or abandoned itineraries</h3></div>
+<div class="card card--white reveal reveal-delay-7" style="border-left:3px solid var(--violet)"><p style="font-size:14px;color:var(--violet);font-weight:700;margin-bottom:6px">Because you travelled to Asia last year</p><h3 style="font-size:16px">Show relevant repeat-trip offers</h3></div>
+</div></div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">23 / 34</span></div>
+<div class="slide-progress" style="width:67.65%"></div>
+</section>
+
+<!-- SLIDE 24 — TRUST AND PROTECTION -->
+<section class="slide slide--black" id="slide-24" role="group" aria-label="Slide 24: Trust and Protection" data-notes="Explain that travel regulation and supplier arrangements must be validated early. The design must accurately distinguish protected packages, standalone services, supplier terms, and the responsibilities of the operating business.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:32px">Trust is part of the interface</h2>
+<div class="grid-4">
+<div class="card card--dark reveal reveal-delay-1" style="text-align:center;padding:20px"><div style="font-size:28px;margin-bottom:8px">💰</div><p style="font-size:14px;color:rgba(255,255,255,.8)">Transparent pricing and terms</p></div>
+<div class="card card--dark reveal reveal-delay-2" style="text-align:center;padding:20px"><div style="font-size:28px;margin-bottom:8px">🔒</div><p style="font-size:14px;color:rgba(255,255,255,.8)">Secure payment and authentication</p></div>
+<div class="card card--dark reveal reveal-delay-3" style="text-align:center;padding:20px"><div style="font-size:28px;margin-bottom:8px">📞</div><p style="font-size:14px;color:rgba(255,255,255,.8)">Visible customer support</p></div>
+<div class="card card--dark reveal reveal-delay-4" style="text-align:center;padding:20px"><div style="font-size:28px;margin-bottom:8px">📄</div><p style="font-size:14px;color:rgba(255,255,255,.8)">Booking references and confirmations</p></div>
+<div class="card card--dark reveal reveal-delay-5" style="text-align:center;padding:20px"><div style="font-size:28px;margin-bottom:8px">📋</div><p style="font-size:14px;color:rgba(255,255,255,.8)">Clear cancellation and change information</p></div>
+<div class="card card--dark reveal reveal-delay-6" style="text-align:center;padding:20px"><div style="font-size:28px;margin-bottom:8px">🏛</div><p style="font-size:14px;color:rgba(255,255,255,.8)">Financial-protection information</p></div>
+<div class="card card--dark reveal reveal-delay-7" style="text-align:center;padding:20px"><div style="font-size:28px;margin-bottom:8px">🔐</div><p style="font-size:14px;color:rgba(255,255,255,.8)">Privacy and data-use transparency</p></div>
+<div class="card card--dark reveal reveal-delay-8" style="text-align:center;padding:20px"><div style="font-size:28px;margin-bottom:8px">♿</div><p style="font-size:14px;color:rgba(255,255,255,.8)">Accessible content and forms</p></div>
+</div>
+<p class="reveal" style="margin-top:28px;font-size:13px;color:var(--muted);font-style:italic;max-width:800px">Never display an ATOL or regulatory claim unless the operating business is properly licensed and the claim applies to that product.</p>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">24 / 34</span></div>
+<div class="slide-progress" style="width:70.59%"></div>
+</section>
+
+<!-- SLIDE 25 — MOBILE-FIRST SERVICE -->
+<section class="slide slide--white" id="slide-25" role="group" aria-label="Slide 25: Mobile-First Service" data-notes="Explain that mobile should not be a compressed desktop interface. The most important mobile tasks are checking, uploading, retrieving, responding, and getting support while moving.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">The trip will live in the customer's hand</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:36px;font-size:16px">Desktop plans the trip. Mobile supports the traveller.</p>
+<div style="display:flex;gap:40px;align-items:center">
+<div class="reveal reveal-delay-2" style="flex:1"><div class="mockup-card" style="max-width:280px;margin:0 auto"><div class="mockup-header">✈ Search</div><div class="mockup-body"><div style="background:var(--paper);border-radius:8px;padding:12px;margin-bottom:8px;font-size:13px;color:var(--muted)">London → Tokyo</div><div style="background:var(--paper);border-radius:8px;padding:12px;margin-bottom:8px;font-size:13px;color:var(--muted)">15–22 Mar · 2 adults</div><div style="background:var(--gradient);border-radius:8px;padding:12px;text-align:center;color:white;font-weight:700;font-size:14px">Search flights</div></div></div></div>
+<div class="reveal reveal-delay-3" style="flex:1"><div class="mockup-card" style="max-width:280px;margin:0 auto"><div class="mockup-header">🗺 Itinerary</div><div class="mockup-body"><div class="mockup-row" style="font-size:13px"><span class="mockup-tag mockup-tag--green" style="margin-right:6px">✓</span>✈ Flight confirmed</div><div class="mockup-row" style="font-size:13px"><span class="mockup-tag mockup-tag--green" style="margin-right:6px">✓</span>🏨 Hotel booked</div><div class="mockup-row" style="font-size:13px"><span class="mockup-tag mockup-tag--violet" style="margin-right:6px">⏳</span>📋 Visa pending</div><div class="mockup-row" style="font-size:13px"><span class="mockup-tag mockup-tag--blue" style="margin-right:6px">+</span>🚗 Add transfer</div></div></div></div>
+<div class="reveal reveal-delay-4" style="flex:1"><div class="mockup-card" style="max-width:280px;margin:0 auto"><div class="mockup-header">📋 Visa status</div><div class="mockup-body"><div style="text-align:center;padding:16px 0"><div style="width:48px;height:48px;border-radius:50%;background:var(--blue);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:20px">3</div><p style="font-size:14px;font-weight:700">Under review</p><p style="font-size:12px;color:var(--muted);margin-top:4px">Estimated 3–5 days</p></div></div></div></div>
+</div></div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">25 / 34</span></div>
+<div class="slide-progress" style="width:73.53%"></div>
+</section>
+
+<!-- SLIDE 26 — CHAPTER DIVIDER: NOW WHAT -->
+<section class="slide slide--black statement-slide" id="slide-26" role="group" aria-label="Slide 26: Chapter Divider - Now What" data-notes="Transition from the customer experience to the practical product and engineering plan.">
+<div class="slide-inner" style="align-items:center;text-align:center">
+<p class="label label--white reveal" style="margin-bottom:24px">NOW WHAT</p>
+<h1 class="reveal reveal-delay-1" style="font-size:clamp(64px,6vw,110px);line-height:1">BUILDING<br>THE PLATFORM</h1>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">26 / 34</span></div>
+<div class="slide-progress" style="width:76.47%"></div>
+</section>
+
+<!-- SLIDE 27 — PAGE ARCHITECTURE -->
+<section class="slide slide--white" id="slide-27" role="group" aria-label="Slide 27: Page Architecture" data-notes="Clarify the difference between templates and URLs. A travel platform may launch with roughly 36 reusable page types while generating many pages from destination content and live supplier inventory.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">Approximately 36 core templates at MVP</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:32px;font-size:16px">A controlled template system can generate hundreds of destination, route and inventory pages.</p>
+<div class="grid-4">
+<div class="reveal reveal-delay-2"><div class="stat-number gradient-text">5</div><div class="stat-label">Discovery & content</div><ul style="list-style:none;padding:0;margin-top:12px"><li style="font-size:13px;padding:4px 0;color:var(--muted)">Homepage</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Deals hub</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Destinations hub</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Destination detail</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Travel guides</li></ul></div>
+<div class="reveal reveal-delay-3"><div class="stat-number gradient-text">19</div><div class="stat-label">Product experiences</div><ul style="list-style:none;padding:0;margin-top:12px"><li style="font-size:13px;padding:4px 0;color:var(--muted)">Flights: 3 templates</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Hotels: 3 templates</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Tours: 3 templates</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Packages: 3 templates</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Visas: 4 templates</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Transfers: 3 templates</li></ul></div>
+<div class="reveal reveal-delay-4"><div class="stat-number gradient-text">7</div><div class="stat-label">Checkout & account</div><ul style="list-style:none;padding:0;margin-top:12px"><li style="font-size:13px;padding:4px 0;color:var(--muted)">Itinerary/cart</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Traveller details</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Payment</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Confirmation</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Auth & dashboard</li></ul></div>
+<div class="reveal reveal-delay-5"><div class="stat-number gradient-text">5</div><div class="stat-label">Support & trust</div><ul style="list-style:none;padding:0;margin-top:12px"><li style="font-size:13px;padding:4px 0;color:var(--muted)">Help & FAQs</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Contact & support</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">About</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Legal & privacy</li><li style="font-size:13px;padding:4px 0;color:var(--muted)">Protection info</li></ul></div>
+</div>
+<p class="reveal reveal-delay-6" style="margin-top:24px;font-size:15px;color:var(--muted)">36 templates → dynamic routes → scalable platform</p>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">27 / 34</span></div>
+<div class="slide-progress" style="width:79.41%"></div>
+</section>
+
+<!-- SLIDE 28 — OPERATIONS -->
+<section class="slide slide--black" id="slide-28" role="group" aria-label="Slide 28: Operations" data-notes="Explain that a polished storefront is only half the product. Staff need a reliable back office for exceptions, supplier references, visa cases, content, support, refunds, and customer communication.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:32px">The customer experience needs an operational engine</h2>
+<div style="display:flex;gap:24px">
+<div class="reveal reveal-delay-1" style="flex:1"><div class="card card--dark" style="height:100%"><p class="label label--white" style="margin-bottom:12px">Customer-facing</p><ul style="list-style:none;padding:0"><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Booking overview</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Payment and refund status</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Supplier references</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Visa case management</li></ul></div></div>
+<div class="reveal reveal-delay-2" style="flex:1"><div class="card card--dark" style="height:100%"><p class="label label--white" style="margin-bottom:12px">Back office</p><ul style="list-style:none;padding:0"><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">CMS publishing</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Promotions and featured deals</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Support notes and escalation</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Notification history</li></ul></div></div>
+<div class="reveal reveal-delay-3" style="flex:1"><div class="card card--dark" style="height:100%"><p class="label label--white" style="margin-bottom:12px">Platform</p><ul style="list-style:none;padding:0"><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Role-based access</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Audit trail</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Document review</li><li style="padding:6px 0;font-size:14px;color:rgba(255,255,255,.7)">Reporting</li></ul></div></div>
+</div></div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">28 / 34</span></div>
+<div class="slide-progress" style="width:82.35%"></div>
+</section>
+
+<!-- SLIDE 29 — TECHNOLOGY STACK -->
+<section class="slide slide--white" id="slide-29" role="group" aria-label="Slide 29: Technology Stack" data-notes="Explain that the recommended stack keeps the interface fast while allowing supplier integrations, background processing, secure document handling, and future scaling.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:28px">A modern, modular travel-commerce stack</h2>
+<div style="display:flex;gap:20px">
+<div class="reveal reveal-delay-1" style="flex:1"><div class="card card--white" style="border-top:3px solid var(--blue)"><h3 style="font-size:16px;margin-bottom:12px">Experience layer</h3><ul style="list-style:none;padding:0"><li style="padding:4px 0;font-size:14px">Next.js</li><li style="padding:4px 0;font-size:14px">React + TypeScript</li><li style="padding:4px 0;font-size:14px">Accessible component system</li><li style="padding:4px 0;font-size:14px">SSR and caching</li></ul></div></div>
+<div class="reveal reveal-delay-2" style="flex:1"><div class="card card--white" style="border-top:3px solid var(--violet)"><h3 style="font-size:16px;margin-bottom:12px">Application layer</h3><ul style="list-style:none;padding:0"><li style="padding:4px 0;font-size:14px">Node.js with NestJS</li><li style="padding:4px 0;font-size:14px">REST or GraphQL APIs</li><li style="padding:4px 0;font-size:14px">Background jobs</li><li style="padding:4px 0;font-size:14px">Shared validation</li></ul></div></div>
+<div class="reveal reveal-delay-3" style="flex:1"><div class="card card--white" style="border-top:3px solid var(--blue)"><h3 style="font-size:16px;margin-bottom:12px">Data layer</h3><ul style="list-style:none;padding:0"><li style="padding:4px 0;font-size:14px">PostgreSQL</li><li style="padding:4px 0;font-size:14px">Redis</li><li style="padding:4px 0;font-size:14px">OpenSearch (optional)</li><li style="padding:4px 0;font-size:14px">Object storage</li></ul></div></div>
+<div class="reveal reveal-delay-4" style="flex:1"><div class="card card--white" style="border-top:3px solid var(--violet)"><h3 style="font-size:16px;margin-bottom:12px">Platform layer</h3><ul style="list-style:none;padding:0"><li style="padding:4px 0;font-size:14px">Vercel or AWS</li><li style="padding:4px 0;font-size:14px">CDN + WAF</li><li style="padding:4px 0;font-size:14px">Automated CI/CD</li><li style="padding:4px 0;font-size:14px">Managed services</li></ul></div></div>
+</div>
+<p class="reveal reveal-delay-5" style="margin-top:20px;font-size:14px;color:var(--muted)">Key principle: every module is replaceable. Exact vendors finalised during technical discovery.</p>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">29 / 34</span></div>
+<div class="slide-progress" style="width:85.29%"></div>
+</section>
+
+<!-- SLIDE 30 — SUPPLIER INTEGRATIONS -->
+<section class="slide slide--black" id="slide-30" role="group" aria-label="Slide 30: Supplier Integrations" data-notes="Make clear that API availability is only one part of integration. Commercial contracts, settlement models, certification, rate limits, supplier support, and legal responsibility can affect scope and timeline.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:28px">Connect the platform to proven travel infrastructure</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+<div class="card card--dark reveal reveal-delay-1"><h3 style="color:var(--white);font-size:16px;margin-bottom:8px">✈ Flights</h3><p style="font-size:13px;color:rgba(255,255,255,.6)">Duffel or Amadeus · Offer search, fare data, ancillaries, booking</p></div>
+<div class="card card--dark reveal reveal-delay-2"><h3 style="color:var(--white);font-size:16px;margin-bottom:8px">🏨 Hotels</h3><p style="font-size:13px;color:rgba(255,255,255,.6)">Hotelbeds or Amadeus · Availability, rates, booking, cancellation</p></div>
+<div class="card card--dark reveal reveal-delay-3"><h3 style="color:var(--white);font-size:16px;margin-bottom:8px">🗺 Tours</h3><p style="font-size:13px;color:rgba(255,255,255,.6)">Viator or Hotelbeds Activities · Approved supplier feeds</p></div>
+<div class="card card--dark reveal reveal-delay-4"><h3 style="color:var(--white);font-size:16px;margin-bottom:8px">🚗 Transfers</h3><p style="font-size:13px;color:rgba(255,255,255,.6)">Hotelbeds Transfers or contracted transfer provider</p></div>
+<div class="card card--dark reveal reveal-delay-5"><h3 style="color:var(--white);font-size:16px;margin-bottom:8px">📋 Visa</h3><p style="font-size:13px;color:rgba(255,255,255,.6)">Rules source, eligibility logic, secure case workflow</p></div>
+<div class="card card--dark reveal reveal-delay-6"><h3 style="color:var(--white);font-size:16px;margin-bottom:8px">💳 Payments</h3><p style="font-size:13px;color:rgba(255,255,255,.6)">Stripe Payment Intents · 3D Secure, multi-currency, refunds</p></div>
+</div>
+<p class="reveal reveal-delay-7" style="margin-top:24px;font-size:13px;color:var(--muted);font-style:italic;max-width:800px">Commercial access, accreditation, certification and supplier contracts must be confirmed before final implementation.</p>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">30 / 34</span></div>
+<div class="slide-progress" style="width:88.24%"></div>
+</section>
+
+<!-- SLIDE 31 — SECURITY -->
+<section class="slide slide--white" id="slide-31" role="group" aria-label="Slide 31: Security" data-notes="Explain in plain language that passport information, traveller data, payment events, and supplier bookings are high-value data. Security has to be part of architecture and operations, not a final checklist.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:28px">Designed for sensitive journeys and real transactions</h2>
+<div class="grid-3">
+<div class="card card--white reveal reveal-delay-1" style="border-top:3px solid var(--blue)"><h3 style="font-size:18px;margin-bottom:12px">Customer data</h3><ul style="list-style:none;padding:0"><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Encrypt data in transit and at rest</li><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Protect uploaded identity documents</li><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Consent and privacy notices</li><li style="padding:6px 0;font-size:14px">Retention and deletion policies</li></ul></div>
+<div class="card card--white reveal reveal-delay-2" style="border-top:3px solid var(--violet)"><h3 style="font-size:18px;margin-bottom:12px">Payment and booking</h3><ul style="list-style:none;padding:0"><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Minimise payment-card storage</li><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Hosted or tokenised components</li><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Rate limiting and fraud controls</li><li style="padding:6px 0;font-size:14px">Bot protection</li></ul></div>
+<div class="card card--white reveal reveal-delay-3" style="border-top:3px solid var(--success)"><h3 style="font-size:18px;margin-bottom:12px">Operations and monitoring</h3><ul style="list-style:none;padding:0"><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Role-based access</li><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Audit sensitive actions</li><li style="padding:6px 0;font-size:14px;border-bottom:1px solid var(--line)">Monitoring and alerts</li><li style="padding:6px 0;font-size:14px">Disaster-recovery procedures</li></ul></div>
+</div>
+<p class="reveal reveal-delay-4" style="margin-top:20px;font-size:13px;color:var(--muted);font-style:italic">Legal and compliance review is required before production launch.</p>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">31 / 34</span></div>
+<div class="slide-progress" style="width:91.18%"></div>
+</section>
+
+<!-- SLIDE 32 — DELIVERY PROCESS -->
+<section class="slide slide--black" id="slide-32" role="group" aria-label="Slide 32: Delivery Process" data-notes="Explain that the project should not begin by coding the homepage. Supplier, regulatory, operational, and payment assumptions must be validated before detailed interface work is locked.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:36px">Design and development move together</h2>
+<div style="display:flex;gap:12px;align-items:stretch">
+<div class="reveal reveal-delay-1" style="flex:1;text-align:center"><div style="background:var(--gradient);border-radius:12px;padding:20px 12px;height:100%"><div style="font-family:var(--font-display);font-size:32px;margin-bottom:8px">01</div><h3 style="font-size:15px;margin-bottom:6px">Discovery</h3><p style="font-size:12px;color:rgba(255,255,255,.7)">Business model, supplier access, compliance</p></div></div>
+<div class="reveal reveal-delay-2" style="flex:1;text-align:center"><div style="background:var(--gradient);border-radius:12px;padding:20px 12px;height:100%"><div style="font-family:var(--font-display);font-size:32px;margin-bottom:8px">02</div><h3 style="font-size:15px;margin-bottom:6px">Architecture</h3><p style="font-size:12px;color:rgba(255,255,255,.7)">User journeys, information architecture</p></div></div>
+<div class="reveal reveal-delay-3" style="flex:1;text-align:center"><div style="background:var(--gradient);border-radius:12px;padding:20px 12px;height:100%"><div style="font-family:var(--font-display);font-size:32px;margin-bottom:8px">03</div><h3 style="font-size:15px;margin-bottom:6px">UX & design</h3><p style="font-size:12px;color:rgba(255,255,255,.7)">Wireframes, design system, prototypes</p></div></div>
+<div class="reveal reveal-delay-4" style="flex:1;text-align:center"><div style="background:var(--gradient);border-radius:12px;padding:20px 12px;height:100%"><div style="font-family:var(--font-display);font-size:32px;margin-bottom:8px">04</div><h3 style="font-size:15px;margin-bottom:6px">Development</h3><p style="font-size:12px;color:rgba(255,255,255,.7)">Frontend, backend, CMS, accounts</p></div></div>
+<div class="reveal reveal-delay-5" style="flex:1;text-align:center"><div style="background:var(--gradient);border-radius:12px;padding:20px 12px;height:100%"><div style="font-family:var(--font-display);font-size:32px;margin-bottom:8px">05</div><h3 style="font-size:15px;margin-bottom:6px">Integrations & QA</h3><p style="font-size:12px;color:rgba(255,255,255,.7)">Supplier APIs, payments, testing</p></div></div>
+<div class="reveal reveal-delay-6" style="flex:1;text-align:center"><div style="background:var(--gradient);border-radius:12px;padding:20px 12px;height:100%"><div style="font-family:var(--font-display);font-size:32px;margin-bottom:8px">06</div><h3 style="font-size:15px;margin-bottom:6px">Launch</h3><p style="font-size:12px;color:rgba(255,255,255,.7)">Deployment, training, handover</p></div></div>
+</div></div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">32 / 34</span></div>
+<div class="slide-progress" style="width:94.12%"></div>
+</section>
+
+<!-- SLIDE 33 — INDICATIVE TIMELINE -->
+<section class="slide slide--white" id="slide-33" role="group" aria-label="Slide 33: Indicative Timeline" data-notes="Present this as an informed initial estimate rather than a contractual promise. An enquiry-only version can be faster, while a live multi-supplier booking platform requires integration, testing and operational readiness.">
+<div class="slide-inner">
+<h2 class="reveal" style="margin-bottom:8px">A production-ready first release: approximately 24–30 weeks</h2>
+<p class="reveal reveal-delay-1" style="color:var(--muted);margin-bottom:32px;font-size:15px">Some workstreams run in parallel. Timing depends on supplier access, certification, legal decisions, content readiness and client feedback.</p>
+<div style="position:relative;padding:20px 0">
+<div class="reveal reveal-delay-2" style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><div style="width:140px;font-size:13px;font-weight:700;text-align:right;flex-shrink:0">Weeks 1–2</div><div style="flex:1;height:32px;background:var(--paper);border-radius:8px;position:relative;overflow:hidden;border:1px solid var(--line)"><div style="position:absolute;top:3px;bottom:3px;left:0;width:100%;background:var(--blue);border-radius:6px;opacity:.8"></div></div><span style="font-size:12px;color:var(--muted);width:200px">Discovery, supplier validation</span></div>
+<div class="reveal reveal-delay-3" style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><div style="width:140px;font-size:13px;font-weight:700;text-align:right;flex-shrink:0">Weeks 3–7</div><div style="flex:1;height:32px;background:var(--paper);border-radius:8px;position:relative;overflow:hidden;border:1px solid var(--line)"><div style="position:absolute;top:3px;bottom:3px;left:0;width:60%;background:var(--violet);border-radius:6px;opacity:.8"></div></div><span style="font-size:12px;color:var(--muted);width:200px">UX architecture, wireframes</span></div>
+<div class="reveal reveal-delay-4" style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><div style="width:140px;font-size:13px;font-weight:700;text-align:right;flex-shrink:0">Weeks 6–14</div><div style="flex:1;height:32px;background:var(--paper);border-radius:8px;position:relative;overflow:hidden;border:1px solid var(--line)"><div style="position:absolute;top:3px;bottom:3px;left:20%;width:70%;background:var(--blue);border-radius:6px;opacity:.8"></div></div><span style="font-size:12px;color:var(--muted);width:200px">Core platform, CMS, admin</span></div>
+<div class="reveal reveal-delay-5" style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><div style="width:140px;font-size:13px;font-weight:700;text-align:right;flex-shrink:0">Weeks 10–22</div><div style="flex:1;height:32px;background:var(--paper);border-radius:8px;position:relative;overflow:hidden;border:1px solid var(--line)"><div style="position:absolute;top:3px;bottom:3px;left:33%;width:80%;background:var(--violet);border-radius:6px;opacity:.8"></div></div><span style="font-size:12px;color:var(--muted);width:200px">Product flows, integrations</span></div>
+<div class="reveal reveal-delay-6" style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><div style="width:140px;font-size:13px;font-weight:700;text-align:right;flex-shrink:0">Weeks 20–27</div><div style="flex:1;height:32px;background:var(--paper);border-radius:8px;position:relative;overflow:hidden;border:1px solid var(--line)"><div style="position:absolute;top:3px;bottom:3px;left:67%;width:30%;background:var(--success);border-radius:6px;opacity:.8"></div></div><span style="font-size:12px;color:var(--muted);width:200px">QA, security, UAT</span></div>
+<div class="reveal reveal-delay-7" style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><div style="width:140px;font-size:13px;font-weight:700;text-align:right;flex-shrink:0">Weeks 28–30</div><div style="flex:1;height:32px;background:var(--paper);border-radius:8px;position:relative;overflow:hidden;border:1px solid var(--line)"><div style="position:absolute;top:3px;bottom:3px;left:90%;width:10%;background:var(--sun);border-radius:6px;opacity:.8"></div></div><span style="font-size:12px;color:var(--muted);width:200px">Launch preparation</span></div>
+</div>
+</div>
+<div class="slide-footer dark"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">33 / 34</span></div>
+<div class="slide-progress" style="width:97.06%"></div>
+</section>
+
+<!-- SLIDE 34 — CLOSING VISION -->
+<section class="slide slide--black" id="slide-34" role="group" aria-label="Slide 34: Closing Vision" data-notes="Close by reinforcing that the product is commercially useful because the experience, operations and technology are being designed as one system. Invite discussion around phase-one product priorities and supplier readiness rather than pricing.">
+<div class="slide-inner" style="align-items:center;text-align:center;justify-content:center">
+<div class="reveal" style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(138,63,252,.1) 0%,transparent 70%)"></div>
+<h1 class="reveal reveal-delay-1" style="font-size:clamp(42px,4.5vw,76px);position:relative;z-index:2;max-width:900px">FROM TRAVEL SEARCH<br>TO TRUSTED TRAVEL PARTNER</h1>
+<p class="reveal reveal-delay-2" style="color:rgba(255,255,255,.6);font-size:20px;margin-top:24px;position:relative;z-index:2;max-width:700px">A platform that helps customers discover, arrange, complete and manage the entire journey with confidence.</p>
+<div class="reveal reveal-delay-3" style="display:flex;gap:32px;margin-top:40px;position:relative;z-index:2">
+<div style="text-align:center;padding:16px 24px;border:1px solid rgba(255,255,255,.1);border-radius:12px"><p style="font-size:14px;color:rgba(255,255,255,.8)">One connected product ecosystem</p></div>
+<div style="text-align:center;padding:16px 24px;border:1px solid rgba(255,255,255,.1);border-radius:12px"><p style="font-size:14px;color:rgba(255,255,255,.8)">Conversion-focused experience</p></div>
+<div style="text-align:center;padding:16px 24px;border:1px solid rgba(255,255,255,.1);border-radius:12px"><p style="font-size:14px;color:rgba(255,255,255,.8)">Modular, scalable foundation</p></div>
+<div style="text-align:center;padding:16px 24px;border:1px solid rgba(255,255,255,.1);border-radius:12px"><p style="font-size:14px;color:rgba(255,255,255,.8)">Phased path from design to launch</p></div>
+</div>
+<p class="reveal reveal-delay-4" style="margin-top:40px;font-size:15px;color:var(--muted);position:relative;z-index:2">Next step: validate the operating model, supplier access and phase-one priorities.</p>
+<p class="reveal reveal-delay-5" style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.3);position:relative;z-index:2">[BRAND NAME] · contact@brand.com</p>
+</div>
+<div class="slide-footer light"><span class="brand">[BRAND NAME]</span><span>2026</span><span class="slide-num">34 / 34</span></div>
+<div class="slide-progress" style="width:100%"></div>
+</section>
+
+</main>
+
+<!-- PRESENTER NOTES PANEL -->
+<aside class="presenter-notes" aria-hidden="true">
+<div class="note-label">Presenter Notes</div>
+<div id="note-content"></div>
+</aside>
+
+<!-- NAVIGATION CONTROLS -->
+<nav class="deck-controls" aria-label="Presentation controls">
+<button id="btn-prev" aria-label="Previous slide">‹</button>
+<span class="deck-counter" id="counter">01 / 34</span>
+<button id="btn-next" aria-label="Next slide">›</button>
+<button id="btn-notes" aria-label="Toggle presenter notes" title="Notes (N)">📝</button>
+<button id="btn-fullscreen" aria-label="Toggle fullscreen" title="Fullscreen (F)">⛶</button>
+<button id="btn-print" aria-label="Toggle print mode" title="Print (P)">🖨</button>
+</nav>
+
+<script>
+(function(){
+  'use strict';
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const notesPanel = document.querySelector('.presenter-notes');
+  const noteContent = document.getElementById('note-content');
+  const total = slides.length;
+  let current = 0;
+  let notesOpen = false;
+  let wheelCooldown = false;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const transitionDuration = prefersReducedMotion ? 0 : 600;
+
+  // Hash-based navigation
+  function getHashSlide() {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#slide-')) {
+      const num = parseInt(hash.replace('#slide-', ''), 10) - 1;
+      if (num >= 0 && num < total) return num;
+    }
+    return 0;
+  }
+
+  function updateHash() {
+    history.replaceState(null, '', '#slide-' + (current + 1));
+  }
+
+  function goToSlide(index, direction) {
+    if (index < 0 || index >= total || index === current) return;
+    const prev = slides[current];
+    const next = slides[index];
+
+    prev.classList.remove('active');
+    prev.classList.add(index > current ? 'prev' : '');
+    prev.style.transform = index > current ? 'translateX(-40px)' : 'translateX(40px)';
+    prev.style.opacity = '0';
+
+    next.style.transform = index > current ? 'translateX(40px)' : 'translateX(-40px)';
+    next.style.opacity = '0';
+    next.classList.remove('prev');
+
+    requestAnimationFrame(() => {
+      next.classList.add('active');
+      next.style.transform = '';
+      next.style.opacity = '';
+    });
+
+    current = index;
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + total;
+    updateHash();
+    updateReveals(next);
+    updateNotes();
+  }
+
+  function nextSlide() { goToSlide(current + 1); }
+  function prevSlide() { goToSlide(current - 1); }
+
+  function updateReveals(slide) {
+    const reveals = slide.querySelectorAll('.reveal');
+    reveals.forEach((el, i) => {
+      el.classList.remove('visible');
+      if (!prefersReducedMotion) {
+        setTimeout(() => el.classList.add('visible'), 80 + i * 80);
+      } else {
+        el.classList.add('visible');
+      }
+    });
+
+    // Spectrum animation
+    const fill = slide.querySelector('.spectrum-fill');
+    const marker = slide.querySelector('.spectrum-marker');
+    if (fill && marker) {
+      setTimeout(() => {
+        fill.style.transform = 'scaleX(1)';
+        marker.style.transform = 'translateX(-50%) scale(1)';
+      }, prefersReducedMotion ? 0 : 300);
+    }
+  }
+
+  function updateNotes() {
+    const note = slides[current].getAttribute('data-notes');
+    noteContent.textContent = note || 'No notes for this slide.';
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    switch(e.key) {
+      case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault(); nextSlide(); break;
+      case 'ArrowLeft': case 'PageUp':
+        e.preventDefault(); prevSlide(); break;
+      case 'Home':
+        e.preventDefault(); goToSlide(0); break;
+      case 'End':
+        e.preventDefault(); goToSlide(total - 1); break;
+      case 'f': case 'F':
+        e.preventDefault(); toggleFullscreen(); break;
+      case 'n': case 'N':
+        e.preventDefault(); toggleNotes(); break;
+      case 'p': case 'P':
+        e.preventDefault(); togglePrint(); break;
+    }
+  });
+
+  // Button controls
+  document.getElementById('btn-prev').addEventListener('click', prevSlide);
+  document.getElementById('btn-next').addEventListener('click', nextSlide);
+  document.getElementById('btn-notes').addEventListener('click', toggleNotes);
+  document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
+  document.getElementById('btn-print').addEventListener('click', togglePrint);
+
+  function toggleNotes() {
+    notesOpen = !notesOpen;
+    notesPanel.classList.toggle('open', notesOpen);
+    notesPanel.setAttribute('aria-hidden', !notesOpen);
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  function togglePrint() {
+    document.body.classList.toggle('print-mode');
+  }
+
+  // Mouse wheel navigation
+  document.addEventListener('wheel', function(e) {
+    if (wheelCooldown) return;
+    wheelCooldown = true;
+    setTimeout(() => wheelCooldown = false, 800);
+    if (e.deltaY > 30) nextSlide();
+    else if (e.deltaY < -30) prevSlide();
+  }, { passive: true });
+
+  // Touch swipe navigation
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) nextSlide();
+      else prevSlide();
+    }
+  }, { passive: true });
+
+  // URL hash navigation
+  window.addEventListener('hashchange', function() {
+    const idx = getHashSlide();
+    if (idx !== current) goToSlide(idx);
+  });
+
+  // Print mode from URL
+  if (window.location.search.includes('print=1')) {
+    document.body.classList.add('print-mode');
+  }
+
+  // Initialize
+  const initialSlide = getHashSlide();
+  slides.forEach((s, i) => {
+    if (i === initialSlide) {
+      s.classList.add('active');
+    }
+  });
+  current = initialSlide;
+  counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + total;
+  updateHash();
+  setTimeout(() => updateReveals(slides[current]), 100);
+  updateNotes();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMCC 2026 | International Missionary Kids Conference</title>
+<meta name="description" content="Join missionary children, families, mentors, and ministry partners for IMCC 2026, a faith-centred international conference focused on belonging, growth, community, and purpose.">
+<meta property="og:title" content="IMCC 2026 | International Missionary Kids Conference">
+<meta property="og:description" content="A faith-centred international conference focused on belonging, growth, community, and purpose.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--black:#000000;--white:#fff;--off-white:#ffffff;--light-neutral:#e8e6e1;
+--mid-neutral:#8a8a85;--dark-neutral:#1a1a1a;--accent:#007DFE;--accent-hover:#0066CC;
+--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif;
+--radius-sm:8px;--radius-md:16px;--radius-lg:24px;--radius-xl:32px;--radius-pill:999px;
+--max-w:1200px;--px-desktop:64px;--px-mobile:20px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:100px;overflow-x:hidden}
+body{font-family:var(--font-body);color:var(--white);background:var(--black);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{max-width:100%;display:block}
+ul{list-style:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 var(--px-desktop)}
+.container-full{max-width:var(--max-w);margin:0 auto;padding:0}
+@media(max-width:1200px) and (min-width:730px){.container{padding:0 48px}.container-full{padding:0 48px}}
+@media(max-width:729px){.container{padding:0 var(--px-mobile)}.container-full{padding:0 var(--px-mobile)}}
+.section{padding:120px 0}
+@media(max-width:729px){.section{padding:80px 0}}
+.dark-bg{background:var(--black);color:var(--white)}
+.light-bg{background:var(--off-white);color:var(--black)}
+.label{font-family:var(--font-display);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);margin-bottom:16px;display:inline-block}
+.label-pill{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;padding:8px 20px;border:1px solid rgba(0,125,254,.2);border-radius:var(--radius-pill);background:rgba(0,125,254,.06)}
+.heading{font-family:var(--font-display);font-weight:700;line-height:1.1}
+.heading-xl{font-size:clamp(2.5rem,6vw,5rem)}
+.heading-lg{font-size:clamp(2rem,4vw,3.5rem)}
+.heading-md{font-size:clamp(1.5rem,3vw,2.25rem)}
+.heading-sm{font-size:clamp(1.25rem,2vw,1.5rem)}
+.body-text{font-size:1.0625rem;line-height:1.7;color:var(--mid-neutral)}
+.dark-bg .body-text{color:rgba(255,255,255,.7)}
+.light-bg .body-text{color:var(--mid-neutral)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:var(--radius-pill);font-family:var(--font-display);font-size:.9375rem;font-weight:600;transition:all .3s ease;white-space:nowrap}
+.btn-primary{background:var(--accent);color:var(--black)}
+.btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.25)}
+.btn-secondary:hover{border-color:var(--white);background:rgba(255,255,255,.08)}
+.light-bg .btn-secondary{color:var(--black);border-color:rgba(0,0,0,.2)}
+.light-bg .btn-secondary:hover{border-color:var(--black);background:rgba(0,0,0,.05)}
+.btn-ghost{background:transparent;color:var(--accent);padding:0;text-decoration:underline;text-underline-offset:4px}
+.btn-ghost:hover{color:var(--accent-hover)}
+.btn-arrow{transition:transform .3s ease}
+.btn:hover .btn-arrow{transform:translateX(4px)}
+
+/* Navigation */
+.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(0,0,0,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-pill);padding:12px 20px;display:flex;align-items:center;gap:16px;transition:all .3s ease;width:1100px;max-width:calc(100vw - 40px)}
+.nav.scrolled{background:rgba(0,0,0,.95);border-color:rgba(255,255,255,.12)}
+.nav-logo{flex-shrink:0}
+.nav-links-wrap{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0;background:#030303;border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-pill);padding:6px 8px}
+.nav-links-wrap a{font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.6);transition:all .3s;white-space:nowrap;padding:10px 16px;border-radius:var(--radius-pill)}
+.nav-links-wrap a:hover,.nav-links-wrap a.active{color:var(--white);background:rgba(255,255,255,.1)}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.nav-register{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--radius-pill);background:var(--accent);color:var(--white);font-size:.875rem;font-weight:600;font-family:var(--font-display);transition:all .3s;white-space:nowrap;flex-shrink:0}
+.nav-register:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.nav-register svg{transition:transform .3s}
+.nav-register:hover svg{transform:translateX(3px)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;padding:4px}
+.nav-toggle span{width:22px;height:2px;background:var(--white);transition:all .3s;border-radius:2px}
+.nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.active span:nth-child(2){opacity:0}
+.nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:900px){
+.nav-links-wrap,.nav-right .nav-register{display:none}
+.nav-toggle{display:flex}
+}
+.nav-mobile{display:none;position:fixed;top:80px;left:50%;transform:translateX(-50%);width:calc(100vw - 40px);max-width:1100px;background:rgba(0,0,0,.95);backdrop-filter:blur(20px);z-index:999;flex-direction:column;align-items:stretch;gap:4px;padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg)}
+.nav-mobile.open{display:flex}
+.nav-mobile a{font-family:var(--font-display);font-size:1.125rem;font-weight:600;color:rgba(255,255,255,.8);transition:color .3s;padding:14px 16px;border-radius:var(--radius-md)}
+.nav-mobile a:hover{color:var(--accent);background:rgba(255,255,255,.06)}
+.nav-mobile a.btn-primary{background:var(--accent);color:var(--white);text-align:center}
+.nav-mobile-close{display:none}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding-top:140px;position:relative;overflow:hidden;background:var(--black)}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.2) 50%,rgba(0,0,0,1) 100%);z-index:1}
+.hero-bg-img{width:100%;height:100%;object-fit:cover;opacity:.5;transition:transform .1s linear;will-change:transform}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:900px;margin:0 auto;padding:0 20px}
+.hero-label{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.9);margin-bottom:16px;padding:8px 20px;border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-pill);background:rgba(255,255,255,.05)}
+.hero-title{font-family:var(--font-display);font-size:clamp(3rem,8vw,6rem);font-weight:700;line-height:1.05;margin-bottom:24px;color:var(--white)}
+.hero-title .accent{color:var(--accent)}
+.hero-theme{font-family:var(--font-display);font-size:clamp(1.125rem,2.5vw,1.75rem);font-weight:400;color:rgba(255,255,255,.7);margin-bottom:48px;font-style:italic}
+.hero-subtitle{font-size:1.125rem;color:rgba(255,255,255,.6);max-width:600px;margin:0 auto 40px;line-height:1.7}
+.hero-meta{display:flex;align-items:center;justify-content:center;gap:32px;margin-bottom:40px;flex-wrap:wrap}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:.9375rem;color:rgba(255,255,255,.8)}
+.hero-meta-item svg{width:18px;height:18px;color:var(--accent);flex-shrink:0}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.4);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;animation:scrollBounce 2s infinite}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.hero-scroll svg{width:20px;height:20px}
+
+/* Event Snapshot */
+.snapshot{padding:60px 0 96px;background:var(--black);border-bottom:1px solid rgba(255,255,255,.08)}
+.snapshot-grid{display:flex;flex-direction:column;align-items:center;gap:0;text-align:center}
+.snapshot-info{display:flex;flex-direction:column;align-items:center}
+.snapshot-info .snapshot-event{font-size:1.125rem;color:rgba(255,255,255,.5);margin-bottom:8px;letter-spacing:.05em}
+.snapshot-info .snapshot-theme-label{font-family:var(--font-display);font-size:32px;color:var(--white);font-style:italic}
+.snapshot-info .snapshot-theme img{height:clamp(200px,30vw,400px);width:auto}
+.snapshot-countdown{display:flex;gap:clamp(12px,3vw,32px);align-items:flex-start;justify-content:center}
+.countdown-box{text-align:center}
+.countdown-box-inner{position:relative;width:clamp(64px,9vw,110px);height:clamp(72px,10vw,122px);background:linear-gradient(180deg,#1a1a1a 0%,#111111 49.9%,#0a0a0a 50%,#1a1a1a 100%);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
+.countdown-box-inner::before{content:'';position:absolute;left:-4px;top:50%;transform:translateY(-50%);width:8px;height:clamp(14px,2vw,20px);background:linear-gradient(180deg,#666,#444);border-radius:4px;z-index:1}
+.countdown-box-inner::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:8px;height:clamp(14px,2vw,20px);background:linear-gradient(180deg,#666,#444);border-radius:4px;z-index:1}
+.countdown-box-num{font-family:var(--font-display);font-size:clamp(2rem,6vw,3.5rem);font-weight:700;color:var(--white);line-height:1;text-shadow:0 2px 4px rgba(0,0,0,.3)}
+.countdown-box-label{font-size:clamp(.625rem,1.4vw,.875rem);color:rgba(255,255,255,.5);margin-top:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+.snapshot-actions{display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:center;margin-top:40px}
+.snapshot-actions .btn-register{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:var(--radius-pill);background:var(--accent);color:var(--white);font-size:.9375rem;font-weight:600;font-family:var(--font-display);transition:all .3s;white-space:nowrap}
+.snapshot-actions .btn-register:hover{background:var(--accent-hover);transform:translateY(-2px)}
+.snapshot-actions .btn-contact{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:var(--radius-pill);background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.2);font-size:.9375rem;font-weight:600;font-family:var(--font-display);transition:all .3s;white-space:nowrap}
+.snapshot-actions .btn-contact:hover{border-color:var(--white);transform:translateY(-2px)}
+@media(max-width:900px){.snapshot{padding:48px 0 64px}}
+@media(max-width:729px){.snapshot{padding:30px 0}.snapshot-grid{gap:0}.snapshot-info .snapshot-theme img{height:160px}.snapshot-countdown{gap:12px}.snapshot-actions{margin-top:24px;flex-wrap:wrap}}
+
+/* Snapshot scroll reveal */
+.snapshot-scroll-reveal{opacity:.15;filter:blur(1px);transition:none}
+
+/* Section Headers */
+.section-header{max-width:700px;margin-bottom:64px}
+.section-header.center{text-align:center;margin-left:auto;margin-right:auto}
+.dark-bg .section-header .label{color:var(--accent)}
+.light-bg .section-header .label{color:var(--accent)}
+
+/* About IMCC */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-image{position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:4/5;background:var(--dark-neutral)}
+.about-image img{width:100%;height:100%;object-fit:cover}
+.about-quote{position:absolute;bottom:24px;left:24px;right:24px;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);padding:24px;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,.1)}
+.about-quote p{font-style:italic;font-size:.9375rem;color:rgba(255,255,255,.9);margin-bottom:8px}
+.about-quote cite{font-size:.8125rem;color:var(--accent);font-style:normal}
+.about-content .heading-md{margin-bottom:24px}
+.about-content p{margin-bottom:16px}
+@media(max-width:729px){.about-grid{grid-template-columns:1fr;gap:40px}}
+
+/* Statement */
+.statement{padding:140px 0;background:var(--black);text-align:center;position:relative;overflow:hidden}
+.statement-bg{position:absolute;inset:0;opacity:.15}
+.statement-bg img{width:100%;height:100%;object-fit:cover}
+.statement-content{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 20px}
+.statement-text{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;line-height:1.2;color:var(--white)}
+.statement-text .accent{color:var(--accent)}
+
+/* Programme */
+.bento-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:auto;gap:24px}
+.bento-card{background:#030303;border:1px solid rgba(255,255,255,.15);border-radius:var(--radius-lg);padding:32px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;transition:all .4s ease;cursor:default;height:420px}
+.bento-card:hover{border-color:rgba(255,255,255,.4);transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.bento-card.span-2{grid-column:span 2}
+.bento-card.span-row{grid-row:span 2}
+.bento-card.span-2.span-row{grid-column:span 2;grid-row:span 2}
+.bento-icon{font-size:2rem;margin-bottom:12px}
+.bento-card h3{font-family:var(--font-display);font-size:1.25rem;font-weight:700;margin-bottom:8px;color:var(--white)}
+.bento-card p{font-size:.875rem;color:rgba(255,255,255,.5);line-height:1.5}
+.bento-card-img{position:absolute;inset:0;z-index:0}
+.bento-card-img img{width:100%;height:100%;object-fit:cover;opacity:1;transition:opacity .4s}
+.bento-card:hover .bento-card-img img{opacity:1}
+.bento-card::after{content:'';position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(transparent,rgba(0,0,0,.85));z-index:1;pointer-events:none}
+.bento-card-content{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:24px 16px;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+@media(max-width:1200px) and (min-width:730px){.bento-grid{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:20px}.bento-card.span-2,.bento-card.span-row,.bento-card.span-2.span-row{grid-column:span 1;grid-row:span 1}.bento-card{height:360px}}
+@media(max-width:729px){.bento-grid{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:16px}.bento-card.span-2{grid-column:span 2;grid-row:span 1}.bento-card.span-row,.bento-card.span-2.span-row{grid-column:span 1;grid-row:span 1}.bento-card{height:280px}}
+
+/* Speakers */
+.speakers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.speaker-card{border-radius:var(--radius-lg);overflow:hidden;background:var(--white);border:1px solid rgba(0,0,0,.06);transition:all .4s;cursor:pointer}
+.speaker-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
+.speaker-img{aspect-ratio:3/4;overflow:hidden;position:relative}
+.speaker-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.speaker-card:hover .speaker-img img{transform:scale(1.05)}
+.speaker-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.8));opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:20px}
+.speaker-card:hover .speaker-overlay{opacity:1}
+.speaker-overlay p{font-size:.8125rem;color:rgba(255,255,255,.8);line-height:1.5}
+.speaker-info{padding:20px}
+.speaker-info h3{font-family:var(--font-display);font-size:1.0625rem;font-weight:700;margin-bottom:4px;color:var(--black)}
+.speaker-info .role{font-size:.8125rem;color:var(--accent);margin-bottom:4px}
+.speaker-info .org{font-size:.8125rem;color:var(--mid-neutral)}
+@media(max-width:729px){.speakers-grid{grid-template-columns:1fr 1fr;gap:16px}}
+
+/* Gallery */
+.gallery-wrapper{position:relative;margin:24px auto 0;padding:16px 0;overflow:hidden;perspective:900px}
+.gallery-track{position:relative;transform-style:preserve-3d;height:320px}
+.gallery-item{position:absolute;left:50%;top:50%;width:240px;aspect-ratio:3/4;border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-neutral);transition:transform .55s cubic-bezier(.25,.46,.45,.94),opacity .55s ease,box-shadow .55s ease;cursor:pointer;transform-style:preserve-3d}
+.gallery-item img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.gallery-item-overlay{position:absolute;bottom:0;left:0;right:0;padding:18px;background:linear-gradient(transparent,rgba(0,0,0,.9));opacity:0;transition:opacity .35s ease;pointer-events:none}
+.gallery-item:hover .gallery-item-overlay{opacity:1}
+.gallery-item-overlay span{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+.gallery-item-overlay p{font-size:.8125rem;color:rgba(255,255,255,.8);margin-top:4px}
+.gallery-glow{position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);width:700px;height:350px;background:radial-gradient(ellipse,rgba(0,125,254,.1) 0%,transparent 70%);pointer-events:none;z-index:0}
+.gallery-nav{display:flex;gap:16px;justify-content:center;margin-top:24px}
+.gallery-nav button{width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:var(--white);display:flex;align-items:center;justify-content:center;transition:all .3s;backdrop-filter:blur(8px)}
+.gallery-nav button:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,125,254,.1)}
+@media(max-width:1200px) and (min-width:730px){.gallery-nav{margin-top:32px}.gallery-track{height:300px}}
+@media(max-width:729px){.gallery-wrapper{padding:8px 0;margin-top:16px}.gallery-track{height:230px}.gallery-item{width:170px}.gallery-nav{margin-top:16px}}
+
+/* Location */
+.location-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:stretch}
+.location-gallery{display:flex;flex-direction:column;gap:12px;border-radius:var(--radius-lg);overflow:hidden;height:100%}
+.location-gallery-main{border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-neutral);flex:1;min-height:0}
+.location-gallery-main img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.location-gallery-main:hover img{transform:scale(1.03)}
+.location-gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.location-gallery-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-md);transition:transform .3s ease,box-shadow .3s ease;cursor:pointer}
+.location-gallery-grid img:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.location-details{padding:20px 0}
+.location-details h3{font-family:var(--font-display);font-size:2.75rem;font-weight:700;margin-bottom:16px}
+.location-info-list{margin-bottom:32px}
+.location-info-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.location-info-item svg{width:20px;height:20px;color:var(--accent);flex-shrink:0;margin-top:2px}
+.location-info-item strong{display:block;font-size:.875rem;margin-bottom:2px}
+.location-info-item span{font-size:.875rem;color:rgba(255,255,255,.6)}
+.location-actions{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:729px){.location-grid{grid-template-columns:1fr}}
+
+/* Sponsorship */
+.sponsor-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center}
+.sponsor-options{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
+.sponsor-option{padding:24px;border-radius:var(--radius-md);border:1px solid var(--light-neutral);background:var(--white);transition:all .3s;text-align:center}
+.sponsor-option:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.sponsor-option .icon{font-size:2rem;margin-bottom:12px}
+.sponsor-option h4{font-family:var(--font-display);font-weight:700;margin-bottom:4px}
+.sponsor-option p{font-size:.8125rem;color:var(--mid-neutral);line-height:1.5}
+.sponsor-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.sponsor-note{font-size:.8125rem;color:var(--mid-neutral);margin-top:24px;padding:16px;border-radius:var(--radius-sm);background:rgba(212,168,83,.08);border:1px solid rgba(212,168,83,.15);line-height:1.6}
+@media(max-width:729px){.sponsor-grid{grid-template-columns:1fr;gap:40px}.sponsor-options{grid-template-columns:1fr}}
+
+/* Partners */
+.partners-marquee{overflow:hidden;margin-bottom:40px;position:relative}
+.partners-marquee::before,.partners-marquee::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:1;pointer-events:none}
+.partners-marquee::before{left:0;background:linear-gradient(90deg,var(--black),transparent)}
+.partners-marquee::after{right:0;background:linear-gradient(-90deg,var(--black),transparent)}
+.partners-track{display:flex;gap:48px;animation:marquee 30s linear infinite;width:max-content}
+.partners-track:hover{animation-play-state:paused}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.partner-logo{flex:0 0 160px;height:80px;display:flex;align-items:center;justify-content:center;padding:16px;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,.08);background:var(--dark-neutral);transition:border-color .3s}
+.partner-logo:hover{border-color:rgba(212,168,83,.3)}
+.partner-logo span{font-family:var(--font-display);font-size:.875rem;font-weight:600;color:rgba(255,255,255,.5);text-align:center}
+.partner-cta{text-align:center;padding:40px;border:1px dashed rgba(255,255,255,.15);border-radius:var(--radius-lg)}
+.partner-cta h3{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:12px}
+.partner-cta p{color:rgba(255,255,255,.5);margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
+
+/* Committee */
+.committee-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.team-card{text-align:center;padding:24px;border-radius:var(--radius-lg);border:1px solid var(--light-neutral);background:var(--white);transition:all .3s}
+.team-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+.team-card-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 16px;overflow:hidden;background:var(--light-neutral)}
+.team-card-avatar img{width:100%;height:100%;object-fit:cover}
+.team-card h3{font-family:var(--font-display);font-size:1.0625rem;font-weight:700;margin-bottom:4px}
+.team-card .role{font-size:.8125rem;color:var(--accent);margin-bottom:4px;font-weight:500}
+.team-card .org{font-size:.8125rem;color:var(--mid-neutral)}
+.team-appreciation{margin-top:64px;text-align:center;padding:40px;border-radius:var(--radius-lg);background:rgba(212,168,83,.06);border:1px solid rgba(212,168,83,.15)}
+.team-appreciation p{font-family:var(--font-display);font-size:1.125rem;font-weight:500;color:var(--black);max-width:600px;margin:0 auto;line-height:1.7}
+@media(max-width:729px){.committee-grid{grid-template-columns:1fr 1fr;gap:16px}}
+
+/* FAQ */
+.faq-list{max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.08)}
+.faq-trigger{width:100%;padding:24px 0;display:flex;justify-content:space-between;align-items:center;text-align:left;font-family:var(--font-display);font-size:1.0625rem;font-weight:600;color:var(--white);cursor:pointer;background:none;border:none;transition:color .3s}
+.faq-trigger:hover{color:var(--accent)}
+.faq-icon{font-size:1.5rem;color:var(--accent);transition:transform .3s;flex-shrink:0;margin-left:16px}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-answer-inner{padding:0 0 24px;font-size:.9375rem;color:rgba(255,255,255,.6);line-height:1.7}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.contact-banner{text-align:center;padding:80px 40px;background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--light-neutral)}
+.contact-banner-email{display:inline-flex;align-items:center;gap:10px;margin-top:32px;padding:18px 40px;border-radius:var(--radius-pill);background:var(--black);color:var(--white);font-family:var(--font-display);font-size:1.125rem;font-weight:600;transition:all .3s}
+.contact-banner-email:hover{background:var(--accent);color:var(--black);transform:translateY(-2px)}
+.contact-form{background:var(--white);padding:40px;border-radius:var(--radius-lg);border:1px solid var(--light-neutral)}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-family:var(--font-display);font-size:.8125rem;font-weight:600;color:var(--black);margin-bottom:8px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 16px;border:1px solid var(--light-neutral);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:.9375rem;color:var(--black);background:var(--white);transition:border-color .3s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8a85' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:729px){.form-row{grid-template-columns:1fr}}
+.form-checkbox{display:flex;align-items:flex-start;gap:12px}
+.form-checkbox input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent)}
+.form-checkbox label{font-size:.8125rem;color:var(--mid-neutral);line-height:1.5}
+.form-success{display:none;padding:24px;border-radius:var(--radius-md);background:rgba(34,139,34,.08);border:1px solid rgba(34,139,34,.2);color:#228b22;font-weight:500;text-align:center}
+.contact-info-side h3{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:24px}
+.contact-info-list{margin-bottom:32px}
+.contact-info-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--light-neutral)}
+.contact-info-item svg{width:20px;height:20px;color:var(--accent);flex-shrink:0;margin-top:2px}
+.contact-info-item strong{display:block;font-size:.875rem;margin-bottom:2px}
+.contact-info-item span{font-size:.875rem;color:var(--mid-neutral)}
+@media(max-width:729px){.contact-grid{grid-template-columns:1fr;gap:40px}}
+
+/* CTA */
+.cta-section{padding:96px 0;background:var(--black);text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;opacity:.1}
+.cta-bg img{width:100%;height:100%;object-fit:cover}
+.cta-content{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 20px}
+.cta-actions{display:flex;justify-content:center;gap:16px;margin-top:40px;flex-wrap:wrap}
+.cta-countdown{display:inline-flex;gap:24px;margin-top:48px;padding:24px 40px;border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);background:rgba(255,255,255,.03)}
+.countdown-item{text-align:center}
+.countdown-num{font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:var(--accent);line-height:1}
+.countdown-label{font-size:.75rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+@media(max-width:729px){.cta-section{padding:64px 0}}
+
+/* Footer */
+.footer{background:var(--black);border-top:1px solid rgba(255,255,255,.08);padding:80px 0 40px}
+.footer-simple{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:48px}
+.footer-simple p{color:rgba(255,255,255,.5);font-size:.875rem;line-height:1.7;margin-top:16px;max-width:520px}
+.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 32px;padding:32px 0;border-top:1px solid rgba(255,255,255,.08)}
+.footer-links a{font-size:.875rem;color:rgba(255,255,255,.5);transition:color .3s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{display:flex;justify-content:center;padding-top:32px}
+.footer-bottom p{font-size:.8125rem;color:rgba(255,255,255,.35)}
+.footer-social{display:flex;gap:12px;margin-top:24px}
+.footer-social a{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:all .3s}
+.footer-social a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;padding:40px;cursor:pointer}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%;max-height:90vh;border-radius:var(--radius-md);object-fit:contain}
+.lightbox-close{position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:var(--white);font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+/* Scroll Reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.hero-scroll{animation:none}.partners-track{animation:none}}
+
+/* Accessibility */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.skip-link{position:absolute;top:-100px;left:16px;z-index:9999;padding:12px 24px;background:var(--accent);color:var(--black);font-weight:600;border-radius:0 0 var(--radius-sm) var(--radius-sm);transition:top .3s}
+.skip-link:focus{top:0}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="#" class="nav-logo" aria-label="IMCC Home"><img src="Logo.jpeg" alt="IMCC Logo" style="height:36px;width:auto;border-radius:4px"></a>
+  <div class="nav-links-wrap">
+    <a href="#about">About</a>
+    <a href="#programme">Programme</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#location">Location</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="#register" class="nav-register">Register <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Navigation -->
+<div class="nav-mobile" role="dialog" aria-label="Mobile menu">
+  <button class="nav-mobile-close" aria-label="Close menu">&times;</button>
+  <a href="#about">About</a>
+  <a href="#programme">Programme</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#location">Location</a>
+  <a href="#faq">FAQ</a>
+  <a href="#contact">Contact</a>
+  <a href="#register" class="btn btn-primary" style="margin-top:8px">Register</a>
+</div>
+
+<main id="main">
+
+<!-- Section 1: Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="Hero.jpeg" alt="Missionary children gathering together in community" class="hero-bg-img" loading="eager">
+  </div>
+  <div class="hero-content reveal">
+    <div class="hero-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      IMCC 2026
+    </div>
+    <h1 class="hero-title">International <span class="accent">Missionary Kids</span><br>Conference</h1>
+    <p class="hero-theme">"One Generation. Many Nations. One Mission."</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <span>24th – 28th August, 2026</span>
+      </div>
+      <div class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Lagos, Nigeria</span>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="#register" class="btn btn-primary">Register for IMCC <span class="btn-arrow">→</span></a>
+      <a href="mailto:imcc@capro.global" class="btn btn-secondary">Sponsor a Child</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- Section 2: Event Snapshot -->
+<section class="snapshot" id="snapshot">
+  <div class="container">
+    <div class="snapshot-grid">
+      <div class="snapshot-info snapshot-scroll-reveal">
+        <div class="snapshot-event">IMCC 2026, Lagos, Nigeria</div>
+        <div class="snapshot-theme-label">Theme</div>
+        <div class="snapshot-theme"><img src="theme.png" alt="Conference Theme"></div>
+      </div>
+      <div class="snapshot-countdown snapshot-scroll-reveal">
+        <div class="countdown-box">
+          <div class="countdown-box-inner">
+            <div class="countdown-box-num" id="cdDays">00</div>
+          </div>
+          <div class="countdown-box-label">Days</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-box-inner">
+            <div class="countdown-box-num" id="cdHours">00</div>
+          </div>
+          <div class="countdown-box-label">Hours</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-box-inner">
+            <div class="countdown-box-num" id="cdMins">00</div>
+          </div>
+          <div class="countdown-box-label">Minutes</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-box-inner">
+            <div class="countdown-box-num" id="cdSecs">00</div>
+          </div>
+          <div class="countdown-box-label">Seconds</div>
+        </div>
+      </div>
+      <div class="snapshot-actions snapshot-scroll-reveal">
+        <a href="#register" class="btn-register">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          Register Now
+        </a>
+        <a href="#contact" class="btn-contact">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: About IMCC -->
+<section class="section light-bg" id="about">
+  <div class="container-full">
+    <div class="about-grid">
+      <div class="about-content reveal" style="max-width:100%">
+        <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>About IMCC</span>
+        <h2 class="heading heading-lg" style="color:var(--black)">A Conference Built for<br>Missionary Children</h2>
+        <p class="body-text" style="color:var(--mid-neutral)">IMCC — the International Missionary Kids Conference — is a dedicated gathering created for children and families connected to missionary work around the world.</p>
+        <p class="body-text" style="color:var(--mid-neutral)">Growing up as a missionary child means navigating multiple cultures, languages, schools, and ministry environments. IMCC provides a unique space where these children can connect with others who truly understand their experiences — and be reminded that they belong to a global family of faith.</p>
+        <p class="body-text" style="color:var(--mid-neutral)">Through worship, teaching, mentorship, creative activities, and cross-cultural friendship, IMCC helps the next generation grow stronger in identity, purpose, and community.</p>
+        <p class="body-text" style="font-size:.8125rem;color:var(--mid-neutral);margin-top:24px">[Insert the verified story of how IMCC began, the people who initiated it, the year it started, and the need it was created to address.]</p>
+      </div>
+      <div class="about-image reveal" style="position:relative">
+        <img src="flyer.jpeg" alt="IMCC 2026 Conference flyer">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: Statement Banner -->
+<section class="statement">
+  <div class="statement-bg">
+    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1600&q=80" alt="" aria-hidden="true">
+  </div>
+  <div class="statement-content reveal">
+    <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Our Heart</span>
+    <p class="statement-text">A place where missionary children are <span class="accent">seen</span>, <span class="accent">strengthened</span>, <span class="accent">equipped</span>, and reminded that they belong to a global family.</p>
+  </div>
+</section>
+
+<!-- Section 6: Programme Highlights -->
+<section class="section dark-bg" id="programme">
+  <div class="container-full">
+    <div class="section-header center reveal">
+      <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Programme</span>
+      <h2 class="heading heading-lg">What to Expect at IMCC</h2>
+      <p class="body-text" style="margin-top:16px">A rich programme of worship, teaching, fellowship, and creative expression designed for missionary children and families.</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card span-2 reveal">
+        <div class="bento-card-img"><img src="Counseling.jpeg" alt="Counseling session" loading="lazy"></div>
+        <div class="bento-card-content">
+          <h3>Counseling</h3>
+          <p>Professional and pastoral counseling for children and families</p>
+        </div>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-card-img"><img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&q=80" alt="Devotion session" loading="lazy"></div>
+        <div class="bento-card-content">
+          <h3>Devotion</h3>
+          <p>Daily devotional sessions to deepen faith</p>
+        </div>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-card-img"><img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80" alt="Plenary session" loading="lazy"></div>
+        <div class="bento-card-content">
+          <h3>Plenaries</h3>
+          <p>Inspirational keynote sessions for all attendees</p>
+        </div>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-card-img"><img src="Workshops.jpeg" alt="Workshop session" loading="lazy"></div>
+        <div class="bento-card-content">
+          <h3>Workshops</h3>
+          <p>Hands-on learning and skill development sessions</p>
+        </div>
+      </div>
+      <div class="bento-card span-row reveal">
+        <div class="bento-card-img"><img src="Connections.jpg" alt="Building connections" loading="lazy"></div>
+        <div class="bento-card-content">
+          <h3>Connections</h3>
+          <p>Building meaningful friendships across cultures and nations</p>
+        </div>
+      </div>
+      <div class="bento-card span-2 reveal">
+        <div class="bento-card-img"><img src="Sport.jpeg" alt="Games and sport events" loading="lazy"></div>
+        <div class="bento-card-content">
+          <h3>Games and Sport Events</h3>
+          <p>Team sports, outdoor activities, and competitive fun</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 7: Conference Outcomes removed per user request -->
+
+<!-- Section 8: Schedule removed per user request -->
+
+<!-- Section 9: Speakers -->
+<section class="section light-bg" id="speakers">
+  <div class="container-full">
+    <div class="section-header center reveal">
+      <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Speakers &amp; Facilitators</span>
+      <h2 class="heading heading-lg" style="color:var(--black)">Meet the Voices of IMCC</h2>
+      <p class="body-text" style="margin-top:16px;color:var(--mid-neutral)">Passionate speakers, mentors, and ministry leaders investing in the next generation. [Official speaker list to be confirmed.]</p>
+    </div>
+    <div class="speakers-grid">
+      <div class="speaker-card reveal">
+        <div class="speaker-img">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Speaker portrait placeholder" loading="lazy">
+          <div class="speaker-overlay"><p>[Insert short biography highlighting ministry experience and relevance to missionary kids.]</p></div>
+        </div>
+        <div class="speaker-info">
+          <h3>[Speaker Name]</h3>
+          <div class="role">Keynote Speaker</div>
+          <div class="org">[Organisation / Ministry]</div>
+        </div>
+      </div>
+      <div class="speaker-card reveal">
+        <div class="speaker-img">
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80" alt="Speaker portrait placeholder" loading="lazy">
+          <div class="speaker-overlay"><p>[Insert short biography highlighting ministry experience and relevance to missionary kids.]</p></div>
+        </div>
+        <div class="speaker-info">
+          <h3>[Speaker Name]</h3>
+          <div class="role">Workshop Leader</div>
+          <div class="org">[Organisation / Ministry]</div>
+        </div>
+      </div>
+      <div class="speaker-card reveal">
+        <div class="speaker-img">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Speaker portrait placeholder" loading="lazy">
+          <div class="speaker-overlay"><p>[Insert short biography highlighting ministry experience and relevance to missionary kids.]</p></div>
+        </div>
+        <div class="speaker-info">
+          <h3>[Speaker Name]</h3>
+          <div class="role">Session Speaker</div>
+          <div class="org">[Organisation / Ministry]</div>
+        </div>
+      </div>
+      <div class="speaker-card reveal">
+        <div class="speaker-img">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80" alt="Speaker portrait placeholder" loading="lazy">
+          <div class="speaker-overlay"><p>[Insert short biography highlighting ministry experience and relevance to missionary kids.]</p></div>
+        </div>
+        <div class="speaker-info">
+          <h3>[Speaker Name]</h3>
+          <div class="role">Mentor</div>
+          <div class="org">[Organisation / Ministry]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 11: Gallery -->
+<section class="section dark-bg" id="gallery">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Previous Moments</span>
+      <h2 class="heading heading-lg">Missionary Kids Across the Globe</h2>
+      <p class="body-text" style="margin-top:16px">Moments of worship, friendship, learning, and celebration from previous IMCC gatherings.</p>
+    </div>
+  </div>
+  <div class="gallery-wrapper">
+    <div class="gallery-glow"></div>
+    <div class="gallery-track" id="galleryTrack">
+      <div class="gallery-item">
+        <img src="1.jpeg" alt="IMCC Moment 1" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="2.jpg" alt="IMCC Moment 2" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="3.jpeg" alt="IMCC Moment 3" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="4.jpeg" alt="IMCC Moment 4" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="5.jpeg" alt="IMCC Moment 5" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="6.jpg" alt="IMCC Moment 6" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="7.jpg" alt="IMCC Moment 7" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="8.jpeg" alt="IMCC Moment 8" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="9.jpg" alt="IMCC Moment 9" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="10.jpeg" alt="IMCC Moment 10" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="11.jpg" alt="IMCC Moment 11" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="12.jpeg" alt="IMCC Moment 12" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="13.jpeg" alt="IMCC Moment 13" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="14.jpg" alt="IMCC Moment 14" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="15.jpg" alt="IMCC Moment 15" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="16.jpg" alt="IMCC Moment 16" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="17.jpg" alt="IMCC Moment 17" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="18.jpg" alt="IMCC Moment 18" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="19.jpeg" alt="IMCC Moment 19" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="20.jpeg" alt="IMCC Moment 20" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="21.jpg" alt="IMCC Moment 21" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="22.jpg" alt="IMCC Moment 22" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="23.jpg" alt="IMCC Moment 23" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="24.jpg" alt="IMCC Moment 24" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="25.jpeg" alt="IMCC Moment 25" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="26.jpeg" alt="IMCC Moment 26" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="27.jpeg" alt="IMCC Moment 27" loading="lazy">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="gallery-nav reveal">
+      <button onclick="galleryPrev()" aria-label="Previous images">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button onclick="galleryNext()" aria-label="Next images">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Section 12: Location -->
+<section class="section dark-bg" id="location">
+  <div class="container-full">
+    <div class="section-header reveal">
+      <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Location</span>
+      <h2 class="heading heading-lg">Venue</h2>
+    </div>
+    <div class="location-grid">
+      <div class="location-gallery reveal">
+        <div class="location-gallery-main">
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkWSaraQPchD9CZ_r0z9pDLVo05Oy1U5tUDMjBW_c9tz6IoP4Yr7BQ3VDIh-aSoa7iOsEGfKb29l6SLOkcp7pvxdwiOIAjPA7Upoiq8ipJkncG5Oa_pnrYB4sb9P406NtWBhxkqpQ=s680-w680-h510-rw" alt="Faith Plaza venue - main building and pool area" loading="lazy">
+        </div>
+        <div class="location-gallery-grid">
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnluuYxY_uXdsLuHXvnsA5C8gjIy4aIR8DqgY7kTi86oGqEpZqoQJypa3DXGPonoGyQy3qUMNvLzxxrRNdKX8bJTGEgU0FehmYgPVGJrYB7QtuvwrcLZRQdDx9xe1vQz1c2Nnm9uhc7yKE=s680-w680-h510-rw" alt="Faith Plaza - dining hall" loading="lazy">
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlkvp659K7X4aFnSGF-LSIYOEFylGFw_VDTV8xVo4DoISAPCFcpd46p-36B1rYYlhsclXqibRytQhCra5JWEJtGWmMaq8c7VHJ-XPiw2YzhMJ_Oyh9dFKdFkk5nlY__vfuDEUeO=s680-w680-h510-rw" alt="Faith Plaza - accommodation room" loading="lazy">
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkRXDoTKmC3Hs5CE2Yslzr1MMjzSr2qFlVUdzFu64GeJVBGuRoZe82Gf9486VtyRmayLQ5q-9GGxXeVlq4xm8LUjJXRE6AxyX1H5weF8MLRalMyWrq-_3fm8fxjqP3NjK44slyXzg=s680-w680-h510-rw" alt="Faith Plaza - sports court" loading="lazy">
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_zYtsDo07Wa-onxzNBB60rIdCtVoxJ7HpSilSwiooRY43qpLiQZRKAXm9vycwVJ4BVL0fVlDXo9e2q73h4QRdIO2MQKTyBmRDcqWnqWDoxFR4YcZs3gZLsDoGuvHL4LIEFK5EUw=s680-w680-h510-rw" alt="Faith Plaza - entrance corridor" loading="lazy">
+        </div>
+      </div>
+      <div class="location-details reveal">
+        <h3>Faith Plaza</h3>
+        <div class="location-info-list">
+          <div class="location-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <strong>Address</strong>
+              <span>Bariga Rd, Cms, opposite Dada Street, Somolu, Lagos 102216, Lagos, Nigeria</span>
+            </div>
+          </div>
+          <div class="location-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+            <div>
+              <strong>Nearby Landmarks</strong>
+              <span>Bariga Waterfront Jetty, Somolu Bariga Museum, University of Lagos (UNILAG), Bariga Market</span>
+            </div>
+          </div>
+          <div class="location-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div>
+              <strong>Getting There</strong>
+              <span>From Murtala Muhammed Airport (approx. 45 min drive), or via Third Mainland Bridge. Bus, taxi, and ride-hailing services available.</span>
+            </div>
+          </div>
+          <div class="location-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <div>
+              <strong>Accommodation</strong>
+              <span>Free on-site accommodation provided for all registered attendees.</span>
+            </div>
+          </div>
+        </div>
+        <div class="location-actions">
+          <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open in Maps <span class="btn-arrow">→</span></a>
+          <a href="#" class="btn btn-secondary">Get Directions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 13: Sponsor a Child -->
+<section class="section light-bg" id="sponsor" style="display:none">
+  <div class="container-full">
+    <div class="sponsor-grid">
+      <div class="reveal">
+        <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Sponsor a Child</span>
+        <h2 class="heading heading-lg" style="color:var(--black)">Help a Missionary Child<br>Attend IMCC</h2>
+        <p class="body-text">Your generosity can help a missionary child experience a life-changing conference. Many missionary families serve in contexts where conference costs are a real barrier. Your sponsorship helps cover registration, travel, accommodation, meals, and programme materials — giving a child the chance to belong, grow, and be encouraged.</p>
+        <div class="sponsor-options">
+          <div class="sponsor-option">
+            <div class="icon">👤</div>
+            <h4>Sponsor One Child</h4>
+            <p>Full sponsorship for one missionary child to attend IMCC</p>
+          </div>
+          <div class="sponsor-option">
+            <div class="icon">👨‍👩‍👧</div>
+            <h4>Sponsor a Family</h4>
+            <p>Help an entire missionary family attend together</p>
+          </div>
+          <div class="sponsor-option">
+            <div class="icon">🚌</div>
+            <h4>Sponsor Transport</h4>
+            <p>Help cover travel costs for children from remote areas</p>
+          </div>
+          <div class="sponsor-option">
+            <div class="icon">🍽️</div>
+            <h4>Sponsor Meals</h4>
+            <p>Ensure every child is well-fed throughout the conference</p>
+          </div>
+        </div>
+        <div class="sponsor-actions">
+          <a href="#" class="btn btn-primary" style="background:var(--black);color:var(--white)">Sponsor a Child <span class="btn-arrow">→</span></a>
+          <a href="#" class="btn btn-secondary" style="color:var(--black);border-color:rgba(0,0,0,.2)">Make a Donation</a>
+        </div>
+        <div class="sponsor-note">
+          <strong>Transparency:</strong> All sponsorship funds are managed by CAPRO Ministries through approved, secure donation channels. You will receive confirmation and updates regarding the impact of your giving. For sponsorship questions, contact <a href="mailto:sponsorship@capro.global" style="color:var(--accent)">sponsorship@capro.global</a>.
+        </div>
+      </div>
+      <div class="reveal" style="position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:4/5;background:var(--light-neutral)">
+        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" alt="Missionary children benefiting from sponsorship" style="width:100%;height:100%;object-fit:cover">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 14: Partners & Sponsors -->
+<section class="section dark-bg" id="partners" style="display:none">
+  <div class="container-full">
+    <div class="section-header center reveal">
+      <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Partners &amp; Sponsors</span>
+      <h2 class="heading heading-lg">Supported By</h2>
+      <p class="body-text" style="margin-top:16px">IMCC is made possible through the generous support of partner organisations, churches, and individuals. [Confirmed partners to be listed.]</p>
+    </div>
+    <div class="partners-marquee">
+      <div class="partners-track">
+        <div class="partner-logo"><span>[Partner 1]</span></div>
+        <div class="partner-logo"><span>[Partner 2]</span></div>
+        <div class="partner-logo"><span>[Partner 3]</span></div>
+        <div class="partner-logo"><span>[Partner 4]</span></div>
+        <div class="partner-logo"><span>[Partner 5]</span></div>
+        <div class="partner-logo"><span>[Partner 6]</span></div>
+        <div class="partner-logo"><span>[Partner 7]</span></div>
+        <div class="partner-logo"><span>[Partner 8]</span></div>
+        <div class="partner-logo"><span>[Partner 1]</span></div>
+        <div class="partner-logo"><span>[Partner 2]</span></div>
+        <div class="partner-logo"><span>[Partner 3]</span></div>
+        <div class="partner-logo"><span>[Partner 4]</span></div>
+        <div class="partner-logo"><span>[Partner 5]</span></div>
+        <div class="partner-logo"><span>[Partner 6]</span></div>
+        <div class="partner-logo"><span>[Partner 7]</span></div>
+        <div class="partner-logo"><span>[Partner 8]</span></div>
+      </div>
+    </div>
+    <div class="partner-cta reveal">
+      <h3>Partner With IMCC</h3>
+      <p>Churches, organisations, and businesses can support IMCC through sponsorship, in-kind donations, volunteering, and promotional partnership.</p>
+      <a href="#" class="btn btn-primary">Become a Partner <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Section 15: Planning Committee -->
+<section class="section light-bg" id="committee">
+  <div class="container-full">
+    <div class="section-header center reveal">
+      <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Planning Committee</span>
+      <h2 class="heading heading-lg" style="color:var(--black)">The Team Behind IMCC</h2>
+      <p class="body-text" style="margin-top:16px">Dedicated volunteers and ministry workers serving together to make IMCC a reality. [Official committee members to be confirmed.]</p>
+    </div>
+    <div class="committee-grid">
+      <div class="team-card reveal">
+        <div class="team-card-avatar">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w200&q=80" alt="Committee member placeholder" loading="lazy">
+        </div>
+        <h3>[Name]</h3>
+        <div class="role">Conference Director</div>
+        <div class="org">[Ministry / Professional Role]</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-card-avatar">
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w200&q=80" alt="Committee member placeholder" loading="lazy">
+        </div>
+        <h3>[Name]</h3>
+        <div class="role">Programme Coordinator</div>
+        <div class="org">[Ministry / Professional Role]</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-card-avatar">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w200&q=80" alt="Committee member placeholder" loading="lazy">
+        </div>
+        <h3>[Name]</h3>
+        <div class="role">Logistics Lead</div>
+        <div class="org">[Ministry / Professional Role]</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-card-avatar">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w200&q=80" alt="Committee member placeholder" loading="lazy">
+        </div>
+        <h3>[Name]</h3>
+        <div class="role">Welfare Coordinator</div>
+        <div class="org">[Ministry / Professional Role]</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-card-avatar">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w200&q=80" alt="Committee member placeholder" loading="lazy">
+        </div>
+        <h3>[Name]</h3>
+        <div class="role">Communications Lead</div>
+        <div class="org">[Ministry / Professional Role]</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-card-avatar">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w200&q=80" alt="Committee member placeholder" loading="lazy">
+        </div>
+        <h3>[Name]</h3>
+        <div class="role">Sponsorship Lead</div>
+        <div class="org">[Ministry / Professional Role]</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-card-avatar">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w200&q=80" alt="Committee member placeholder" loading="lazy">
+        </div>
+        <h3>[Name]</h3>
+        <div class="role">Volunteer Coordinator</div>
+        <div class="org">[Ministry / Professional Role]</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-card-avatar">
+          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w200&q=80" alt="Committee member placeholder" loading="lazy">
+        </div>
+        <h3>[Name]</h3>
+        <div class="role">Registration Lead</div>
+        <div class="org">[Ministry / Professional Role]</div>
+      </div>
+    </div>
+    <div class="team-appreciation reveal">
+      <p>IMCC is made possible by the dedication of volunteers, ministry workers, and supporters who give their time, skills, and resources to serve the next generation. We are deeply grateful for every person who contributes to this conference.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 16: FAQ -->
+<section class="section dark-bg" id="faq">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Frequently Asked Questions</span>
+      <h2 class="heading heading-lg">Questions &amp; Answers</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">Who can attend IMCC?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">IMCC is designed for missionary children, teenagers from missionary families, young adults raised in mission environments, missionary parents, mentors, caregivers, and ministry leaders. [Final eligibility criteria to be confirmed by organisers.]</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">What does the registration fee include?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">[Registration fee details and inclusions to be confirmed by organisers.]</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">Can I sponsor a child?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Sponsorship is a meaningful way to help missionary children attend IMCC. Contact <a href="mailto:imcc@capro.global" style="color:var(--accent)">imcc@capro.global</a> for more information.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">How can my church support IMCC?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Churches can support IMCC through prayer, financial partnership, sending volunteers, and promoting the conference to missionary families. Contact the IMCC team to discuss partnership opportunities.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">What safeguarding measures are in place?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Child safeguarding is a top priority at IMCC. All volunteers and leaders undergo safeguarding checks. [Specific safeguarding policies to be confirmed and linked.]</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">Is financial assistance available?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Sponsorship and financial assistance may be available for missionary families who need support. Please contact the IMCC team for confidential enquiry.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 17: Contact -->
+<section class="section light-bg" id="contact">
+  <div class="container">
+    <div class="contact-banner reveal">
+      <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Contact the IMCC Team</span>
+      <h2 class="heading heading-lg" style="color:var(--black)">Have Any Questions?</h2>
+      <p class="body-text" style="margin:16px auto 0;max-width:560px">Whether it's about registration, sponsorship, volunteering, partnership, or anything else — send us an email and the IMCC team will get back to you.</p>
+      <a href="mailto:imcc@capro.global" class="contact-banner-email">imcc@capro.global</a>
+    </div>
+  </div>
+</section>
+
+<!-- Section 18: Final CTA -->
+<section class="cta-section" id="register">
+  <div class="cta-bg">
+    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600&q=80" alt="" aria-hidden="true">
+  </div>
+  <div class="cta-content reveal">
+    <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Register Now</span>
+    <h2 class="heading heading-xl">Your IMCC Journey<br>Starts Here</h2>
+    <p class="body-text" style="max-width:600px;margin:24px auto 0;font-size:1.125rem">Join missionary children, families, and ministry partners from around the world for four unforgettable days of worship, learning, friendship, and faith. Register today and be part of something that changes lives.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-primary">Register for IMCC <span class="btn-arrow">→</span></a>
+      <a href="mailto:imcc@capro.global" class="btn btn-secondary">Sponsor a Child <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-simple">
+      <a href="#" class="nav-logo"><img src="Logo.jpeg" alt="IMCC Logo" style="height:48px;width:auto"></a>
+      <p>The International Missionary Kids Conference — a faith-centred gathering where missionary children are seen, strengthened, and connected across nations.</p>
+      <p style="margin-top:12px;font-size:.8125rem;color:rgba(255,255,255,.35)">An initiative of <a href="https://capro.global/" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">CAPRO Ministries</a></p>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12z"/></svg></a>
+      </div>
+    </div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="#about">About</a>
+      <a href="#programme">Programme</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#location">Location</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="footer-bottom">
+      <p>&copy; 2026 IMCC — International Missionary Kids Conference. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Image lightbox">
+  <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+  <img src="" alt="" id="lightboxImg">
+</div>
+
+<script>
+// Countdown Timer
+(function(){
+const eventDate = new Date('2026-08-24T09:00:00');
+function updateCountdown(){
+const now = new Date();
+const diff = eventDate - now;
+if(diff <= 0){
+document.getElementById('cdDays').textContent = '00';
+document.getElementById('cdHours').textContent = '00';
+document.getElementById('cdMins').textContent = '00';
+document.getElementById('cdSecs').textContent = '00';
+return;
+}
+const days = Math.floor(diff / (1000*60*60*24));
+const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+const secs = Math.floor((diff % (1000*60)) / 1000);
+document.getElementById('cdDays').textContent = String(days).padStart(2,'0');
+document.getElementById('cdHours').textContent = String(hours).padStart(2,'0');
+document.getElementById('cdMins').textContent = String(mins).padStart(2,'0');
+document.getElementById('cdSecs').textContent = String(secs).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+})();
+
+// Hero parallax zoom
+(function(){
+const heroImg = document.querySelector('.hero-bg-img');
+if(!heroImg) return;
+window.addEventListener('scroll', function(){
+const scrolled = window.scrollY;
+const heroHeight = document.querySelector('.hero').offsetHeight;
+if(scrolled < heroHeight){
+const scale = 1 + (scrolled / heroHeight) * 0.8;
+heroImg.style.transform = 'scale(' + scale + ')';
+}
+},{passive:true});
+})();
+
+// Navigation scroll effect
+(function(){
+const nav = document.querySelector('.nav');
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links-wrap a');
+window.addEventListener('scroll', function(){
+if(window.scrollY > 80) nav.classList.add('scrolled');
+else nav.classList.remove('scrolled');
+let current = '';
+sections.forEach(function(section){
+const top = section.offsetTop - 150;
+if(window.scrollY >= top) current = section.getAttribute('id');
+});
+navLinks.forEach(function(link){
+link.classList.remove('active');
+if(link.getAttribute('href') === '#' + current) link.classList.add('active');
+});
+});
+})();
+
+// Mobile menu
+(function(){
+const toggle = document.querySelector('.nav-toggle');
+const mobile = document.querySelector('.nav-mobile');
+const links = mobile.querySelectorAll('a');
+function openMenu(){
+mobile.classList.add('open');
+toggle.classList.add('active');
+toggle.setAttribute('aria-expanded', 'true');
+}
+function closeMenu(){
+mobile.classList.remove('open');
+toggle.classList.remove('active');
+toggle.setAttribute('aria-expanded', 'false');
+}
+toggle.addEventListener('click', function(){
+if(mobile.classList.contains('open')){ closeMenu(); } else { openMenu(); }
+});
+links.forEach(function(link){
+link.addEventListener('click', closeMenu);
+});
+document.addEventListener('keydown', function(e){
+if(e.key === 'Escape') closeMenu();
+});
+})();
+
+// FAQ accordion
+(function(){
+const items = document.querySelectorAll('.faq-item');
+items.forEach(function(item){
+const trigger = item.querySelector('.faq-trigger');
+trigger.addEventListener('click', function(){
+const isOpen = item.classList.contains('open');
+items.forEach(function(i){i.classList.remove('open');i.querySelector('.faq-trigger').setAttribute('aria-expanded','false')});
+if(!isOpen){item.classList.add('open');trigger.setAttribute('aria-expanded','true')}
+});
+});
+})();
+
+// Snapshot scroll-linked opacity reveal
+(function(){
+const items = document.querySelectorAll('.snapshot-scroll-reveal');
+const snapshot = document.querySelector('.snapshot');
+if(!snapshot) return;
+function updateOpacity(){
+const rect = snapshot.getBoundingClientRect();
+const windowHeight = window.innerHeight;
+const start = windowHeight;
+const end = 0;
+const progress = 1 - (rect.top / start);
+const clampedProgress = Math.max(0, Math.min(1, progress));
+items.forEach(function(item,i){
+const delay = i * 0.15;
+const itemProgress = Math.max(0, Math.min(1, (clampedProgress - delay) / (1 - delay)));
+const opacity = 0.15 + (itemProgress * 0.85);
+const blur = 1 - (itemProgress * 1);
+item.style.opacity = opacity;
+item.style.filter = 'blur(' + blur + 'px)';
+});
+}
+window.addEventListener('scroll', updateOpacity, {passive:true});
+updateOpacity();
+})();
+
+// Scroll reveal
+(function(){
+const observer = new IntersectionObserver(function(entries){
+entries.forEach(function(entry){
+if(entry.isIntersecting){entry.target.classList.add('visible')}
+});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){observer.observe(el)});
+})();
+
+// 3D Concave Gallery Carousel
+(function(){
+  var track = document.getElementById('galleryTrack');
+  var items = Array.prototype.slice.call(track.querySelectorAll('.gallery-item'));
+  var total = items.length;
+  var visibleCount = 7;
+  var autoTimer = null;
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+
+  function layout(){
+    var vw = window.innerWidth;
+    var isMobile = vw <= 729;
+    var cardW = isMobile ? 150 : 240;
+    var hSpacing = isMobile ? 125 : 200;
+    var centerDepth = isMobile ? -120 : -220;
+    var edgeDepth = isMobile ? 40 : 100;
+    var centerScale = isMobile ? 0.55 : 0.5;
+    var edgeScale = isMobile ? 1.0 : 1.18;
+    var maxRotY = isMobile ? 16 : 24;
+    var centerOpacity = 0.5;
+    var edgeOpacity = 1;
+    var centerIdx = Math.floor(visibleCount / 2);
+
+    items.forEach(function(item, i){
+      var offset = i - centerIdx;
+      var norm = Math.abs(offset) / centerIdx;
+      var s = centerScale + (edgeScale - centerScale) * norm;
+      var z = centerDepth + (edgeDepth - centerDepth) * norm;
+      var rotY = -offset * (maxRotY / centerIdx);
+      var op = (i >= 0 && i < visibleCount) ? centerOpacity + (edgeOpacity - centerOpacity) * norm : 0;
+      var zIdx = Math.round(1 + norm * 9);
+      var x = offset * hSpacing;
+      item.style.width = cardW + 'px';
+      item.style.transform = 'translate(-50%,-50%) translateX('+x+'px) translateZ('+z+'px) rotateY('+rotY+'deg) scale('+s+')';
+      item.style.opacity = op;
+      item.style.zIndex = zIdx;
+      item.style.pointerEvents = (i >= 0 && i < visibleCount) ? 'auto' : 'none';
+    });
+  }
+
+  function rotateLeft(){
+    var first = items.shift();
+    items.push(first);
+    track.appendChild(first);
+    layout();
+  }
+
+  function rotateRight(){
+    var last = items.pop();
+    items.unshift(last);
+    track.insertBefore(last, items[0]);
+    layout();
+  }
+
+  function startAuto(){
+    stopAuto();
+    autoTimer = setInterval(function(){ rotateLeft(); }, 3000);
+  }
+
+  function stopAuto(){
+    if(autoTimer){ clearInterval(autoTimer); autoTimer = null; }
+  }
+
+  window.galleryPrev = function(){
+    stopAuto();
+    rotateRight();
+    startAuto();
+  };
+  window.galleryNext = function(){
+    stopAuto();
+    rotateLeft();
+    startAuto();
+  };
+
+  track.addEventListener('click', function(e){
+    var clicked = e.target.closest('.gallery-item');
+    if(!clicked) return;
+    var idx = items.indexOf(clicked);
+    if(idx < 0 || idx >= visibleCount) return;
+    var img = clicked.querySelector('img');
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox || e.target.classList.contains('lightbox-close')){
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && lightbox.classList.contains('open')){
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    if(e.key === 'ArrowLeft') galleryPrev();
+    if(e.key === 'ArrowRight') galleryNext();
+  });
+
+  // Smooth drag / swipe support
+  var dragStartX = 0;
+  var dragDelta = 0;
+  var dragging = false;
+  var dragThreshold = 30;
+  var dragVelocity = 0;
+  var lastDragX = 0;
+  var lastDragTime = 0;
+
+  function onDragStart(e){
+    dragging = true;
+    dragStartX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    lastDragX = dragStartX;
+    lastDragTime = Date.now();
+    dragDelta = 0;
+    dragVelocity = 0;
+    stopAuto();
+    track.style.transition = 'none';
+  }
+
+  function onDragMove(e){
+    if(!dragging) return;
+    var x = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    var now = Date.now();
+    var dt = now - lastDragTime;
+    if(dt > 0) dragVelocity = (x - lastDragX) / dt;
+    lastDragX = x;
+    lastDragTime = now;
+    dragDelta = x - dragStartX;
+    var shift = dragDelta * 0.6;
+    track.style.transform = 'translateX(' + shift + 'px)';
+  }
+
+  function onDragEnd(){
+    if(!dragging) return;
+    dragging = false;
+    track.style.transition = '';
+    track.style.transform = '';
+    var speedSwipe = Math.abs(dragVelocity) > 0.3;
+    if(dragDelta > dragThreshold || (speedSwipe && dragVelocity > 0)){
+      rotateRight();
+    } else if(dragDelta < -dragThreshold || (speedSwipe && dragVelocity < 0)){
+      rotateLeft();
+    }
+    startAuto();
+  }
+
+  track.addEventListener('mousedown', onDragStart);
+  document.addEventListener('mousemove', onDragMove);
+  document.addEventListener('mouseup', onDragEnd);
+  track.addEventListener('touchstart', onDragStart, {passive:true});
+  document.addEventListener('touchmove', onDragMove, {passive:true});
+  document.addEventListener('touchend', onDragEnd);
+
+  layout();
+  startAuto();
+  window.addEventListener('resize', layout);
+  document.getElementById('gallery').addEventListener('mouseenter', stopAuto);
+  document.getElementById('gallery').addEventListener('mouseleave', startAuto);
+})();
+</script>
+</body>
+</html>

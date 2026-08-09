@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Deels — Product Design & Development Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#7B2FF2;--blue:#2D7FF9;--black:#0A0A0A;--white:#FFFFFF;--offwhite:#F5F5F5;--gray:#888;--darkgray:#1A1A1A;--font-head:'Space Grotesk','Inter',sans-serif;--font-body:'Inter',sans-serif}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--black);font-family:var(--font-body);color:var(--black);-webkit-font-smoothing:antialiased}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .45s ease}
+.slide.active{opacity:1;pointer-events:auto;z-index:10}
+/* Typography */
+.slide h1{font-family:var(--font-head);font-size:clamp(42px,5vw,72px);line-height:1.05;font-weight:900;letter-spacing:-.02em}
+.slide h2{font-family:var(--font-head);font-size:clamp(36px,4.5vw,64px);line-height:1.08;font-weight:900;letter-spacing:-.01em}
+.slide h3{font-family:var(--font-head);font-size:clamp(16px,1.5vw,22px);font-weight:700}
+.slide p,.slide li{font-size:clamp(14px,1.2vw,18px);line-height:1.6;font-weight:400}
+.purple{color:var(--purple)}
+.white{color:var(--white)}
+/* Layouts */
+.split{display:flex;width:100%;height:100%}
+.split-left{width:50%;position:relative;display:flex;align-items:center;justify-content:center}
+.split-right{width:50%;display:flex;align-items:center;justify-content:center;padding:60px 50px}
+.split-left-dark{background:var(--black);color:var(--white)}
+.split-right-dark{background:var(--black);color:var(--white)}
+.split-left-light{background:var(--white)}
+.split-right-light{background:var(--white)}
+.full-dark{background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.full-light{background:var(--white);color:var(--black);display:flex;align-items:center;justify-content:center}
+/* Section divider */
+.section-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.section-divider .sub{font-size:clamp(14px,1.1vw,17px);text-transform:uppercase;letter-spacing:.15em;color:var(--gray);margin-bottom:16px;font-weight:500}
+/* Cards */
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%}
+.card{background:var(--purple);border-radius:8px;padding:28px 24px;color:var(--white);display:flex;flex-direction:column;justify-content:center;min-height:160px}
+.card h3{font-size:clamp(20px,2vw,32px);font-weight:900;margin-bottom:6px}
+.card p{font-size:clamp(14px,1.1vw,16px);opacity:.85;line-height:1.5}
+.card-outline{background:transparent;border:2px solid rgba(255,255,255,.25);border-radius:8px;padding:28px 24px;color:var(--white);display:flex;flex-direction:column;justify-content:center;min-height:160px}
+.card-outline h3{font-size:clamp(20px,2vw,32px);font-weight:900;margin-bottom:6px}
+.card-outline p{font-size:clamp(14px,1.1vw,16px);opacity:.7;line-height:1.5}
+/* Illustration */
+.illust{max-width:100%;height:auto;object-fit:contain}
+.illust-container{display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:40px}
+/* Bullet lists */
+.blist{list-style:none;padding:0}
+.blist li{padding:8px 0;padding-left:20px;position:relative;font-size:clamp(14px,1.2vw,18px);line-height:1.5}
+.blist li::before{content:'';position:absolute;left:0;top:16px;width:8px;height:8px;border-radius:50%;background:var(--purple)}
+.blist li strong{font-weight:700;color:var(--black)}
+/* Cols */
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:30px;width:100%}
+.cols2-wide{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;width:100%}
+/* Footer */
+.sf{position:absolute;bottom:0;left:0;right:0;height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;font-size:14px;font-weight:600;z-index:5}
+.sf.d{color:rgba(255,255,255,.2)}.sf.l{color:var(--gray)}
+/* Progress */
+.sp{position:absolute;bottom:0;left:0;height:3px;background:var(--purple);z-index:6;transition:width .45s ease}
+/* Reveal */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+.rv1{transition-delay:.07s}.rv2{transition-delay:.13s}.rv3{transition-delay:.19s}.rv4{transition-delay:.25s}.rv5{transition-delay:.31s}.rv6{transition-delay:.37s}
+/* Step circles */
+.step-circle{width:40px;height:40px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:800;font-size:14px;flex-shrink:0}
+/* Controls */
+.ctrl{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;z-index:200;background:rgba(10,10,10,.9);backdrop-filter:blur(8px);border-radius:40px;padding:5px 16px;border:1px solid rgba(255,255,255,.08)}
+.ctrl button{width:32px;height:32px;border:none;background:rgba(255,255,255,.07);color:var(--white);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.ctrl button:hover{background:rgba(255,255,255,.15)}
+.ctrl button:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+.ctrl button svg{width:15px;height:15px}
+.ctr{color:rgba(255,255,255,.4);font-size:14px;font-weight:600;min-width:48px;text-align:center;font-variant-numeric:tabular-nums}
+/* Presenter notes */
+.pn{position:fixed;bottom:0;left:0;right:0;max-height:26vh;background:rgba(10,10,10,.96);backdrop-filter:blur(8px);color:rgba(255,255,255,.75);padding:16px 32px;font-size:14px;line-height:1.6;z-index:190;transform:translateY(100%);transition:transform .3s ease;overflow-y:auto;border-top:2px solid var(--purple)}
+.pn.open{transform:translateY(0)}
+.pn-label{font-size:14px;text-transform:uppercase;letter-spacing:.12em;color:var(--purple);font-weight:700;margin-bottom:5px}
+@media print{.ctrl,.pn{display:none!important}.slide{position:relative!important;opacity:1!important;pointer-events:auto!important;width:100vw;height:calc(100vw*.5625);page-break-after:always}.rv{opacity:1!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){.slide,.rv{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="deck">
+
+<!-- ═══ SLIDE 01 — COVER ═══ -->
+<section class="slide active" id="slide-01" data-notes="This presentation outlines our approach to designing and developing Travel Deels as a modern travel platform.">
+<div class="split">
+  <div class="split-left split-left-dark" style="flex-direction:column;padding:60px 50px;align-items:flex-start">
+    <p class="rv" style="font-size:14px;text-transform:uppercase;letter-spacing:.15em;color:var(--gray);margin-bottom:20px">Design · Development · Strategy</p>
+    <h1 class="rv rv1" style="margin-bottom:14px">TRAVEL<br><span class="purple">DEELS</span></h1>
+    <p class="rv rv2" style="font-size:clamp(14px,1.2vw,18px);color:var(--gray);margin-bottom:0;line-height:1.5">Product Design &amp;<br>Development Proposal</p>
+  </div>
+  <div class="split-right split-right-dark" style="padding:0;position:relative">
+    <img src="https://stories.freepiklabs.com/storage/29571/Journey_Mesa-de-trabajo-1.svg" alt="Travel journey illustration" class="illust" style="max-width:85%">
+  </div>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>1 / 22</span></div>
+<div class="sp" style="width:5%"></div>
+</section>
+
+<!-- ═══ SLIDE 02 — AGENDA ═══ -->
+<section class="slide" id="slide-02" data-notes="Here is what we will cover in this proposal.">
+<div class="split">
+  <div class="split-left split-left-dark" style="padding:0;display:flex;align-items:center;justify-content:center">
+    <img src="https://stories.freepiklabs.com/storage/6340/World-01.svg" alt="World illustration" class="illust" style="max-width:75%">
+  </div>
+  <div class="split-right split-right-dark" style="flex-direction:column;align-items:flex-start;gap:0">
+    <h2 class="rv" style="margin-bottom:28px">AGENDA</h2>
+    <div style="display:flex;flex-direction:column;width:100%">
+      <div class="rv rv1" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-size:clamp(14px,1.2vw,18px)">Introduction</span><span style="color:var(--gray);font-size:14px">03</span></div>
+      <div class="rv rv2" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-size:clamp(14px,1.2vw,18px)">Understanding the Project</span><span style="color:var(--gray);font-size:14px">04</span></div>
+      <div class="rv rv3" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-size:clamp(14px,1.2vw,18px)">Market Landscape</span><span style="color:var(--gray);font-size:14px">06</span></div>
+      <div class="rv rv4" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-size:clamp(14px,1.2vw,18px)">Product Direction</span><span style="color:var(--gray);font-size:14px">08</span></div>
+      <div class="rv rv5" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-size:clamp(14px,1.2vw,18px)">Design System</span><span style="color:var(--gray);font-size:14px">12</span></div>
+      <div class="rv rv6" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-size:clamp(14px,1.2vw,18px)">Technical Approach</span><span style="color:var(--gray);font-size:14px">15</span></div>
+      <div class="rv" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-size:clamp(14px,1.2vw,18px)">Maintenance &amp; Support</span><span style="color:var(--gray);font-size:14px">19</span></div>
+      <div class="rv" style="display:flex;justify-content:space-between;padding:12px 0"><span style="font-size:clamp(14px,1.2vw,18px)">Closing</span><span style="color:var(--gray);font-size:14px">21</span></div>
+    </div>
+  </div>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>2 / 22</span></div>
+<div class="sp" style="width:10%"></div>
+</section>
+
+<!-- ═══ SLIDE 03 — SECTION: INTRODUCTION ═══ -->
+<section class="slide" id="slide-03" data-notes="Let's start with a brief introduction.">
+<div class="full-dark section-divider">
+  <p class="sub rv">INTRODUCTION</p>
+  <h2 class="rv rv1" style="font-size:clamp(48px,6vw,88px)">What is<br><span class="purple">Travel Deels</span></h2>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>3 / 22</span></div>
+<div class="sp" style="width:15%"></div>
+</section>
+
+<!-- ═══ SLIDE 04 — WHAT IS TRAVEL DEELS ═══ -->
+<section class="slide" id="slide-04" data-notes="Travel Deels is a connected travel ecosystem — flights, hotels, tours, packages, visas, transfers — all in one platform.">
+<div class="split">
+  <div class="split-left split-left-light" style="flex-direction:column;align-items:flex-start;padding:60px 50px">
+    <h2 class="rv" style="margin-bottom:20px">A connected<br><span class="purple">travel ecosystem</span></h2>
+    <ul class="blist rv rv2">
+      <li><strong>Flights</strong> — Search, compare and book with live pricing</li>
+      <li><strong>Hotels</strong> — Global inventory, filtered by preference</li>
+      <li><strong>Tours &amp; Activities</strong> — Experiences at every destination</li>
+      <li><strong>Holiday Packages</strong> — Curated bundles for quick booking</li>
+      <li><strong>Visas</strong> — Check, apply, track — all in one place</li>
+      <li><strong>Airport Transfers</strong> — Door-to-door ground transport</li>
+    </ul>
+  </div>
+  <div class="split-right split-right-light" style="padding:0">
+    <img src="https://stories.freepiklabs.com/storage/14084/Hotel-Booking-(1)_Artboard-1.svg" alt="Hotel booking illustration" class="illust" style="max-width:80%">
+  </div>
+</div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>4 / 22</span></div>
+<div class="sp" style="width:20%"></div>
+</section>
+
+<!-- ═══ SLIDE 05 — THE PROBLEM ═══ -->
+<section class="slide" id="slide-05" data-notes="Most travel platforms fragment the journey. Users jump between sites for flights, hotels, visas, transfers. That's friction.">
+<div class="split">
+  <div class="split-left split-left-dark" style="padding:0">
+    <img src="https://stories.freepiklabs.com/storage/2566/277-World_Artboard-1.svg" alt="World illustration" class="illust" style="max-width:70%">
+  </div>
+  <div class="split-right split-right-dark" style="flex-direction:column;align-items:flex-start">
+    <h2 class="rv" style="margin-bottom:16px">The <span class="purple">problem</span></h2>
+    <p class="rv rv1" style="color:var(--gray);margin-bottom:24px;font-size:clamp(14px,1.2vw,18px);line-height:1.6">Users currently jump between multiple platforms to plan a single trip. That creates friction, confusion and lost bookings.</p>
+    <div class="rv rv2" style="padding:16px 20px;border:1px solid rgba(255,255,255,.12);border-radius:6px;margin-bottom:12px;width:100%">
+      <h3 style="font-size:15px;margin-bottom:4px">Fragmented experience</h3>
+      <p style="font-size:14px;color:var(--gray)">5+ websites to plan one trip</p>
+    </div>
+    <div class="rv rv3" style="padding:16px 20px;border:1px solid rgba(255,255,255,.12);border-radius:6px;margin-bottom:12px;width:100%">
+      <h3 style="font-size:15px;margin-bottom:4px">Low conversion</h3>
+      <p style="font-size:14px;color:var(--gray)">68% cart abandonment in travel</p>
+    </div>
+    <div class="rv rv4" style="padding:16px 20px;border:1px solid rgba(255,255,255,.12);border-radius:6px;width:100%">
+      <h3 style="font-size:15px;margin-bottom:4px">No unified management</h3>
+      <p style="font-size:14px;color:var(--gray)">Bookings scattered across emails and apps</p>
+    </div>
+  </div>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>5 / 22</span></div>
+<div class="sp" style="width:25%"></div>
+</section>
+
+<!-- ═══ SLIDE 06 — SECTION: MARKET ═══ -->
+<section class="slide" id="slide-06" data-notes="Let's look at the competitive landscape.">
+<div class="full-dark section-divider">
+  <p class="sub rv">MARKET LANDSCAPE</p>
+  <h2 class="rv rv1" style="font-size:clamp(48px,6vw,88px)">Who we're<br><span class="purple">up against</span></h2>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>6 / 22</span></div>
+<div class="sp" style="width:30%"></div>
+</section>
+
+<!-- ═══ SLIDE 07 — WHAT WE STUDIED ═══ -->
+<section class="slide" id="slide-07" data-notes="We studied six major competitors to understand what works and what gaps exist.">
+<div style="background:var(--white);width:100%;height:100%;padding:60px 50px;display:flex;flex-direction:column;justify-content:center">
+  <h2 class="rv" style="margin-bottom:6px">What we studied</h2>
+  <p class="rv rv1" style="color:var(--gray);margin-bottom:24px;font-size:14px">Six category references — learning from proven patterns.</p>
+  <div class="cards3">
+    <a href="https://www.trip.com" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit"><div class="rv rv2" style="background:var(--offwhite);border-radius:8px;padding:24px;border:1px solid #E5E5E5;cursor:pointer">
+      <h3 style="font-size:18px;margin-bottom:4px">Trip.com</h3>
+      <p style="font-size:14px;color:var(--gray);margin-bottom:10px">Breadth of product — flights, hotels, trains, activities in one ecosystem.</p>
+      <p style="font-size:14px;color:var(--purple);font-weight:600">Takeaway: One platform, many services.</p>
+    </div></a>
+    <a href="https://www.travelup.com" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit"><div class="rv rv3" style="background:var(--offwhite);border-radius:8px;padding:24px;border:1px solid #E5E5E5;cursor:pointer">
+      <h3 style="font-size:18px;margin-bottom:4px">TravelUp</h3>
+      <p style="font-size:14px;color:var(--gray);margin-bottom:10px">Search-first booking flow with strong filter UX and price comparison.</p>
+      <p style="font-size:14px;color:var(--purple);font-weight:600">Takeaway: Search drives intent.</p>
+    </div></a>
+    <a href="https://www.netflights.com" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit"><div class="rv rv4" style="background:var(--offwhite);border-radius:8px;padding:24px;border:1px solid #E5E5E5;cursor:pointer">
+      <h3 style="font-size:18px;margin-bottom:4px">Netflights</h3>
+      <p style="font-size:14px;color:var(--gray);margin-bottom:10px">Strong flight comparison — transparent pricing, flexible dates, multi-city.</p>
+      <p style="font-size:14px;color:var(--purple);font-weight:600">Takeaway: Transparency builds trust.</p>
+    </div></a>
+    <a href="https://www.trailfinders.com" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit"><div class="rv rv5" style="background:var(--offwhite);border-radius:8px;padding:24px;border:1px solid #E5E5E5;cursor:pointer">
+      <h3 style="font-size:18px;margin-bottom:4px">Trailfinders</h3>
+      <p style="font-size:14px;color:var(--gray);margin-bottom:10px">Guided travel support — human expertise paired with digital tools.</p>
+      <p style="font-size:14px;color:var(--purple);font-weight:600">Takeaway: Expertise adds value.</p>
+    </div></a>
+    <a href="https://www.flightcentre.com.au" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit"><div class="rv rv6" style="background:var(--offwhite);border-radius:8px;padding:24px;border:1px solid #E5E5E5;cursor:pointer">
+      <h3 style="font-size:18px;margin-bottom:4px">Flight Centre</h3>
+      <p style="font-size:14px;color:var(--gray);margin-bottom:10px">Service-led trust — personal consultants, tailored packages, loyalty.</p>
+      <p style="font-size:14px;color:var(--purple);font-weight:600">Takeaway: Service differentiates.</p>
+    </div></a>
+    <a href="https://www.travelrepublic.co.uk" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit"><div class="rv" style="background:var(--offwhite);border-radius:8px;padding:24px;border:1px solid #E5E5E5;cursor:pointer">
+      <h3 style="font-size:18px;margin-bottom:4px">Travel Republic</h3>
+      <p style="font-size:14px;color:var(--gray);margin-bottom:10px">Destination merchandising — visual grids, seasonal deals, upsell flows.</p>
+      <p style="font-size:14px;color:var(--purple);font-weight:600">Takeaway: Visual merchandising sells.</p>
+    </div></a>
+  </div>
+</div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>7 / 22</span></div>
+<div class="sp" style="width:35%"></div>
+</section>
+
+<!-- ═══ SLIDE 08 — SECTION: PRODUCT DIRECTION ═══ -->
+<section class="slide" id="slide-08" data-notes="Now let's talk about the product direction we recommend.">
+<div class="full-dark section-divider">
+  <p class="sub rv">PRODUCT DIRECTION</p>
+  <h2 class="rv rv1" style="font-size:clamp(48px,6vw,88px)">The<br><span class="purple">experience</span></h2>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>8 / 22</span></div>
+<div class="sp" style="width:40%"></div>
+</section>
+
+<!-- ═══ SLIDE 09 — EXPERIENCE DIRECTION ═══ -->
+<section class="slide" id="slide-09" data-notes="We recommend a continuous journey — discover, search, compare, book, manage.">
+<div class="split">
+  <div class="split-left split-left-light" style="flex-direction:column;align-items:flex-start;padding:60px 50px">
+    <h2 class="rv" style="margin-bottom:8px">Continuous<br><span class="purple">journey</span></h2>
+    <p class="rv rv1" style="color:var(--gray);margin-bottom:24px;font-size:14px">From discovery to post-booking management.</p>
+    <div class="rv rv2" style="display:flex;gap:8px;width:100%;margin-bottom:20px">
+      <div style="flex:1;background:var(--purple);border-radius:6px;padding:16px 12px;color:var(--white);text-align:center"><h3 style="font-size:14px;color:var(--white);margin-bottom:2px">Discover</h3><p style="font-size:14px;opacity:.7">Browse destinations</p></div>
+      <div style="flex:1;background:var(--offwhite);border:1px solid #E5E5E5;border-radius:6px;padding:16px 12px;text-align:center"><h3 style="font-size:14px;margin-bottom:2px">Search</h3><p style="font-size:14px;color:var(--gray)">Find options</p></div>
+      <div style="flex:1;background:var(--offwhite);border:1px solid #E5E5E5;border-radius:6px;padding:16px 12px;text-align:center"><h3 style="font-size:14px;margin-bottom:2px">Compare</h3><p style="font-size:14px;color:var(--gray)">Evaluate prices</p></div>
+      <div style="flex:1;background:var(--offwhite);border:1px solid #E5E5E5;border-radius:6px;padding:16px 12px;text-align:center"><h3 style="font-size:14px;margin-bottom:2px">Book</h3><p style="font-size:14px;color:var(--gray)">Complete checkout</p></div>
+      <div style="flex:1;background:var(--offwhite);border:1px solid #E5E5E5;border-radius:6px;padding:16px 12px;text-align:center"><h3 style="font-size:14px;margin-bottom:2px">Manage</h3><p style="font-size:14px;color:var(--gray)">Track trips</p></div>
+    </div>
+    <div class="rv rv3" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%">
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><div class="step-circle" style="width:28px;height:28px;font-size:14px">1</div><p style="font-size:14px;font-weight:600">Clear product discovery</p></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><div class="step-circle" style="width:28px;height:28px;font-size:14px">2</div><p style="font-size:14px;font-weight:600">Reduced booking friction</p></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><div class="step-circle" style="width:28px;height:28px;font-size:14px">3</div><p style="font-size:14px;font-weight:600">Unified itinerary view</p></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><div class="step-circle" style="width:28px;height:28px;font-size:14px">4</div><p style="font-size:14px;font-weight:600">Cross-sell &amp; retention</p></div>
+    </div>
+  </div>
+  <div class="split-right split-right-light" style="padding:0">
+    <img src="https://stories.freepiklabs.com/storage/101442/Online-Ticket_Mesa-de-trabajo-1.svg" alt="Online ticket illustration" class="illust" style="max-width:75%">
+  </div>
+</div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>9 / 22</span></div>
+<div class="sp" style="width:45%"></div>
+</section>
+
+<!-- ═══ SLIDE 10 — CONVERSION STRATEGY ═══ -->
+<section class="slide" id="slide-10" data-notes="Five UX/UI principles that reduce drop-off and drive sales — low cognitive load, frictionless flow, seamless payments, intent-driven UX, and visual trust.">
+<div style="background:var(--black);color:var(--white);width:100%;height:100%;padding:36px 44px;display:flex;flex-direction:column;justify-content:center">
+  <h2 class="rv" style="margin-bottom:4px;text-align:center">Traffic to sales —<br><span class="purple">conversion strategy</span></h2>
+  <p class="rv rv1" style="color:var(--gray);margin-bottom:44px;font-size:14px;text-align:center">UX and design principles we build into the platform — keeping users engaged, reducing drop-off, and driving bookings.</p>
+  <div class="rv rv2" style="display:flex;flex-direction:row;gap:12px;width:100%;align-items:flex-start">
+    <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;flex:1">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--white)">1</div>
+        <h3 style="font-size:15px">Low Cognitive Load</h3>
+      </div>
+      <p style="font-size:14px;color:var(--gray);line-height:1.5">Clean interfaces, clear hierarchy, progressive disclosure. Users find what they need without feeling overwhelmed — fewer drop-offs at every screen.</p>
+    </div>
+    <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;flex:1;margin-top:44px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--white)">2</div>
+        <h3 style="font-size:15px">Frictionless Flow</h3>
+      </div>
+      <p style="font-size:14px;color:var(--gray);line-height:1.5">Minimal steps from selection to confirmation. Guest checkout, auto-fill, progress indicators. Every extra click is a risk — we design them out.</p>
+    </div>
+    <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;flex:1;margin-top:88px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--white)">3</div>
+        <h3 style="font-size:15px">Seamless Payments</h3>
+      </div>
+      <p style="font-size:14px;color:var(--gray);line-height:1.5">Multiple payment options, clear upfront pricing, one-click checkout for returning users. Trust signals at every step — no surprises, no abandonment.</p>
+    </div>
+    <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;flex:1;margin-top:132px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--white)">4</div>
+        <h3 style="font-size:15px">Intent-Driven UX</h3>
+      </div>
+      <p style="font-size:14px;color:var(--gray);line-height:1.5">Smart defaults, predictive search, contextual recommendations. The platform anticipates user needs — fewer decisions, faster path to booking.</p>
+    </div>
+    <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:18px 16px;display:flex;flex-direction:column;flex:1;margin-top:176px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--white)">5</div>
+        <h3 style="font-size:15px">Trust &amp; Visual Assurance</h3>
+      </div>
+      <p style="font-size:14px;color:var(--gray);line-height:1.5">Social proof, transparent policies, security badges, consistent visual language throughout. Users convert when the interface feels safe and credible.</p>
+    </div>
+  </div>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>10 / 22</span></div>
+<div class="sp" style="width:45%"></div>
+</section>
+
+<!-- ═══ SLIDE 11 — PAGE STRUCTURE ═══ -->
+<section class="slide" id="slide-11" data-notes="Family tree structure — main homepage at root, dedicated service homepages, then subpages and profile branches beneath each.">
+<div style="background:var(--white);width:100%;height:100%;padding:80px 36px 24px;display:flex;flex-direction:column">
+  <h2 class="rv" style="margin-bottom:8px;text-align:center">Site structure — family tree</h2>
+   <p class="rv rv1" style="color:var(--gray);margin-bottom:0;font-size:14px;text-align:center">Main homepage at root, dedicated service homepages, then subpages and profile beneath each.</p>
+  <div style="height:64px;flex-shrink:0"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;flex:1">
+    <!-- ═══ Level 1 — Root ═══ -->
+    <div class="rv rv2" style="background:var(--purple);border-radius:8px;padding:10px 60px;color:var(--white);text-align:center;position:relative;z-index:2;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <h3 style="font-size:15px;font-weight:700">Travel Deels Main Homepage</h3>
+      <p style="font-size:14px;opacity:.75;margin-top:2px">Global Nav · Search Bar · Trust Signals · Featured Content</p>
+    </div>
+    <!-- Connector root → level 2 (64px gap, lines sit fully within) -->
+    <div style="position:relative;height:64px;width:90%">
+      <div style="position:absolute;top:0;left:50%;width:1px;height:32px;background:#ccc"></div>
+      <div style="position:absolute;top:32px;left:5%;right:5%;height:1px;background:#ccc"></div>
+      <div style="position:absolute;top:32px;left:5%;width:1px;height:32px;background:#ccc"></div>
+      <div style="position:absolute;top:32px;left:22%;width:1px;height:32px;background:#ccc"></div>
+      <div style="position:absolute;top:32px;left:39%;width:1px;height:32px;background:#ccc"></div>
+      <div style="position:absolute;top:32px;left:56%;width:1px;height:32px;background:#ccc"></div>
+      <div style="position:absolute;top:32px;left:73%;width:1px;height:32px;background:#ccc"></div>
+      <div style="position:absolute;top:32px;right:5%;width:1px;height:32px;background:#ccc"></div>
+    </div>
+    <!-- ═══ Level 2 — Service Homepages ═══ -->
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;width:100%">
+      <!-- Flights -->
+      <div style="border:1px solid #E5E5E5;border-radius:6px;overflow:hidden;min-height:300px">
+        <div style="background:#111;color:var(--white);padding:8px 8px;text-align:center;font-size:14px;font-weight:700">Flights</div>
+        <div style="display:flex;flex-direction:column;gap:1px;padding:8px 10px">
+          <p style="font-size:14px;color:var(--purple);font-weight:600">Flights Homepage</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Search Results</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Flight Details</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Seat Selection</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Add-ons</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Checkout → Confirmation</p>
+        </div>
+      </div>
+      <!-- Hotels -->
+      <div style="border:1px solid #E5E5E5;border-radius:6px;overflow:hidden;min-height:300px">
+        <div style="background:#111;color:var(--white);padding:8px 8px;text-align:center;font-size:14px;font-weight:700">Hotels</div>
+        <div style="display:flex;flex-direction:column;gap:1px;padding:8px 10px">
+          <p style="font-size:14px;color:var(--purple);font-weight:600">Hotels Homepage</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Search Results</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Hotel Details</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Room Select</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Add-ons</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Checkout → Confirmation</p>
+        </div>
+      </div>
+      <!-- Packages / Tours -->
+      <div style="border:1px solid #E5E5E5;border-radius:6px;overflow:hidden;min-height:300px">
+        <div style="background:#111;color:var(--white);padding:8px 8px;text-align:center;font-size:14px;font-weight:700">Packages</div>
+        <div style="display:flex;flex-direction:column;gap:1px;padding:8px 10px">
+          <p style="font-size:14px;color:var(--purple);font-weight:600">Packages Homepage</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Package Grid</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Package Details</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Itinerary</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Booking</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Checkout → Confirmation</p>
+        </div>
+      </div>
+      <!-- Visa -->
+      <div style="border:1px solid #E5E5E5;border-radius:6px;overflow:hidden;min-height:300px">
+        <div style="background:#111;color:var(--white);padding:8px 8px;text-align:center;font-size:14px;font-weight:700">Visa</div>
+        <div style="display:flex;flex-direction:column;gap:1px;padding:8px 10px">
+          <p style="font-size:14px;color:var(--purple);font-weight:600">Visa Homepage</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Visa Types</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Application Form</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Document Upload</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Payment</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Status Tracking</p>
+        </div>
+      </div>
+      <!-- Transfers -->
+      <div style="border:1px solid #E5E5E5;border-radius:6px;overflow:hidden;min-height:300px">
+        <div style="background:#111;color:var(--white);padding:8px 8px;text-align:center;font-size:14px;font-weight:700">Transfers</div>
+        <div style="display:flex;flex-direction:column;gap:1px;padding:8px 10px">
+          <p style="font-size:14px;color:var(--purple);font-weight:600">Transfers Homepage</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Search / Book</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Vehicle Select</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Passenger Info</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Confirm</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Receipt</p>
+        </div>
+      </div>
+      <!-- Account / Profile -->
+      <div style="border:1px solid #E5E5E5;border-radius:6px;overflow:hidden;min-height:300px">
+        <div style="background:var(--purple);color:var(--white);padding:8px 8px;text-align:center;font-size:14px;font-weight:700">Account</div>
+        <div style="display:flex;flex-direction:column;gap:1px;padding:8px 10px">
+          <p style="font-size:14px;color:var(--purple);font-weight:600">Profile Home</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">My Bookings</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Travel History</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Saved / Wishlist</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Payment Methods</p>
+          <p style="font-size:13px;color:var(--gray);padding-left:4px">Visa Status · Notifications</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>11 / 22</span></div>
+<div class="sp" style="width:50%"></div>
+</section>
+
+<!-- ═══ SLIDE 12 — DESIGN DIRECTION ═══ -->
+<section class="slide" id="slide-12" data-notes="Four pillars guiding every design decision.">
+<div class="split">
+  <div class="split-left split-left-dark" style="flex-direction:column;align-items:flex-start;padding:60px 50px">
+    <h2 class="rv" style="margin-bottom:20px">Design<br><span class="purple">direction</span></h2>
+    <p class="rv rv1" style="color:var(--gray);margin-bottom:24px;font-size:14px;line-height:1.6">Four pillars guiding every design decision across the platform.</p>
+    <div class="rv rv2" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%">
+      <div style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:6px">
+        <h3 style="font-size:15px;margin-bottom:4px">Brand clarity</h3>
+        <p style="font-size:14px;color:var(--gray)">Consistent identity across all surfaces</p>
+      </div>
+      <div class="rv rv3" style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:6px">
+        <h3 style="font-size:15px;margin-bottom:4px">Modern UI</h3>
+        <p style="font-size:14px;color:var(--gray)">Credible, organised, easy to use</p>
+      </div>
+      <div class="rv rv4" style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:6px">
+        <h3 style="font-size:15px;margin-bottom:4px">Speed</h3>
+        <p style="font-size:14px;color:var(--gray)">Fast navigation, minimal cognitive load</p>
+      </div>
+      <div class="rv rv5" style="padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:6px">
+        <h3 style="font-size:15px;margin-bottom:4px">Conversion</h3>
+        <p style="font-size:14px;color:var(--gray)">Every screen drives toward booking</p>
+      </div>
+    </div>
+  </div>
+  <div class="split-right split-right-dark" style="padding:0">
+    <img src="https://stories.freepiklabs.com/storage/2585/World_Mesa-de-trabajo-1.svg" alt="World illustration" class="illust" style="max-width:75%">
+  </div>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>12 / 22</span></div>
+<div class="sp" style="width:55%"></div>
+</section>
+
+<!-- ═══ SLIDE 13 — SECTION: DESIGN SYSTEM ═══ -->
+<section class="slide" id="slide-13" data-notes="Now let's look at the design system and component language.">
+<div class="full-dark section-divider">
+  <p class="sub rv">DESIGN SYSTEM</p>
+  <h2 class="rv rv1" style="font-size:clamp(48px,6vw,88px)">Component<br><span class="purple">language</span></h2>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>13 / 22</span></div>
+<div class="sp" style="width:60%"></div>
+</section>
+
+<!-- ═══ SLIDE 14 — COMPONENT MODULES ═══ -->
+<section class="slide" id="slide-14" data-notes="A consistent visual language across all modules.">
+<div class="split">
+  <div class="split-left split-left-light" style="padding:60px 50px;flex-direction:column;align-items:flex-start">
+    <h2 class="rv" style="margin-bottom:16px">Module<br><span class="purple">library</span></h2>
+    <p class="rv rv1" style="color:var(--gray);margin-bottom:20px;font-size:14px">Reusable components that ensure consistency and speed.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%">
+      <div class="rv rv2" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5">
+        <div style="width:36px;height:36px;border-radius:6px;background:var(--purple);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <div><h3 style="font-size:14px;margin-bottom:1px">Hero &amp; Navigation</h3><p style="font-size:14px;color:var(--gray)">Persistent search bar and primary CTA</p></div>
+      </div>
+      <div class="rv rv3" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5">
+        <div style="width:36px;height:36px;border-radius:6px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div>
+        <div><h3 style="font-size:14px;margin-bottom:1px">Destination Cards</h3><p style="font-size:14px;color:var(--gray)">Visual grid for browsing destinations</p></div>
+      </div>
+      <div class="rv rv4" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5">
+        <div style="width:36px;height:36px;border-radius:6px;background:var(--purple);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div><h3 style="font-size:14px;margin-bottom:1px">Search Modules</h3><p style="font-size:14px;color:var(--gray)">Flight, hotel, visa, transfer</p></div>
+      </div>
+      <div class="rv rv5" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5">
+        <div style="width:36px;height:36px;border-radius:6px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div><h3 style="font-size:14px;margin-bottom:1px">Trust &amp; Payment</h3><p style="font-size:14px;color:var(--gray)">Security signals and booking flow</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="split-right split-right-light" style="padding:0">
+    <img src="https://stories.freepiklabs.com/storage/15362/Booking-01-01.svg" alt="Booking illustration" class="illust" style="max-width:75%">
+  </div>
+</div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>14 / 22</span></div>
+<div class="sp" style="width:65%"></div>
+</section>
+
+<!-- ═══ SLIDE 15 — TECHNOLOGY STACK ═══ -->
+<section class="slide" id="slide-15" data-notes="Our technology stack is organised in functional layers. Each layer builds on the one below it — from infrastructure to design tools.">
+<div style="background:var(--white);width:100%;height:100%;padding:20px 40px 30px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+  <h2 class="rv" style="margin-bottom:2px;text-align:center">Technology Stack</h2>
+  <p class="rv rv1" style="color:var(--gray);margin-bottom:16px;font-size:14px;text-align:center">Organised in functional layers — each building on the foundation below.</p>
+  <div class="rv rv2" style="position:relative;width:100%">
+    <!-- Central hub -->
+    <div style="display:flex;justify-content:center;margin-bottom:100px">
+      <div style="width:40px;height:40px;background:var(--black);border-radius:8px;display:flex;align-items:center;justify-content:center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+      </div>
+    </div>
+    <!-- Connector lines -->
+    <div style="position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:10px">
+      <!-- Vertical line hub → horizontal -->
+      <div style="position:absolute;top:-100px;left:50%;width:1px;height:100px;background:#ccc"></div>
+      <!-- Horizontal line -->
+      <div style="position:absolute;top:-100px;left:8.3%;right:8.3%;height:1px;background:#ccc"></div>
+      <!-- Vertical drops to each column -->
+      <div style="position:absolute;top:-100px;left:8.3%;width:1px;height:100px;background:#ccc"></div>
+      <div style="position:absolute;top:-100px;left:25%;width:1px;height:100px;background:#ccc"></div>
+      <div style="position:absolute;top:-100px;left:41.7%;width:1px;height:100px;background:#ccc"></div>
+      <div style="position:absolute;top:-100px;left:58.3%;width:1px;height:100px;background:#ccc"></div>
+      <div style="position:absolute;top:-100px;left:75%;width:1px;height:100px;background:#ccc"></div>
+      <div style="position:absolute;top:-100px;right:8.3%;width:1px;height:100px;background:#ccc"></div>
+      <!-- Column 1: Design -->
+      <div style="border:1px solid #E5E5E5;border-radius:8px;padding:14px 12px;display:flex;flex-direction:column">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--purple);margin:0 auto 8px"></div>
+        <h3 style="font-size:14px;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #E5E5E5">Design</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#1E1E1E;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/figma/fff" alt="Figma" style="width:12px;height:12px"></div><p style="font-size:13px">Figma</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#FF9A00;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/adobeillustrator/fff" alt="Illustrator" style="width:12px;height:12px"></div><p style="font-size:13px">Illustrator</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#001E36;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/adobephotoshop/31A8FF" alt="Photoshop" style="width:12px;height:12px"></div><p style="font-size:13px">Photoshop</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#FF4785;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><span style="color:white;font-size:8px;font-weight:800">S</span></div><p style="font-size:13px">Storyset</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#FFD02B;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/miro/111" alt="Miro" style="width:12px;height:12px"></div><p style="font-size:13px">Miro</p></div>
+        </div>
+      </div>
+      <!-- Column 2: Frontend -->
+      <div style="border:1px solid #E5E5E5;border-radius:8px;padding:14px 12px;display:flex;flex-direction:column">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--blue);margin:0 auto 8px"></div>
+        <h3 style="font-size:14px;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #E5E5E5">Frontend</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#111;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/nextdotjs/fff" alt="Next.js" style="width:12px;height:12px"></div><p style="font-size:13px">Next.js</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#20232A;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" style="width:12px;height:12px"></div><p style="font-size:13px">React</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#3178C6;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/typescript/fff" alt="TypeScript" style="width:12px;height:12px"></div><p style="font-size:13px">TypeScript</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#06B6D4;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/tailwindcss/fff" alt="Tailwind" style="width:12px;height:12px"></div><p style="font-size:13px">Tailwind CSS</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#FF6B35;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><span style="color:white;font-size:8px;font-weight:800">Z</span></div><p style="font-size:13px">Zustand</p></div>
+        </div>
+      </div>
+      <!-- Column 3: Backend -->
+      <div style="border:1px solid #E5E5E5;border-radius:8px;padding:14px 12px;display:flex;flex-direction:column">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--success);margin:0 auto 8px"></div>
+        <h3 style="font-size:14px;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #E5E5E5">Backend</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#339933;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/nodedotjs/fff" alt="Node.js" style="width:12px;height:12px"></div><p style="font-size:13px">Node.js</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#fff;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/graphql/E535AB" alt="GraphQL" style="width:12px;height:12px"></div><p style="font-size:13px">GraphQL</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#6C47FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/prisma/fff" alt="Prisma" style="width:12px;height:12px"></div><p style="font-size:13px">Prisma ORM</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#DC382D;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/redis/fff" alt="Redis" style="width:12px;height:12px"></div><p style="font-size:13px">Redis</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#47A248;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/mongodb/fff" alt="MongoDB" style="width:12px;height:12px"></div><p style="font-size:13px">MongoDB</p></div>
+        </div>
+      </div>
+      <!-- Column 4: DevOps -->
+      <div style="border:1px solid #E5E5E5;border-radius:8px;padding:14px 12px;display:flex;flex-direction:column">
+        <div style="width:8px;height:8px;border-radius:50%;background:#FF9900;margin:0 auto 8px"></div>
+        <h3 style="font-size:14px;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #E5E5E5">DevOps</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#FF9900;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/amazonwebservices/fff" alt="AWS" style="width:12px;height:12px"></div><p style="font-size:13px">AWS</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#2496ED;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/docker/fff" alt="Docker" style="width:12px;height:12px"></div><p style="font-size:13px">Docker</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#2088FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/githubactions/fff" alt="GitHub Actions" style="width:12px;height:12px"></div><p style="font-size:13px">GitHub Actions</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#111;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/vercel/fff" alt="Vercel" style="width:12px;height:12px"></div><p style="font-size:13px">Vercel</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#FF9900;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/amazonwebservices/fff" alt="CloudFront" style="width:12px;height:12px"></div><p style="font-size:13px">CloudFront CDN</p></div>
+        </div>
+      </div>
+      <!-- Column 5: Integrations -->
+      <div style="border:1px solid #E5E5E5;border-radius:8px;padding:14px 12px;display:flex;flex-direction:column">
+        <div style="width:8px;height:8px;border-radius:50%;background:#FF4785;margin:0 auto 8px"></div>
+        <h3 style="font-size:14px;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #E5E5E5">Integrations</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#635BFF;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/stripe/fff" alt="Stripe" style="width:12px;height:12px"></div><p style="font-size:13px">Stripe</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#1A1F71;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><span style="color:white;font-size:8px;font-weight:800">A</span></div><p style="font-size:13px">Amadeus GDS</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#003580;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/bookingdotcom/fff" alt="Booking.com" style="width:12px;height:12px"></div><p style="font-size:13px">Booking.com</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#E535AB;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><span style="color:white;font-size:8px;font-weight:800">Bz</span></div><p style="font-size:13px">Braze</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#7B2FF2;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/klaviyo/fff" alt="Klaviyo" style="width:12px;height:12px"></div><p style="font-size:13px">Klaviyo</p></div>
+        </div>
+      </div>
+      <!-- Column 6: Testing & QA -->
+      <div style="border:1px solid #E5E5E5;border-radius:8px;padding:14px 12px;display:flex;flex-direction:column">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--black);margin:0 auto 8px"></div>
+        <h3 style="font-size:14px;text-align:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #E5E5E5">Testing &amp; QA</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#99424F;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/jest/fff" alt="Jest" style="width:12px;height:12px"></div><p style="font-size:13px">Jest</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#2E8555;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/cypress/fff" alt="Cypress" style="width:12px;height:12px"></div><p style="font-size:13px">Cypress</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#1976D2;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/playwright/fff" alt="Playwright" style="width:12px;height:12px"></div><p style="font-size:13px">Playwright</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#362D59;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/sentry/fff" alt="Sentry" style="width:12px;height:12px"></div><p style="font-size:13px">Sentry</p></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;height:20px;border-radius:4px;background:#6C47FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden"><img src="https://cdn.simpleicons.org/googlelighthouse/fff" alt="Lighthouse" style="width:12px;height:12px"></div><p style="font-size:13px">Lighthouse</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>15 / 22</span></div>
+<div class="sp" style="width:67%"></div>
+</section>
+
+<!-- ═══ SLIDE 16 — SECTION: TECHNICAL ═══ -->
+<section class="slide" id="slide-16" data-notes="Now let's look at the technical architecture.">
+<div class="full-dark section-divider">
+  <p class="sub rv">TECHNICAL APPROACH</p>
+  <h2 class="rv rv1" style="font-size:clamp(48px,6vw,88px)">How we'll<br><span class="purple">build it</span></h2>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>16 / 22</span></div>
+<div class="sp" style="width:75%"></div>
+</section>
+
+<!-- ═══ SLIDE 17 — TECH ARCHITECTURE ═══ -->
+<section class="slide" id="slide-17" data-notes="A scalable stack — not overengineered, but ready for growth.">
+<div style="background:var(--black);color:var(--white);width:100%;height:100%;padding:50px 55px;display:flex;flex-direction:column;justify-content:center">
+  <h2 class="rv" style="margin-bottom:8px;font-size:clamp(36px,4vw,56px)">Technical<br><span class="purple">architecture</span></h2>
+  <p class="rv rv1" style="color:var(--gray);margin-bottom:24px;font-size:15px">A scalable stack for a growing travel platform.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch">
+    <!-- Row 0: Product / UI/UX Design -->
+    <div class="rv rv2" style="padding:20px 22px;border:1px solid rgba(255,255,255,.12);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <p style="font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--purple);margin-bottom:6px;font-weight:700">Layer</p>
+      <h3 style="font-size:17px;margin-bottom:4px">Product / UI/UX Design</h3>
+      <p style="font-size:14px;color:var(--gray)">Figma · Storyset · design system · prototyping</p>
+    </div>
+    <div class="rv rv3" style="padding:20px 22px;background:rgba(123,47,242,.08);border:1px solid rgba(123,47,242,.15);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <h3 style="font-size:17px;margin-bottom:6px">Design-first approach</h3>
+      <p style="font-size:14px;color:var(--gray)">Component library, tokens, interactive prototypes before any code</p>
+    </div>
+    <!-- Row 1: Frontend -->
+    <div class="rv rv4" style="padding:20px 22px;border:1px solid rgba(255,255,255,.12);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <p style="font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:6px;font-weight:700">Layer</p>
+      <h3 style="font-size:17px;margin-bottom:4px">Frontend</h3>
+      <p style="font-size:14px;color:var(--gray)">Next.js · React · TypeScript · Tailwind</p>
+    </div>
+    <div class="rv rv5" style="padding:20px 22px;background:rgba(45,127,249,.08);border:1px solid rgba(45,127,249,.15);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <h3 style="font-size:17px;margin-bottom:6px">Clean API layer</h3>
+      <p style="font-size:14px;color:var(--gray)">Connecting GDS, NDC, hotel and visa partners</p>
+    </div>
+    <!-- Row 2: Backend -->
+    <div class="rv rv6" style="padding:20px 22px;border:1px solid rgba(255,255,255,.12);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <p style="font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--purple);margin-bottom:6px;font-weight:700">Layer</p>
+      <h3 style="font-size:17px;margin-bottom:4px">Backend &amp; APIs</h3>
+      <p style="font-size:14px;color:var(--gray)">Node.js · REST/GraphQL · microservices</p>
+    </div>
+    <div class="rv rv7" style="padding:20px 22px;background:rgba(123,47,242,.08);border:1px solid rgba(123,47,242,.15);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <h3 style="font-size:17px;margin-bottom:6px">Modular architecture</h3>
+      <p style="font-size:14px;color:var(--gray)">New products and suppliers added without redesign</p>
+    </div>
+    <!-- Row 3: Infrastructure -->
+    <div class="rv" style="padding:20px 22px;border:1px solid rgba(255,255,255,.12);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <p style="font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:6px;font-weight:700">Layer</p>
+      <h3 style="font-size:17px;margin-bottom:4px">Infrastructure</h3>
+      <p style="font-size:14px;color:var(--gray)">AWS · CDN · CI/CD · monitoring</p>
+    </div>
+    <div class="rv" style="padding:20px 22px;background:rgba(45,127,249,.08);border:1px solid rgba(45,127,249,.15);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <h3 style="font-size:17px;margin-bottom:6px">Performance-first</h3>
+      <p style="font-size:14px;color:var(--gray)">CDN, edge caching, optimised search queries</p>
+    </div>
+    <!-- Row 4: Security -->
+    <div class="rv" style="padding:20px 22px;border:1px solid rgba(255,255,255,.12);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <p style="font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--purple);margin-bottom:6px;font-weight:700">Layer</p>
+      <h3 style="font-size:17px;margin-bottom:4px">Security &amp; Compliance</h3>
+      <p style="font-size:14px;color:var(--gray)">PCI DSS · GDPR · encryption · penetration testing</p>
+    </div>
+    <div class="rv" style="padding:20px 22px;background:rgba(123,47,242,.08);border:1px solid rgba(123,47,242,.15);border-radius:6px;display:flex;flex-direction:column;justify-content:center">
+      <h3 style="font-size:17px;margin-bottom:6px">Security &amp; compliance</h3>
+      <p style="font-size:14px;color:var(--gray)">Data encryption at rest and in transit, regular audits</p>
+    </div>
+  </div>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>17 / 22</span></div>
+<div class="sp" style="width:80%"></div>
+</section>
+
+<!-- ═══ SLIDE 18 — DATA & SUPPLY ═══ -->
+<section class="slide" id="slide-18" data-notes="A travel product is only as good as its supply connections.">
+<div class="split">
+  <div class="split-left split-left-light" style="padding:0">
+    <img src="https://stories.freepiklabs.com/storage/2463/World-01.svg" alt="World connections" class="illust" style="max-width:75%">
+  </div>
+  <div class="split-right split-right-light" style="flex-direction:column;align-items:flex-start">
+    <h2 class="rv" style="margin-bottom:16px">Data &amp;<br><span class="purple">supply</span></h2>
+    <p class="rv rv1" style="color:var(--gray);margin-bottom:20px;font-size:14px">Integrations that determine search quality, pricing and fulfillment.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%">
+      <div class="rv rv2" style="padding:12px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><h3 style="font-size:14px;margin-bottom:2px">Flights &amp; NDC</h3><p style="font-size:14px;color:var(--gray)">Amadeus · Kiwi · live pricing</p></div>
+      <div class="rv rv3" style="padding:12px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><h3 style="font-size:14px;margin-bottom:2px">Hotels &amp; Stays</h3><p style="font-size:14px;color:var(--gray)">Booking.com · Expedia · direct</p></div>
+      <div class="rv rv4" style="padding:12px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><h3 style="font-size:14px;margin-bottom:2px">Activities &amp; Tours</h3><p style="font-size:14px;color:var(--gray)">Tiqets · Viator · local partners</p></div>
+      <div class="rv rv5" style="padding:12px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><h3 style="font-size:14px;margin-bottom:2px">Visas &amp; Compliance</h3><p style="font-size:14px;color:var(--gray)">Government APIs · providers</p></div>
+      <div class="rv rv6" style="padding:12px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><h3 style="font-size:14px;margin-bottom:2px">Payments</h3><p style="font-size:14px;color:var(--gray)">Stripe · Apple Pay · local wallets</p></div>
+      <div class="rv" style="padding:12px 14px;background:var(--offwhite);border-radius:6px;border:1px solid #E5E5E5"><h3 style="font-size:14px;margin-bottom:2px">CRM &amp; Marketing</h3><p style="font-size:14px;color:var(--gray)">Braze · Klaviyo · analytics</p></div>
+    </div>
+  </div>
+</div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>18 / 22</span></div>
+<div class="sp" style="width:85%"></div>
+</section>
+
+<!-- ═══ SLIDE 19 — DEVELOPMENT PHASES ═══ -->
+<section class="slide" id="slide-19" data-notes="Development timeline in three phases: Design and Development as the initial phase focusing on design, MVP Development and Testing as the main development work, and Full Build and Launch for final release and deployment.">
+<div style="background:var(--white);width:100%;height:100%;padding:44px 50px;display:flex;flex-direction:column;justify-content:center">
+  <h2 class="rv" style="margin-bottom:4px">Development timeline</h2>
+  <p class="rv rv1" style="color:var(--gray);margin-bottom:22px;font-size:15px">From design discovery to full launch — approximately 5 to 6 months.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:stretch">
+    <!-- Phase 1 — Design & Development -->
+    <div class="rv rv2" style="background:var(--offwhite);border:1px solid #E5E5E5;border-radius:8px;padding:22px 20px;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:800;font-size:14px">1</div>
+          <h3 style="font-size:17px">Design &amp; Development</h3>
+        </div>
+        <span style="font-size:14px;color:var(--purple);font-weight:700">Weeks 1–6</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;flex:1">
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Stakeholder interviews &amp; requirements</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Competitor &amp; market analysis</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">User flow mapping &amp; wireframes</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">UI design for all key screens</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Design system &amp; component library</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Interactive prototype &amp; client review</p></div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #E5E5E5;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:var(--purple)"></div><p style="font-size:14px;font-weight:700;color:var(--purple)">Deliverable: Approved design &amp; prototype</p></div>
+    </div>
+    <!-- Phase 2 — MVP Development & Testing -->
+    <div class="rv rv3" style="background:var(--offwhite);border:1px solid #E5E5E5;border-radius:8px;padding:22px 20px;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:800;font-size:14px">2</div>
+          <h3 style="font-size:17px">MVP Development &amp; Testing</h3>
+        </div>
+        <span style="font-size:14px;color:var(--blue);font-weight:700">Weeks 7–14</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;flex:1">
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Frontend build — all key pages</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Backend API architecture &amp; setup</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">User auth &amp; account management</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Flight &amp; hotel search integration</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Booking flow &amp; payment integration</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Internal testing &amp; bug fixes</p></div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #E5E5E5;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:var(--blue)"></div><p style="font-size:14px;font-weight:700;color:var(--blue)">Deliverable: Tested MVP for UAT</p></div>
+    </div>
+    <!-- Phase 3 — Full Build & Launch -->
+    <div class="rv rv4" style="background:var(--offwhite);border:1px solid #E5E5E5;border-radius:8px;padding:22px 20px;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--black);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:800;font-size:14px">3</div>
+          <h3 style="font-size:17px">Full Build &amp; Launch</h3>
+        </div>
+        <span style="font-size:14px;color:var(--black);font-weight:700">Weeks 15–22</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;flex:1">
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--black)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Remaining feature development</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--black)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">API integration testing (flight, visa, hotel)</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--black)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Payment gateway &amp; security testing</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--black)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Performance optimisation &amp; QA</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--black)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">User acceptance testing (UAT)</p></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--black)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px">Deployment, docs &amp; full handoff</p></div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #E5E5E5;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:var(--black)"></div><p style="font-size:14px;font-weight:700;color:var(--black)">Deliverable: Production-ready platform</p></div>
+    </div>
+  </div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>19 / 22</span></div>
+<div class="sp" style="width:86%"></div>
+</section>
+
+<!-- ═══ SLIDE 20 — MAINTENANCE & SUPPORT ═══ -->
+<section class="slide" id="slide-20" data-notes="After launch, we don't just walk away. We offer ongoing maintenance and support to keep the platform secure, updated and running smoothly.">
+<div class="split">
+  <div class="split-left split-left-light" style="flex-direction:column;align-items:flex-start;padding:50px 44px">
+    <h2 class="rv" style="margin-bottom:8px;font-size:clamp(32px,3.5vw,48px)">Ongoing<br><span class="purple">maintenance</span></h2>
+    <p class="rv rv1" style="color:var(--gray);margin-bottom:22px;font-size:15px">We don't just build and disappear. Long-term support keeps your platform secure, updated and running smoothly.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%">
+      <div class="rv rv2" style="padding:16px 18px;background:var(--offwhite);border:1px solid #E5E5E5;border-radius:6px">
+        <h3 style="font-size:15px;margin-bottom:4px">Security monitoring</h3>
+        <p style="font-size:14px;color:var(--gray)">Continuous vulnerability scanning, patch management, compliance updates</p>
+      </div>
+      <div class="rv rv3" style="padding:16px 18px;background:var(--offwhite);border:1px solid #E5E5E5;border-radius:6px">
+        <h3 style="font-size:15px;margin-bottom:4px">Server &amp; AWS management</h3>
+        <p style="font-size:14px;color:var(--gray)">Uptime monitoring, auto-scaling, cost optimisation, server maintenance</p>
+      </div>
+      <div class="rv rv4" style="padding:16px 18px;background:var(--offwhite);border:1px solid #E5E5E5;border-radius:6px">
+        <h3 style="font-size:15px;margin-bottom:4px">API monitoring</h3>
+        <p style="font-size:14px;color:var(--gray)">Flight, hotel, visa API health checks, failover handling, partner updates</p>
+      </div>
+      <div class="rv rv5" style="padding:16px 18px;background:var(--offwhite);border:1px solid #E5E5E5;border-radius:6px">
+        <h3 style="font-size:15px;margin-bottom:4px">Bug fixes &amp; iteration</h3>
+        <p style="font-size:14px;color:var(--gray)">Ongoing bug resolution, UX improvements, feature requests</p>
+      </div>
+    </div>
+  </div>
+  <div class="split-right split-right-light" style="flex-direction:column;align-items:center;justify-content:center;padding:50px 44px">
+    <img src="https://stories.freepiklabs.com/storage/1120/Maintenance_Mesa-de-trabajo-1.svg" alt="Maintenance illustration" class="illust" style="max-width:75%">
+  </div>
+</div>
+<div class="sf l"><span>travel deels</span><span>2026</span><span>20 / 22</span></div>
+<div class="sp" style="width:90%"></div>
+</section>
+
+<!-- ═══ SLIDE 21 — WHAT WE DELIVER ═══ -->
+<section class="slide" id="slide-21" data-notes="Here's exactly what our engagement includes.">
+<div class="split">
+  <div class="split-left split-left-dark" style="flex-direction:column;align-items:flex-start;padding:60px 50px">
+    <h2 class="rv" style="margin-bottom:20px">What we<br><span class="purple">deliver</span></h2>
+    <div class="rv rv1" style="display:flex;flex-direction:column;gap:10px;width:100%">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,.1);border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px;font-weight:600">Design System — brand, tokens, components</p></div>
+      <div class="rv rv2" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,.1);border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px;font-weight:600">Product Design — all key screens and flows</p></div>
+      <div class="rv rv3" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,.1);border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px;font-weight:600">Frontend Build — Next.js, responsive, accessible</p></div>
+      <div class="rv rv4" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,.1);border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px;font-weight:600">Backend &amp; APIs — booking, payments, suppliers</p></div>
+      <div class="rv rv5" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,.1);border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px;font-weight:600">QA &amp; Deployment — testing, CI/CD, launch</p></div>
+      <div class="rv rv6" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,.1);border-radius:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><p style="font-size:14px;font-weight:600">Launch Support — handover, docs, iteration</p></div>
+    </div>
+  </div>
+  <div class="split-right split-right-dark" style="padding:0">
+    <img src="https://stories.freepiklabs.com/storage/16149/Hotel-Booking-01.svg" alt="Hotel booking" class="illust" style="max-width:80%">
+  </div>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>21 / 22</span></div>
+<div class="sp" style="width:95%"></div>
+</section>
+
+<!-- ═══ SLIDE 22 — CLOSING ═══ -->
+<section class="slide" id="slide-22" data-notes="We appreciate the opportunity. We are happy to walk through any part of this in more detail.">
+<div class="split">
+  <div class="split-left split-left-dark" style="flex-direction:column;align-items:flex-start;padding:60px 50px">
+    <p class="rv" style="font-size:14px;text-transform:uppercase;letter-spacing:.15em;color:var(--gray);margin-bottom:16px">Thank you</p>
+    <h1 class="rv rv1" style="margin-bottom:14px">Let's build<br><span class="purple">Travel Deels.</span></h1>
+    <p class="rv rv2" style="font-size:clamp(14px,1.2vw,18px);color:var(--gray);line-height:1.6">A clear product direction.<br>A fast, credible, conversion-driven experience.</p>
+  </div>
+  <div class="split-right split-right-dark" style="padding:0">
+    <img src="https://stories.freepiklabs.com/storage/15803/Hotel-Booking_Mesa-de-trabajo-1.svg" alt="Booking illustration" class="illust" style="max-width:80%">
+  </div>
+</div>
+<div class="sf d"><span>travel deels</span><span>2026</span><span>22 / 22</span></div>
+<div class="sp" style="width:100%"></div>
+</section>
+</main>
+
+<!-- ═══════════════ CONTROLS ═══════════════ -->
+<nav class="ctrl" aria-label="Slide controls">
+<button id="prevBtn" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+<span class="ctr" id="ct">1 / 22</span>
+<button id="nextBtn" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg></button>
+<button id="notesBtn" aria-label="Toggle presenter notes" title="Press N"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></button>
+<button id="fullBtn" aria-label="Toggle fullscreen" title="Press F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+</nav>
+
+<div class="pn" id="pn" aria-live="polite">
+<div class="pn-label">Presenter Notes</div>
+<div id="pnc"></div>
+</div>
+
+<script>
+(function(){
+var S=document.querySelectorAll('.slide'),N=S.length,C=0,L=false;
+var pn=document.getElementById('pn'),pnc=document.getElementById('pnc'),ct=document.getElementById('ct');
+
+function reveal(i){S[i].querySelectorAll('.rv').forEach(function(r){r.classList.add('on')})}
+function hide(i){S[i].querySelectorAll('.rv').forEach(function(r){r.classList.remove('on')})}
+
+function go(i){
+  if(i===C||L||i<0||i>=N)return;
+  L=true;
+  hide(C);
+  S[C].classList.remove('active');
+  C=i;
+  S[C].classList.add('active');
+  ct.textContent=(C+1)+' / '+N;
+  if(history.replaceState)history.replaceState(null,'','#slide-'+String(C+1).padStart(2,'0'));
+  setTimeout(function(){reveal(C);L=false},60);
+}
+
+function next(){if(C<N-1)go(C+1)}
+function prev(){if(C>0)go(C-1)}
+
+document.getElementById('nextBtn').onclick=next;
+document.getElementById('prevBtn').onclick=prev;
+document.getElementById('notesBtn').onclick=function(){
+  pn.classList.toggle('open');
+  if(pn.classList.contains('open'))pnc.textContent=S[C].getAttribute('data-notes')||'No notes.';
+};
+document.getElementById('fullBtn').onclick=function(){
+  if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(function(){});
+  else document.exitFullscreen();
+};
+
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  switch(e.key){
+    case'ArrowRight':case' ':case'PageDown':e.preventDefault();next();break;
+    case'ArrowLeft':case'PageUp':e.preventDefault();prev();break;
+    case'Home':e.preventDefault();go(0);break;
+    case'End':e.preventDefault();go(N-1);break;
+    case'f':case'F':document.getElementById('fullBtn').click();break;
+    case'n':case'N':document.getElementById('notesBtn').click();break;
+  }
+});
+
+window.addEventListener('hashchange',function(){
+  var h=location.hash.match(/slide-(\d+)/);
+  if(h){var i=parseInt(h[1],10)-1;if(i>=0&&i<N&&i!==C)go(i)}
+});
+
+var tx=0;
+document.addEventListener('touchstart',function(e){tx=e.changedTouches[0].clientX},{passive:true});
+document.addEventListener('touchend',function(e){
+  var dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50){dx<0?next():prev()}
+},{passive:true});
+
+reveal(0);
+if(location.hash){
+  var h=location.hash.match(/slide-(\d+)/);
+  if(h){var i=parseInt(h[1],10)-1;if(i>0&&i<N){S[0].classList.remove('active');C=0;go(i);}}
+}
+})();
+</script>
+</body>
+</html>
