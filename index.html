@@ -254,17 +254,12 @@ ul{list-style:none}
 .partner-cta p{color:rgba(255,255,255,.5);margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
 
 /* Committee Infinite Scroller */
-.committee-scroller-outer{position:relative;width:100vw;margin-left:calc(-50vw + 50%);overflow:hidden;padding:40px 0}
+.committee-scroller-outer{position:relative;width:100vw;margin-left:calc(-50vw + 50%);overflow:hidden;padding:40px 0;user-select:none;-webkit-user-select:none}
 .committee-scroller-outer::before,.committee-scroller-outer::after{content:'';position:absolute;top:0;bottom:0;width:180px;z-index:2;pointer-events:none}
 .committee-scroller-outer::before{left:0;background:linear-gradient(90deg,var(--light-bg) 0%,transparent 100%)}
 .committee-scroller-outer::after{right:0;background:linear-gradient(-90deg,var(--light-bg) 0%,transparent 100%)}
-.committee-scroller-track{display:flex;gap:24px;width:max-content;will-change:transform}
-.committee-scroller-track.dragging{cursor:grabbing;animation-play-state:paused}
-@keyframes scrollCommittee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.committee-scroller-track.animate{animation:scrollCommittee 40s linear infinite}
-.committee-scroller-track.animate:hover{animation-play-state:paused}
-.committee-scroller-track.dragging{animation:none!important}
-.committee-card{display:flex;flex-direction:column;align-items:center;width:180px;padding:20px;border-radius:var(--radius-lg);border:1px solid rgba(0,0,0,.08);background:var(--white);flex-shrink:0;cursor:default;transition:transform .3s,box-shadow .3s,border-color .3s}
+.committee-scroller-track{display:flex;gap:24px;will-change:transform}
+.committee-card{display:flex;flex-direction:column;align-items:center;width:180px;padding:20px;border-radius:var(--radius-lg);border:1px solid rgba(0,0,0,.08);background:var(--white);flex-shrink:0;cursor:default}
 .committee-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.08);border-color:rgba(0,0,0,.12)}
 .committee-card-emoji{width:120px;height:120px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:3.5rem;margin-bottom:14px}
 .committee-card-emoji.female{background:linear-gradient(145deg,#fce4ec,#f8bbd0)}
@@ -1289,77 +1284,105 @@ document.querySelectorAll('.reveal').forEach(function(el){observer.observe(el)})
 })();
 </script>
 <script>
-// Committee Infinite Scroller
+// Committee Infinite Scroller - Robust Implementation
 (function(){
   const track = document.getElementById('committeeScroller');
   if(!track) return;
   const outer = track.parentElement;
   
-  // Clone all items for seamless loop
-  const items = Array.from(track.children);
-  items.forEach(item => track.appendChild(item.cloneNode(true)));
+  // State
+  let pos = 0;
+  let speed = 0.8;
+  let isPaused = false;
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartPos = 0;
+  let lastTime = 0;
   
-  // Start animation
-  track.classList.add('animate');
+  // Clone items for seamless loop
+  const originals = Array.from(track.children);
+  originals.forEach(item => track.appendChild(item.cloneNode(true)));
   
-  // Pause on hover
-  outer.addEventListener('mouseenter', ()=> track.style.animationPlayState = 'paused');
-  outer.addEventListener('mouseleave', ()=> { if(!track.classList.contains('dragging')) track.style.animationPlayState = 'running'; });
+  // Get width of one set of items
+  function getSetWidth(){
+    let w = 0;
+    originals.forEach(item => {
+      const style = getComputedStyle(item);
+      w += item.offsetWidth + parseFloat(getComputedStyle(track).gap);
+    });
+    return w;
+  }
   
-  // Drag to scroll
-  let isDragging = false, startX, scrollLeft;
+  function animate(time){
+    if(!lastTime) lastTime = time;
+    const delta = time - lastTime;
+    lastTime = time;
+    
+    if(!isPaused && !isDragging){
+      pos -= speed * (delta / 16);
+      
+      const setWidth = getSetWidth();
+      if(pos <= -setWidth){
+        pos += setWidth;
+      }
+      if(pos > 0){
+        pos -= setWidth;
+      }
+    }
+    
+    track.style.transform = `translateX(${pos}px)`;
+    requestAnimationFrame(animate);
+  }
+  
+  // Mouse events
+  outer.addEventListener('mouseenter', ()=> isPaused = true);
+  outer.addEventListener('mouseleave', ()=> {
+    if(!isDragging) isPaused = false;
+  });
+  
   track.addEventListener('mousedown', (e)=>{
     isDragging = true;
-    track.classList.add('dragging');
-    startX = e.pageX;
-    scrollLeft = track.getBoundingClientRect().left;
+    isPaused = true;
+    dragStartX = e.clientX;
+    dragStartPos = pos;
+    track.style.cursor = 'grabbing';
     e.preventDefault();
   });
+  
   document.addEventListener('mousemove', (e)=>{
     if(!isDragging) return;
-    const x = e.pageX;
-    const walk = (x - startX) * 1.5;
-    const currentTransform = getComputedStyle(track).transform;
-    const matrix = new DOMMatrix(currentTransform);
-    track.style.transform = `translateX(${matrix.m41 + walk}px)`;
-    startX = x;
+    const dx = e.clientX - dragStartX;
+    pos = dragStartPos + dx;
   });
+  
   document.addEventListener('mouseup', ()=>{
     if(!isDragging) return;
     isDragging = false;
-    track.classList.remove('dragging');
-    // Snap back to animation
-    const currentTransform = getComputedStyle(track).transform;
-    const matrix = new DOMMatrix(currentTransform);
-    const offset = matrix.m41;
-    const halfWidth = track.scrollWidth / 2;
-    const normalizedOffset = ((offset % halfWidth) + halfWidth) % halfWidth;
-    track.style.transform = '';
-    track.style.setProperty('--drag-offset', `-${normalizedOffset}px`);
-    track.style.animationPlayState = 'running';
+    isPaused = false;
+    track.style.cursor = '';
   });
   
-  // Touch support
-  track.addEventListener('touchstart', (e)=>{
+  // Touch events
+  outer.addEventListener('touchstart', (e)=>{
     isDragging = true;
-    track.classList.add('dragging');
-    startX = e.touches[0].pageX;
+    isPaused = true;
+    dragStartX = e.touches[0].clientX;
+    dragStartPos = pos;
   }, {passive:true});
-  track.addEventListener('touchmove', (e)=>{
+  
+  outer.addEventListener('touchmove', (e)=>{
     if(!isDragging) return;
-    const x = e.touches[0].pageX;
-    const walk = (x - startX) * 1.5;
-    const currentTransform = getComputedStyle(track).transform;
-    const matrix = new DOMMatrix(currentTransform);
-    track.style.transform = `translateX(${matrix.m41 + walk}px)`;
-    startX = x;
+    const dx = e.touches[0].clientX - dragStartX;
+    pos = dragStartPos + dx;
   }, {passive:true});
-  track.addEventListener('touchend', ()=>{
+  
+  outer.addEventListener('touchend', ()=>{
     isDragging = false;
-    track.classList.remove('dragging');
-    track.style.transform = '';
-    track.style.animationPlayState = 'running';
+    isPaused = false;
   });
+  
+  // Start
+  requestAnimationFrame(animate);
 })();
 </script>
 </body>
