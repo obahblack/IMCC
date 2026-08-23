@@ -185,6 +185,9 @@ ul{list-style:none}
 @media(max-width:729px){.bento-grid{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:16px}.bento-card.span-2{grid-column:span 2;grid-row:span 1}.bento-card.span-row,.bento-card.span-2.span-row{grid-column:span 1;grid-row:span 1}.bento-card{height:280px}}
 
 /* Speakers */
+.speakers-section-header{margin-bottom:32px}
+.speakers-section-header h2{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--black);margin-bottom:4px}
+.speakers-section-header p{font-size:.875rem;color:var(--mid-neutral)}
 .speakers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .speaker-card{border-radius:var(--radius-lg);overflow:hidden;background:var(--white);border:1px solid rgba(0,0,0,.06);transition:all .4s;cursor:pointer}
 .speaker-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
@@ -198,7 +201,27 @@ ul{list-style:none}
 .speaker-info h3{font-family:var(--font-display);font-size:1.0625rem;font-weight:700;margin-bottom:4px;color:var(--black)}
 .speaker-info .role{font-size:.8125rem;color:var(--accent);margin-bottom:4px}
 .speaker-info .org{font-size:.8125rem;color:var(--mid-neutral)}
-@media(max-width:729px){.speakers-grid{grid-template-columns:1fr 1fr;gap:16px}}
+@media(max-width:729px){.speakers-grid{grid-template-columns:1fr 1fr;gap:16px;grid-auto-rows:1fr}.speakers-grid .speaker-card:last-child{grid-column:1/-1}.speakers-grid .speaker-card:last-child .speaker-img{aspect-ratio:6/4}.speakers-grid .speaker-card:last-child .speaker-img img{object-fit:cover}}
+
+/* Panelists Marquee */
+.panelists-marquee{overflow:hidden;margin-top:48px;position:relative;user-select:none;width:100vw;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)}
+.panelists-marquee::before,.panelists-marquee::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.panelists-marquee::before{left:0;background:linear-gradient(90deg,var(--off-white,#ffffff),transparent)}
+.panelists-marquee::after{right:0;background:linear-gradient(-90deg,var(--off-white,#ffffff),transparent)}
+.panelists-track{display:flex;gap:20px;width:max-content;cursor:grab}
+.panelists-track.dragging{cursor:grabbing;animation:none!important}
+.panelists-track:hover{animation-play-state:paused}
+.panelists-track.dragging{animation-play-state:paused}
+@keyframes panelist-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.panelist-card{flex:0 0 200px;border-radius:var(--radius-md);overflow:hidden;background:var(--white);border:1px solid rgba(0,0,0,.06);transition:all .4s;cursor:pointer}
+.panelist-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.panelist-card .speaker-img{aspect-ratio:3/4}
+.panelist-card .speaker-info{padding:14px}
+.panelist-card .speaker-info h3{font-size:.9375rem}
+.panelist-card .speaker-info .role{font-size:.75rem}
+.panelist-card .speaker-info .org{font-size:.75rem}
+@media(max-width:729px){.panelist-card{flex:0 0 160px}.panelist-card .speaker-info{padding:10px}.panelist-card .speaker-info h3{font-size:.8125rem}.panelist-card .speaker-info .org{font-size:.6875rem}}
+@media(prefers-reduced-motion:reduce){.panelists-track{animation:none!important}}
 
 /* Gallery */
 .gallery-wrapper{position:relative;margin:24px auto 0;padding:16px 0;overflow:hidden;perspective:900px}
@@ -250,17 +273,18 @@ ul{list-style:none}
 /* Partners */
 .partners-marquee{overflow:hidden;margin-bottom:40px;position:relative}
 .partners-marquee::before,.partners-marquee::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:1;pointer-events:none}
-.partners-marquee::before{left:0;background:linear-gradient(90deg,var(--black),transparent)}
-.partners-marquee::after{right:0;background:linear-gradient(-90deg,var(--black),transparent)}
-.partners-track{display:flex;gap:48px;animation:marquee 30s linear infinite;width:max-content}
+.partners-marquee::before{left:0;background:linear-gradient(90deg,var(--off-white,#ffffff),transparent)}
+.partners-marquee::after{right:0;background:linear-gradient(-90deg,var(--off-white,#ffffff),transparent)}
+.partners-track{display:flex;gap:40px;animation:marquee 30s linear infinite;width:max-content}
 .partners-track:hover{animation-play-state:paused}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.partner-logo{flex:0 0 160px;height:80px;display:flex;align-items:center;justify-content:center;padding:16px;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,.08);background:var(--dark-neutral);transition:border-color .3s}
-.partner-logo:hover{border-color:rgba(212,168,83,.3)}
-.partner-logo span{font-family:var(--font-display);font-size:.875rem;font-weight:600;color:rgba(255,255,255,.5);text-align:center}
-.partner-cta{text-align:center;padding:40px;border:1px dashed rgba(255,255,255,.15);border-radius:var(--radius-lg)}
-.partner-cta h3{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:12px}
-.partner-cta p{color:rgba(255,255,255,.5);margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
+.partner-logo{flex:0 0 240px;height:120px;display:flex;align-items:center;justify-content:center;padding:20px;border-radius:var(--radius-md);border:1px solid rgba(0,0,0,.08);background:var(--white);transition:all .3s}
+.partner-logo:hover{border-color:rgba(212,168,83,.4);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.partner-logo img{max-width:100%;max-height:100%;object-fit:contain;filter:grayscale(20%);transition:filter .3s}
+.partner-logo:hover img{filter:grayscale(0%)}
+.partner-cta{text-align:center;padding:40px;border:1px dashed rgba(0,0,0,.15);border-radius:var(--radius-lg)}
+.partner-cta h3{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:12px;color:var(--black)}
+.partner-cta p{color:var(--mid-neutral);margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
 
 /* Committee Infinite Scroller */
 .committee-scroller-outer{position:relative;width:100vw;margin-left:calc(-50vw + 50%);overflow:hidden;padding:40px 0;user-select:none;-webkit-user-select:none}
@@ -347,6 +371,28 @@ ul{list-style:none}
 .lightbox img{max-width:90%;max-height:90vh;border-radius:var(--radius-md);object-fit:contain}
 .lightbox-close{position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:var(--white);font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
+/* Donation Modal */
+.donate-overlay{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.donate-overlay.open{display:flex}
+.donate-modal{background:var(--white);border-radius:var(--radius-lg);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative;cursor:default;box-shadow:0 24px 64px rgba(0,0,0,.25)}
+.donate-modal-header{background:linear-gradient(135deg,var(--black) 0%,#1a1a1a 100%);padding:32px 32px 28px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;position:relative}
+.donate-modal-header h2{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.donate-modal-header p{font-size:.875rem;color:rgba(255,255,255,.7);line-height:1.6}
+.donate-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:var(--white);font-size:1.25rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.donate-close:hover{background:rgba(255,255,255,.2)}
+.donate-modal-body{padding:28px 32px 32px}
+.donate-account{background:var(--off-white);border-radius:var(--radius-md);padding:20px;margin-bottom:16px;border:1px solid rgba(0,0,0,.06)}
+.donate-account h3{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--black);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.donate-account h3 .flag{font-size:1.125rem}
+.donate-account .detail{font-size:.875rem;color:var(--mid-neutral);line-height:1.8}
+.donate-account .detail strong{color:var(--black);font-weight:600}
+.donate-account .reference{margin-top:8px;font-size:.8125rem;color:var(--accent);font-weight:600;padding:6px 10px;background:rgba(212,168,83,.08);border-radius:var(--radius-sm);display:inline-block}
+.donate-footer{margin-top:24px;padding-top:20px;border-top:1px solid rgba(0,0,0,.06);text-align:center}
+.donate-footer p{font-size:.8125rem;color:var(--mid-neutral);margin-bottom:8px}
+.donate-footer a{color:var(--accent);font-weight:600;text-decoration:none}
+.donate-footer a:hover{text-decoration:underline}
+@media(max-width:520px){.donate-modal{max-height:95vh;border-radius:var(--radius-md)}.donate-modal-header{padding:24px 20px 20px;border-radius:var(--radius-md) var(--radius-md) 0 0}.donate-modal-header h2{font-size:1.25rem}.donate-modal-body{padding:20px}.donate-account{padding:16px}}
+
 /* Scroll Reveal */
 .reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
@@ -419,7 +465,7 @@ ul{list-style:none}
     </div>
     <div class="hero-actions">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSfMptfQ2EEgh30I9J99N5zhZTedJX38Wos3GTVlkyi1ghYGzA/viewform?usp=sharing&ouid=109950971866186932856" class="btn btn-primary">Register for IMCC <span class="btn-arrow">→</span></a>
-      <a href="mailto:mkc.capro@gmail.com" class="btn btn-secondary">Sponsor a Child</a>
+      <button class="btn btn-secondary donate-trigger">Donate</button>
     </div>
   </div>
 
@@ -570,6 +616,9 @@ ul{list-style:none}
       <h2 class="heading heading-lg" style="color:var(--black)">Meet the Voices of IMCC</h2>
       <p class="body-text" style="margin-top:16px;color:var(--mid-neutral)">Passionate speakers, mentors, and ministry leaders investing in the next generation.</p>
     </div>
+    <div class="speakers-section-header">
+      <h2>Keynote Speakers</h2>
+    </div>
     <div class="speakers-grid">
       <div class="speaker-card reveal">
         <div class="speaker-img">
@@ -595,90 +644,154 @@ ul{list-style:none}
       </div>
       <div class="speaker-card reveal">
         <div class="speaker-img">
-          <img src="Oluwajare Fola-Bolumole.jpg" alt="Oluwajare Fola-Bolumole" loading="lazy">
-          <div class="speaker-overlay"><p>Entrepreneur and engineer, CEO of The ChocBoy Brand, Nigeria's first bean-to-bar chocolate company.</p></div>
+          <img src="images/Dr Funmi Adeniyi.jpg" alt="Dr. Funmi Adeniyi" loading="lazy">
+          <div class="speaker-overlay"><p>Visionary healthcare entrepreneur and philanthropist, Founder of Luxe Dental Clinic and Executive Director of the Smile Doctor Foundation, championing oral health access for underserved communities.</p></div>
         </div>
         <div class="speaker-info">
-          <h3>Oluwajare Fola-Bolumole</h3>
-          <div class="role">Panelist</div>
-          <div class="org">CEO, The ChocBoy Brand</div>
+          <h3>Dr. Funmi Adeniyi</h3>
+          <div class="role">Keynote Speaker</div>
+          <div class="org">Founder &amp; Clinical Director, Luxe Dental Clinic</div>
         </div>
       </div>
-      <div class="speaker-card reveal">
-        <div class="speaker-img">
-          <img src="Dr Oluwabunmi Fola-Bolumole.jpeg" alt="Dr. Oluwabunmi Fola-Bolumole" loading="lazy">
-          <div class="speaker-overlay"><p>Consultant child and adolescent psychiatrist advancing young people's mental health through care, teaching, and research.</p></div>
+    </div>
+
+    <div class="speakers-section-header" style="margin-top:48px">
+      <h2>Panelists</h2>
+      <p>Swipe or drag to explore all panelists</p>
+    </div>
+    <div class="panelists-marquee">
+      <div class="panelists-track" id="panelistsTrack">
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="Oluwajare Fola-Bolumole.jpg" alt="Oluwajare Fola-Bolumole" loading="lazy">
+            <div class="speaker-overlay"><p>Entrepreneur and engineer, CEO of The ChocBoy Brand, Nigeria's first bean-to-bar chocolate company.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Oluwajare Fola-Bolumole</h3>
+            <div class="role">Panelist</div>
+            <div class="org">CEO, The ChocBoy Brand</div>
+          </div>
         </div>
-        <div class="speaker-info">
-          <h3>Dr. Oluwabunmi Fola-Bolumole</h3>
-          <div class="role">Panelist</div>
-          <div class="org">Consultant Child &amp; Adolescent Psychiatrist, UCH Ibadan</div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="Dr Oluwabunmi Fola-Bolumole.jpeg" alt="Dr. Oluwabunmi Fola-Bolumole" loading="lazy">
+            <div class="speaker-overlay"><p>Consultant child and adolescent psychiatrist advancing young people's mental health through care, teaching, and research.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Dr. Oluwabunmi Fola-Bolumole</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Consultant Child &amp; Adolescent Psychiatrist, UCH Ibadan</div>
+          </div>
         </div>
-      </div>
-      <div class="speaker-card reveal">
-        <div class="speaker-img">
-          <img src="Abraham Aderonmu.jpeg" alt="Abraham Aderonmu" loading="lazy">
-          <div class="speaker-overlay"><p>Multimedia production, technology, and business development leader with over 12 years of experience.</p></div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="Abraham Aderonmu.jpeg" alt="Abraham Aderonmu" loading="lazy">
+            <div class="speaker-overlay"><p>Multimedia production, technology, and business development leader with over 12 years of experience.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Abraham Aderonmu</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Managing Partner, Shutterhouse Africa</div>
+          </div>
         </div>
-        <div class="speaker-info">
-          <h3>Abraham Aderonmu</h3>
-          <div class="role">Panelist</div>
-          <div class="org">Managing Partner, Shutterhouse Africa</div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="Hope Ayabina.jpg" alt="Hope Ayabina" loading="lazy">
+            <div class="speaker-overlay"><p>Africa's diplomatic career advisor and mentor, equipping young Africans for careers in diplomacy and international affairs.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Hope Ayabina</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Diplomatic Career Advisor &amp; Founder, HDCMLC</div>
+          </div>
         </div>
-      </div>
-      <div class="speaker-card reveal">
-        <div class="speaker-img">
-          <img src="Hope Ayabina.jpg" alt="Hope Ayabina" loading="lazy">
-          <div class="speaker-overlay"><p>Africa's diplomatic career advisor and mentor, equipping young Africans for careers in diplomacy and international affairs.</p></div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="Seyi Adeyera.jpg" alt="Seyi Adeyera" loading="lazy">
+            <div class="speaker-overlay"><p>Bio coming soon.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Seyi Adeyera</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Bio coming soon</div>
+          </div>
         </div>
-        <div class="speaker-info">
-          <h3>Hope Ayabina</h3>
-          <div class="role">Panelist</div>
-          <div class="org">Diplomatic Career Advisor &amp; Founder, HDCMLC</div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="NAOMI HOSMURE WADE-OKO.png" alt="Naomi Wade" loading="lazy">
+            <div class="speaker-overlay"><p>Nigerian entrepreneur, business development professional, public servant, and researcher with extensive experience in real estate, agriculture, shipping, and hospitality.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Naomi Wade</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Entrepreneur &amp; Public Servant, NIMC</div>
+          </div>
         </div>
-      </div>
-      <div class="speaker-card reveal">
-        <div class="speaker-img">
-          <img src="Seyi Adeyera.jpg" alt="Seyi Adeyera" loading="lazy">
-          <div class="speaker-overlay"><p>Bio coming soon.</p></div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="Benjamin Babatope.jpeg" alt="Benjamin Babatope" loading="lazy">
+            <div class="speaker-overlay"><p>Supply Chain Consultant in the energy sector, passionate about driving operational excellence and supporting Missionary Kids in their identity and purpose.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Benjamin Babatope</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Supply Chain Consultant</div>
+          </div>
         </div>
-        <div class="speaker-info">
-          <h3>Seyi Adeyera</h3>
-          <div class="role">Panelist</div>
-          <div class="org">Bio coming soon</div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="Sis Ada Ozodo.jpeg" alt="Ada Sarah Ozodo" loading="lazy">
+            <div class="speaker-overlay"><p>British-Nigerian filmmaker, speaker, and counsellor. Executive Director of Tumaini Media Services and Nchekwube Children Foundation.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Ada Sarah Ozodo</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Filmmaker &amp; Executive Director, Tumaini Media</div>
+          </div>
         </div>
-      </div>
-      <div class="speaker-card reveal">
-        <div class="speaker-img">
-          <img src="NAOMI HOSMURE WADE-OKO.png" alt="Naomi Wade" loading="lazy">
-          <div class="speaker-overlay"><p>Nigerian entrepreneur, business development professional, public servant, and researcher with extensive experience in real estate, agriculture, shipping, and hospitality.</p></div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="images/Peace Danlami.png" alt="Peace Danlami" loading="lazy">
+            <div class="speaker-overlay"><p>Nurse, missionary, and passionate advocate for the next generation. A missionary kid herself, now serving with CAPRO and raising four missionary kids.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Peace Danlami</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Nurse &amp; Missionary, CAPRO</div>
+          </div>
         </div>
-        <div class="speaker-info">
-          <h3>Naomi Wade</h3>
-          <div class="role">Panelist</div>
-          <div class="org">Entrepreneur &amp; Public Servant, NIMC</div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="images/Iwanger Esther Adzer.jpeg" alt="Iwanger Esther Adzer" loading="lazy">
+            <div class="speaker-overlay"><p>Full-time missionary with CAPRO, serving in the Multimedia Department. Passionate about using media and storytelling to advance the Gospel among unreached peoples.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Iwanger Esther Adzer</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Missionary &amp; Multimedia, CAPRO</div>
+          </div>
         </div>
-      </div>
-      <div class="speaker-card reveal">
-        <div class="speaker-img">
-          <img src="Benjamin Babatope.jpeg" alt="Benjamin Babatope" loading="lazy">
-          <div class="speaker-overlay"><p>Supply Chain Consultant in the energy sector, passionate about driving operational excellence and supporting Missionary Kids in their identity and purpose.</p></div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="images/Shater Dondo jr Iorlamen.jpeg" alt="Shater Dondo jr Iorlamen" loading="lazy">
+            <div class="speaker-overlay"><p>Bio coming soon.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Shater Dondo jr Iorlamen</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Bio coming soon</div>
+          </div>
         </div>
-        <div class="speaker-info">
-          <h3>Benjamin Babatope</h3>
-          <div class="role">Panelist</div>
-          <div class="org">Supply Chain Consultant</div>
-        </div>
-      </div>
-      <div class="speaker-card reveal">
-        <div class="speaker-img">
-          <img src="Sis Ada Ozodo.jpeg" alt="Ada Sarah Ozodo" loading="lazy">
-          <div class="speaker-overlay"><p>British-Nigerian filmmaker, speaker, and counsellor. Executive Director of Tumaini Media Services and Nchekwube Children Foundation.</p></div>
-        </div>
-        <div class="speaker-info">
-          <h3>Ada Sarah Ozodo</h3>
-          <div class="role">Panelist</div>
-          <div class="org">Filmmaker &amp; Executive Director, Tumaini Media</div>
+        <div class="panelist-card">
+          <div class="speaker-img">
+            <img src="images/Suleiman Abdulahi Ibrahim.jpg" alt="Suleiman Abdulahi Ibrahim" loading="lazy">
+            <div class="speaker-overlay"><p>Bio coming soon.</p></div>
+          </div>
+          <div class="speaker-info">
+            <h3>Suleiman Abdulahi Ibrahim</h3>
+            <div class="role">Panelist</div>
+            <div class="org">Bio coming soon</div>
+          </div>
         </div>
       </div>
     </div>
@@ -802,13 +915,13 @@ ul{list-style:none}
     <div class="location-grid">
       <div class="location-gallery reveal">
         <div class="location-gallery-main">
-          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkWSaraQPchD9CZ_r0z9pDLVo05Oy1U5tUDMjBW_c9tz6IoP4Yr7BQ3VDIh-aSoa7iOsEGfKb29l6SLOkcp7pvxdwiOIAjPA7Upoiq8ipJkncG5Oa_pnrYB4sb9P406NtWBhxkqpQ=s680-w680-h510-rw" alt="Faith Plaza venue - main building and pool area" loading="lazy">
+          <img src="images/faith-plaza-main.webp" alt="Faith Plaza venue - main building and pool area" loading="lazy">
         </div>
         <div class="location-gallery-grid">
-          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnluuYxY_uXdsLuHXvnsA5C8gjIy4aIR8DqgY7kTi86oGqEpZqoQJypa3DXGPonoGyQy3qUMNvLzxxrRNdKX8bJTGEgU0FehmYgPVGJrYB7QtuvwrcLZRQdDx9xe1vQz1c2Nnm9uhc7yKE=s680-w680-h510-rw" alt="Faith Plaza - dining hall" loading="lazy">
-          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlkvp659K7X4aFnSGF-LSIYOEFylGFw_VDTV8xVo4DoISAPCFcpd46p-36B1rYYlhsclXqibRytQhCra5JWEJtGWmMaq8c7VHJ-XPiw2YzhMJ_Oyh9dFKdFkk5nlY__vfuDEUeO=s680-w680-h510-rw" alt="Faith Plaza - accommodation room" loading="lazy">
-          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkRXDoTKmC3Hs5CE2Yslzr1MMjzSr2qFlVUdzFu64GeJVBGuRoZe82Gf9486VtyRmayLQ5q-9GGxXeVlq4xm8LUjJXRE6AxyX1H5weF8MLRalMyWrq-_3fm8fxjqP3NjK44slyXzg=s680-w680-h510-rw" alt="Faith Plaza - sports court" loading="lazy">
-          <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_zYtsDo07Wa-onxzNBB60rIdCtVoxJ7HpSilSwiooRY43qpLiQZRKAXm9vycwVJ4BVL0fVlDXo9e2q73h4QRdIO2MQKTyBmRDcqWnqWDoxFR4YcZs3gZLsDoGuvHL4LIEFK5EUw=s680-w680-h510-rw" alt="Faith Plaza - entrance corridor" loading="lazy">
+          <img src="images/faith-plaza-dining.webp" alt="Faith Plaza - dining hall" loading="lazy">
+          <img src="images/faith-plaza-accommodation.webp" alt="Faith Plaza - accommodation room" loading="lazy">
+          <img src="images/faith-plaza-sports.webp" alt="Faith Plaza - sports court" loading="lazy">
+          <img src="images/faith-plaza-entrance.webp" alt="Faith Plaza - entrance corridor" loading="lazy">
         </div>
       </div>
       <div class="location-details reveal">
@@ -852,53 +965,8 @@ ul{list-style:none}
   </div>
 </section>
 
-<!-- Section 13: Sponsor a Child -->
-<section class="section light-bg" id="sponsor" style="display:none">
-  <div class="container-full">
-    <div class="sponsor-grid">
-      <div class="reveal">
-        <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Sponsor a Child</span>
-        <h2 class="heading heading-lg" style="color:var(--black)">Help a Missionary Child<br>Attend IMCC</h2>
-        <p class="body-text">Your generosity can help a missionary child experience a life-changing conference. Many missionary families serve in contexts where conference costs are a real barrier. Your sponsorship helps cover registration, travel, accommodation, meals, and programme materials — giving a child the chance to belong, grow, and be encouraged.</p>
-        <div class="sponsor-options">
-          <div class="sponsor-option">
-            <div class="icon">👤</div>
-            <h4>Sponsor One Child</h4>
-            <p>Full sponsorship for one missionary child to attend IMCC</p>
-          </div>
-          <div class="sponsor-option">
-            <div class="icon">👨‍👩‍👧</div>
-            <h4>Sponsor a Family</h4>
-            <p>Help an entire missionary family attend together</p>
-          </div>
-          <div class="sponsor-option">
-            <div class="icon">🚌</div>
-            <h4>Sponsor Transport</h4>
-            <p>Help cover travel costs for children from remote areas</p>
-          </div>
-          <div class="sponsor-option">
-            <div class="icon">🍽️</div>
-            <h4>Sponsor Meals</h4>
-            <p>Ensure every child is well-fed throughout the conference</p>
-          </div>
-        </div>
-        <div class="sponsor-actions">
-          <a href="#" class="btn btn-primary" style="background:var(--black);color:var(--white)">Sponsor a Child <span class="btn-arrow">→</span></a>
-          <a href="#" class="btn btn-secondary" style="color:var(--black);border-color:rgba(0,0,0,.2)">Make a Donation</a>
-        </div>
-        <div class="sponsor-note">
-          <strong>Transparency:</strong> All sponsorship funds are managed by CAPRO Ministries through approved, secure donation channels. You will receive confirmation and updates regarding the impact of your giving. For sponsorship questions, contact <a href="mailto:mkc.capro@gmail.com" style="color:var(--accent)">mkc.capro@gmail.com</a>.
-        </div>
-      </div>
-      <div class="reveal" style="position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:4/5;background:var(--light-neutral)">
-        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" alt="Missionary children benefiting from sponsorship" style="width:100%;height:100%;object-fit:cover">
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Section 14: Partners & Sponsors -->
-<section class="section dark-bg" id="partners" style="display:none">
+<section class="section light-bg" id="partners">
   <div class="container-full">
     <div class="section-header center reveal">
       <span class="label-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Partners &amp; Sponsors</span>
@@ -907,29 +975,25 @@ ul{list-style:none}
     </div>
     <div class="partners-marquee">
       <div class="partners-track">
-        <div class="partner-logo"><span>[Partner 1]</span></div>
-        <div class="partner-logo"><span>[Partner 2]</span></div>
-        <div class="partner-logo"><span>[Partner 3]</span></div>
-        <div class="partner-logo"><span>[Partner 4]</span></div>
-        <div class="partner-logo"><span>[Partner 5]</span></div>
-        <div class="partner-logo"><span>[Partner 6]</span></div>
-        <div class="partner-logo"><span>[Partner 7]</span></div>
-        <div class="partner-logo"><span>[Partner 8]</span></div>
-        <div class="partner-logo"><span>[Partner 1]</span></div>
-        <div class="partner-logo"><span>[Partner 2]</span></div>
-        <div class="partner-logo"><span>[Partner 3]</span></div>
-        <div class="partner-logo"><span>[Partner 4]</span></div>
-        <div class="partner-logo"><span>[Partner 5]</span></div>
-        <div class="partner-logo"><span>[Partner 6]</span></div>
-        <div class="partner-logo"><span>[Partner 7]</span></div>
-        <div class="partner-logo"><span>[Partner 8]</span></div>
+        <div class="partner-logo"><img src="sponsors/CAPRO_Logo.png" alt="CAPRO"></div>
+        <div class="partner-logo"><img src="sponsors/cway food.jpeg" alt="CWAY Food"></div>
+        <div class="partner-logo"><img src="sponsors/cway water.jpg" alt="CWAY Water"></div>
+        <div class="partner-logo"><img src="sponsors/cci.png" alt="CCI"></div>
+        <div class="partner-logo"><img src="sponsors/CAPRO_Logo.png" alt="CAPRO"></div>
+        <div class="partner-logo"><img src="sponsors/cway food.jpeg" alt="CWAY Food"></div>
+        <div class="partner-logo"><img src="sponsors/cway water.jpg" alt="CWAY Water"></div>
+        <div class="partner-logo"><img src="sponsors/cci.png" alt="CCI"></div>
+        <div class="partner-logo"><img src="sponsors/CAPRO_Logo.png" alt="CAPRO"></div>
+        <div class="partner-logo"><img src="sponsors/cway food.jpeg" alt="CWAY Food"></div>
+        <div class="partner-logo"><img src="sponsors/cway water.jpg" alt="CWAY Water"></div>
+        <div class="partner-logo"><img src="sponsors/cci.png" alt="CCI"></div>
+        <div class="partner-logo"><img src="sponsors/CAPRO_Logo.png" alt="CAPRO"></div>
+        <div class="partner-logo"><img src="sponsors/cway food.jpeg" alt="CWAY Food"></div>
+        <div class="partner-logo"><img src="sponsors/cway water.jpg" alt="CWAY Water"></div>
+        <div class="partner-logo"><img src="sponsors/cci.png" alt="CCI"></div>
       </div>
     </div>
-    <div class="partner-cta reveal">
-      <h3>Partner With IMCC</h3>
-      <p>Churches, organisations, and businesses can support IMCC through sponsorship, in-kind donations, volunteering, and promotional partnership.</p>
-      <a href="#" class="btn btn-primary">Become a Partner <span class="btn-arrow">→</span></a>
-    </div>
+
   </div>
 </section>
 
@@ -989,8 +1053,8 @@ ul{list-style:none}
         <div class="faq-answer"><div class="faq-answer-inner">IMCC is completely free. Accommodation, feeding, and all conference activities are fully covered. The only cost to attendees is their transportation to the venue.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-trigger" aria-expanded="false">Can I sponsor a child?<span class="faq-icon">+</span></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Yes. Sponsorship is a meaningful way to help missionary children attend IMCC. Contact <a href="mailto:mkc.capro@gmail.com" style="color:var(--accent)">mkc.capro@gmail.com</a> for more information.</div></div>
+        <button class="faq-trigger" aria-expanded="false">How can I support IMCC?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">You can support IMCC through financial gifts. We accept Naira bank transfers (Zenith Bank) and UK bank transfers. Click the <strong>Donate</strong> button to see full account details.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-trigger" aria-expanded="false">How can my church support IMCC?<span class="faq-icon">+</span></button>
@@ -1027,7 +1091,7 @@ ul{list-style:none}
     <p class="body-text" style="max-width:600px;margin:24px auto 0;font-size:1.125rem">Join missionary children, families, and ministry partners from around the world for four unforgettable days of worship, learning, friendship, and faith. Register today and be part of something that changes lives.</p>
     <div class="cta-actions">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSfMptfQ2EEgh30I9J99N5zhZTedJX38Wos3GTVlkyi1ghYGzA/viewform?usp=sharing&ouid=109950971866186932856" class="btn btn-primary">Register for IMCC <span class="btn-arrow">→</span></a>
-      <a href="mailto:mkc.capro@gmail.com" class="btn btn-secondary">Sponsor a Child <span class="btn-arrow">→</span></a>
+      <button class="btn btn-secondary donate-trigger">Donate <span class="btn-arrow">→</span></button>
     </div>
   </div>
 </section>
@@ -1065,6 +1129,41 @@ ul{list-style:none}
 <div class="lightbox" id="lightbox" role="dialog" aria-label="Image lightbox">
   <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
   <img src="" alt="" id="lightboxImg">
+</div>
+
+<!-- Donation Modal -->
+<div class="donate-overlay" id="donateOverlay" role="dialog" aria-label="Donate to IMCC">
+  <div class="donate-modal">
+    <div class="donate-modal-header">
+      <button class="donate-close" aria-label="Close donate modal">&times;</button>
+      <h2>Support IMCC 2026</h2>
+      <p>IMCC is a conference for impact, healing, connection, identity, mentorship &amp; purpose for Missionary children. Help us make it happen. Support financially today. Every gift counts 🙏</p>
+    </div>
+    <div class="donate-modal-body">
+      <div class="donate-account">
+        <h3><span class="flag">🇳🇬</span> Naira Account (₦)</h3>
+        <div class="detail">
+          <strong>Account Name:</strong> Calvary Ministries (CAPRO)<br>
+          <strong>Bank:</strong> Zenith Bank<br>
+          <strong>Account Number:</strong> 1010682824
+        </div>
+        <div class="reference">Reference: IMCC 2026</div>
+      </div>
+      <div class="donate-account">
+        <h3><span class="flag">🇬🇧</span> UK Account</h3>
+        <div class="detail">
+          <strong>Account Name:</strong> Calvary Ministries<br>
+          <strong>Sort Code:</strong> 207106<br>
+          <strong>Account Number:</strong> 23826260
+        </div>
+        <div class="reference">Reference: IMCC 2026</div>
+      </div>
+      <div class="donate-footer">
+        <p>Questions? Reach out to us at<br><a href="mailto:mkc.capro@gmail.com">mkc.capro@gmail.com</a></p>
+        <p style="margin-top:8px;font-size:.75rem;color:var(--mid-neutral)">Thank you for your generosity! ❤️</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1304,6 +1403,15 @@ document.querySelectorAll('.reveal').forEach(function(el){observer.observe(el)})
     if(e.key === 'ArrowRight') galleryNext();
   });
 
+  // Donation Modal
+  var donateOverlay = document.getElementById('donateOverlay');
+  var donateTriggers = document.querySelectorAll('.donate-trigger');
+  function openDonate(){ donateOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeDonate(){ donateOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+  donateTriggers.forEach(function(btn){ btn.addEventListener('click', function(e){ e.preventDefault(); openDonate(); }); });
+  donateOverlay.addEventListener('click', function(e){ if(e.target === donateOverlay || e.target.classList.contains('donate-close')) closeDonate(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && donateOverlay.classList.contains('open')) closeDonate(); });
+
   // Smooth drag / swipe support
   var dragStartX = 0;
   var dragDelta = 0;
@@ -1464,6 +1572,103 @@ document.querySelectorAll('.reveal').forEach(function(el){observer.observe(el)})
   });
   
   // Start
+  requestAnimationFrame(animate);
+})();
+
+// Panelists Infinite Scroller
+(function(){
+  const track = document.getElementById('panelistsTrack');
+  if(!track) return;
+  const outer = track.parentElement;
+
+  let pos = 0;
+  let speed = 0.6;
+  let isPaused = false;
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartPos = 0;
+  let lastTime = 0;
+  let direction = -1;
+
+  // Clone items for seamless loop
+  const originals = Array.from(track.children);
+  originals.forEach(item => track.appendChild(item.cloneNode(true)));
+
+  function getSetWidth(){
+    let w = 0;
+    originals.forEach(item => {
+      w += item.offsetWidth + parseFloat(getComputedStyle(track).gap);
+    });
+    return w;
+  }
+
+  function animate(time){
+    if(!lastTime) lastTime = time;
+    const delta = time - lastTime;
+    lastTime = time;
+
+    if(!isPaused && !isDragging){
+      pos += direction * speed * (delta / 16);
+      const setWidth = getSetWidth();
+      if(pos <= -setWidth) pos += setWidth;
+      if(pos > 0) pos -= setWidth;
+    }
+
+    track.style.transform = `translateX(${pos}px)`;
+    requestAnimationFrame(animate);
+  }
+
+  outer.addEventListener('mouseenter', ()=> isPaused = true);
+  outer.addEventListener('mouseleave', ()=> {
+    if(!isDragging) isPaused = false;
+  });
+
+  track.addEventListener('mousedown', (e)=>{
+    isDragging = true;
+    isPaused = true;
+    dragStartX = e.clientX;
+    dragStartPos = pos;
+    track.classList.add('dragging');
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e)=>{
+    if(!isDragging || !track) return;
+    const dx = e.clientX - dragStartX;
+    if(Math.abs(dx) > 5){
+      direction = dx > 0 ? 1 : -1;
+    }
+    pos = dragStartPos + dx;
+  });
+
+  document.addEventListener('mouseup', ()=>{
+    if(!isDragging) return;
+    isDragging = false;
+    isPaused = false;
+    track.classList.remove('dragging');
+  });
+
+  outer.addEventListener('touchstart', (e)=>{
+    isDragging = true;
+    isPaused = true;
+    dragStartX = e.touches[0].clientX;
+    dragStartPos = pos;
+  }, {passive:true});
+
+  outer.addEventListener('touchmove', (e)=>{
+    if(!isDragging) return;
+    const dx = e.touches[0].clientX - dragStartX;
+    if(Math.abs(dx) > 5){
+      direction = dx > 0 ? 1 : -1;
+    }
+    pos = dragStartPos + dx;
+  }, {passive:true});
+
+  outer.addEventListener('touchend', ()=>{
+    isDragging = false;
+    isPaused = false;
+  });
+
   requestAnimationFrame(animate);
 })();
 </script>
